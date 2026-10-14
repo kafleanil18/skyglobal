@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCMS } from '../context/CMSContext';
+import { COUNTRIES as DEFAULT_COUNTRIES } from '../data/skyGlobalData';
 import { 
   Globe2, 
   MapPin, 
@@ -12,7 +13,8 @@ import {
 } from 'lucide-react';
 
 export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModal }) {
-  const { countries } = useCMS();
+  const cms = useCMS();
+  const countriesList = cms?.countries || DEFAULT_COUNTRIES;
   const [activeModalCountry, setActiveModalCountry] = useState(null);
 
   return (
@@ -35,7 +37,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
 
         {/* 6 Countries Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {COUNTRIES.map((country) => (
+          {countriesList.map((country) => (
             <div
               key={country.id}
               className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-md hover:shadow-xl hover:border-amber-400 transition-all duration-300 flex flex-col justify-between group"

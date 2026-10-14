@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCMS } from '../context/CMSContext';
+import { BLOGS as DEFAULT_BLOGS } from '../data/skyGlobalData';
 import { 
   FileText, 
   Calendar, 
@@ -10,7 +11,8 @@ import {
 } from 'lucide-react';
 
 export default function BlogsSection() {
-  const { blogs } = useCMS();
+  const cms = useCMS();
+  const blogList = cms?.blogs || DEFAULT_BLOGS;
   const [activeBlog, setActiveBlog] = useState(null);
 
   return (
@@ -33,7 +35,7 @@ export default function BlogsSection() {
 
         {/* 3 Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {BLOGS.map((blog) => (
+          {blogList.map((blog) => (
             <article 
               key={blog.id}
               className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 flex flex-col justify-between group"

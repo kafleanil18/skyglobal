@@ -1,9 +1,11 @@
 import React from 'react';
 import { useCMS } from '../context/CMSContext';
+import { TESTIMONIALS as DEFAULT_TESTIMONIALS } from '../data/skyGlobalData';
 import { Star, Quote, CheckCircle2, Award } from 'lucide-react';
 
 export default function TestimonialsSection() {
-  const { testimonials } = useCMS();
+  const cms = useCMS();
+  const list = cms?.testimonials || DEFAULT_TESTIMONIALS;
   return (
     <section id="testimonials" className="py-24 bg-slate-50 text-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +26,7 @@ export default function TestimonialsSection() {
 
         {/* 6 Testimonial Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {TESTIMONIALS.map((item) => (
+          {list.map((item) => (
             <div 
               key={item.id}
               className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 flex flex-col justify-between group"
