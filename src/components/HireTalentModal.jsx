@@ -12,11 +12,11 @@ import {
   Zap,
   Phone
 } from 'lucide-react';
-import { COMPANY_INFO, COUNTRIES } from '../data/skyGlobalData';
+import { COMPANY_INFO } from '../data/skyGlobalData';
 import { useCMS } from '../context/CMSContext';
 
 export default function HireTalentModal({ isOpen, onClose }) {
-  const { addEmployerRequest } = useCMS();
+  const { addEmployerRequest, countries } = useCMS();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -189,7 +189,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, destinationCountry: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] bg-white"
                   >
-                    {COUNTRIES.map(c => (
+                    {countries.map(c => (
                       <option key={c.name} value={c.name}>{c.name}</option>
                     ))}
                   </select>

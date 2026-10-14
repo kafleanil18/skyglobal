@@ -11,7 +11,8 @@ import {
   Sparkles,
   PhoneCall
 } from 'lucide-react';
-import { COMPANY_INFO, COUNTRIES } from '../data/skyGlobalData';
+import { COMPANY_INFO } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 
 export default function Hero({ 
   searchQuery, 
@@ -22,6 +23,7 @@ export default function Hero({
   onOpenHireModal,
   onOpenResumeModal
 }) {
+  const { countries } = useCMS();
   const trendingSearches = ['Electrician (Malta)', 'Maintenance Tech', 'Plumber', 'MEP Project Manager', 'Housekeeping', 'Australia Subclass 407'];
 
   return (
@@ -90,7 +92,7 @@ export default function Hero({
                   className="w-full pl-10 pr-8 py-3 rounded-xl bg-[#101a6d]/90 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#a99410] border border-[#25c0f3]/30 appearance-none cursor-pointer"
                 >
                   <option value="All Countries">All Destination Countries</option>
-                  {COUNTRIES.map((c) => (
+                  {countries.map((c) => (
                     <option key={c.name} value={c.name}>{c.name}</option>
                   ))}
                 </select>

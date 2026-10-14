@@ -284,13 +284,50 @@ export function CMSProvider({ children }) {
   };
 
   // --- Country Operations ---
+  const addCountry = (countryData) => {
+    const newCountry = {
+      id: `country-${Date.now()}`,
+      name: (countryData.name || '').trim(),
+      status: countryData.status || 'Active Hiring',
+      badge: (countryData.badge || 'International Hub').trim(),
+      image: (countryData.image || '').trim() || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
+      overview: (countryData.overview || '').trim(),
+      highlight: (countryData.highlight || 'Authorized Work Permits & Sponsorship').trim(),
+      details: Array.isArray(countryData.details)
+        ? countryData.details
+        : typeof countryData.details === 'string'
+          ? countryData.details.split('\n').map(s => s.trim()).filter(Boolean)
+          : [
+              'Direct employer sponsorship and authorized work permit documentation.',
+              'Pre-departure orientation, visa verification, and travel arrangements.',
+              'Renewable employment contracts with competitive overseas benefits.'
+            ]
+    };
+    setCountries(prev => [...prev, newCountry]);
+    return newCountry;
+  };
+
   const updateCountry = (countryId, updatedFields) => {
     setCountries(prev => prev.map(c => {
-      if (c.id === countryId) {
-        return { ...c, ...updatedFields };
+      if (c.id === countryId || String(c.id) === String(countryId)) {
+        return { 
+          ...c, 
+          ...updatedFields,
+          details: updatedFields.details !== undefined
+            ? Array.isArray(updatedFields.details)
+              ? updatedFields.details
+              : typeof updatedFields.details === 'string'
+                ? updatedFields.details.split('\n').map(s => s.trim()).filter(Boolean)
+                : c.details
+            : c.details
+        };
       }
       return c;
     }));
+  };
+
+  const deleteCountry = (countryId) => {
+    setCountries(prev => prev.filter(c => c.id !== countryId && String(c.id) !== String(countryId)));
   };
 
   // --- Blog Operations ---
@@ -378,7 +415,9 @@ export function CMSProvider({ children }) {
       updateEmployerRequestStatus,
       deleteEmployerRequest,
       countries,
+      addCountry,
       updateCountry,
+      deleteCountry,
       blogs,
       addBlog,
       updateBlog,

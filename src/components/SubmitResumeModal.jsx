@@ -9,11 +9,11 @@ import {
   Lock,
   Globe
 } from 'lucide-react';
-import { COMPANY_INFO, COUNTRIES } from '../data/skyGlobalData';
+import { COMPANY_INFO } from '../data/skyGlobalData';
 import { useCMS } from '../context/CMSContext';
 
 export default function SubmitResumeModal({ isOpen, onClose }) {
-  const { addApplication } = useCMS();
+  const { addApplication, countries } = useCMS();
   const [submitted, setSubmitted] = useState(false);
   const [fileName, setFileName] = useState('');
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
     email: '',
     phone: '',
     currentCountry: '',
-    preferredDestination: 'Malta (Europe / Schengen)',
+    preferredDestination: countries[0]?.name || 'Malta',
     profession: '',
     experienceYears: '3-5 years'
   });
@@ -189,13 +189,12 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, preferredDestination: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] bg-white"
                   >
-                    <option>Malta (Europe / Schengen)</option>
-                    <option>Australia (Training Visa 407 / Skilled)</option>
-                    <option>United Arab Emirates (Dubai / Tax Free)</option>
-                    <option>Bulgaria (European Union)</option>
-                    <option>Greece (Coming Soon)</option>
-                    <option>Romania (Coming Soon)</option>
-                    <option>Any suitable overseas opportunity</option>
+                    {countries.map(c => (
+                      <option key={c.id || c.name} value={c.name}>
+                        {c.name} {c.badge ? `(${c.badge})` : ''}
+                      </option>
+                    ))}
+                    <option value="Any suitable overseas opportunity">Any suitable overseas opportunity</option>
                   </select>
                 </div>
               </div>

@@ -13,10 +13,10 @@ import {
   Plane
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
-import { COUNTRIES, SECTORS } from '../../data/skyGlobalData';
+import { SECTORS } from '../../data/skyGlobalData';
 
 export default function AdminJobsTab() {
-  const { jobs, addJob, updateJob, deleteJob } = useCMS();
+  const { jobs, addJob, updateJob, deleteJob, countries } = useCMS();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCountryFilter, setSelectedCountryFilter] = useState('All');
   
@@ -125,7 +125,7 @@ export default function AdminJobsTab() {
           className="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] shadow-sm"
         >
           <option value="All">All Destination Countries</option>
-          {COUNTRIES.map(c => (
+          {countries.map(c => (
             <option key={c.name} value={c.name}>{c.name}</option>
           ))}
         </select>
@@ -244,7 +244,7 @@ export default function AdminJobsTab() {
                     onChange={(e) => setFormData({ ...formData, country: e.target.value, location: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-800 text-xs focus:ring-2 focus:ring-amber-400"
                   >
-                    {COUNTRIES.map(c => (
+                    {countries.map(c => (
                       <option key={c.name} value={c.name}>{c.name}</option>
                     ))}
                   </select>

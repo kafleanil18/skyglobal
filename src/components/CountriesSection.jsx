@@ -59,12 +59,12 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                     </span>
                     <span 
                       className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
-                        country.status.includes('Active')
+                        (country.status || '').includes('Active')
                           ? 'bg-emerald-500 text-white shadow-sm'
                           : 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] font-black'
                       }`}
                     >
-                      {country.status}
+                      {country.status || 'Active Hiring'}
                     </span>
                   </div>
 
@@ -79,7 +79,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                 <div className="p-6">
                   <div className="bg-[#e5f2f9] border border-[#25c0f3]/30 rounded-xl p-3 mb-4 text-xs font-semibold text-[#101a6d] flex items-center gap-2">
                     <Plane className="w-4 h-4 text-[#101a6d] shrink-0" />
-                    <span>{country.highlight}</span>
+                    <span>{country.highlight || 'Authorized Work Permit & Sponsorship'}</span>
                   </div>
 
                   <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">
@@ -87,7 +87,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                   </p>
 
                   <ul className="space-y-2 border-t border-slate-100 pt-4 mb-2">
-                    {country.details.slice(0, 2).map((det, i) => (
+                    {(country.details || []).slice(0, 2).map((det, i) => (
                       <li key={i} className="text-xs text-slate-600 flex items-start gap-2">
                         <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{det}</span>
@@ -168,7 +168,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                     Sponsorship & Placement Criteria
                   </h4>
                   <ul className="space-y-2">
-                    {activeModalCountry.details.map((d, i) => (
+                    {(activeModalCountry.details || []).map((d, i) => (
                       <li key={i} className="text-xs sm:text-sm text-slate-700 flex items-start gap-2.5">
                         <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{d}</span>
