@@ -9,8 +9,10 @@ import {
   Send,
   Users,
   ShieldCheck,
-  Zap
+  Zap,
+  Phone
 } from 'lucide-react';
+import { COMPANY_INFO, COUNTRIES } from '../data/skyGlobalData';
 
 export default function HireTalentModal({ isOpen, onClose }) {
   const [submitted, setSubmitted] = useState(false);
@@ -18,9 +20,10 @@ export default function HireTalentModal({ isOpen, onClose }) {
     companyName: '',
     contactName: '',
     email: '',
-    roleCategory: 'Software & Distributed Systems',
-    headcount: '1-2 Specialists',
-    targetLocation: 'Europe (EU Blue Card)',
+    phone: '',
+    industrySector: 'MEP, Electrical & Technical Trades',
+    headcount: '1-5 Candidates',
+    destinationCountry: 'Malta',
     timeline: 'Immediate (Within 30 Days)',
     notes: ''
   });
@@ -39,13 +42,13 @@ export default function HireTalentModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
       <div 
         className="bg-white rounded-3xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white p-6 sm:p-7 relative">
+        <div className="bg-[#09152b] text-white p-6 sm:p-7 relative">
           <button
             onClick={onClose}
             className="absolute top-5 right-5 text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-slate-800 transition-colors"
@@ -53,16 +56,16 @@ export default function HireTalentModal({ isOpen, onClose }) {
             <X className="w-5 h-5" />
           </button>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 text-xs font-semibold mb-2 border border-sky-500/30">
-            <Zap className="w-3.5 h-3.5 text-sky-400" />
-            Employer Talent Request
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            Employer Recruitment Request
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold font-display text-white">
-            Hire World-Class Tech & Engineering Talent
+            Partner with Sky Global HR Consultancy
           </h2>
           <p className="text-slate-300 text-xs sm:text-sm mt-1">
-            Receive pre-vetted candidate shortlists within 72 hours, with complete visa and relocation handling.
+            Let our Dubai recruitment specialists source, screen, and legally mobilize skilled personnel for your projects worldwide.
           </p>
         </div>
 
@@ -74,13 +77,13 @@ export default function HireTalentModal({ isOpen, onClose }) {
                 <CheckCircle2 className="w-10 h-10" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 font-display">
-                Talent Request Received!
+                Recruitment Request Received!
               </h3>
               <p className="text-slate-600 text-sm max-w-md mx-auto">
-                Thank you! Our Senior Technical Account Partner will reach out to you within 4 hours to review your profile requirements and schedule initial talent previews.
+                Thank you! Our corporate recruitment manager at our Dubai headquarters will contact you within 4 business hours.
               </p>
               <div className="inline-block px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold">
-                Ref: SKG-REQ-{Math.floor(10000 + Math.random() * 90000)}
+                Ref: SG-REQ-{Math.floor(10000 + Math.random() * 90000)}
               </div>
             </div>
           ) : (
@@ -93,24 +96,24 @@ export default function HireTalentModal({ isOpen, onClose }) {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Acme Tech Labs"
+                    placeholder="e.g. Ramla Bay Resort / MEP Ltd"
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Contact Name & Title *
+                    Contact Person & Title *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Sarah Jenkins, VP Eng"
+                    placeholder="e.g. David Miller, Operations Dir"
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                   />
                 </div>
               </div>
@@ -118,100 +121,94 @@ export default function HireTalentModal({ isOpen, onClose }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Work Email *
+                    Business Email *
                   </label>
                   <input
                     type="email"
                     required
-                    placeholder="sarah@acme.com"
+                    placeholder="david@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Primary Domain / Stack *
+                    Phone Number / WhatsApp *
                   </label>
-                  <select
-                    value={formData.roleCategory}
-                    onChange={(e) => setFormData({ ...formData, roleCategory: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
-                  >
-                    <option>Software & Distributed Systems</option>
-                    <option>AI, LLM & Machine Learning</option>
-                    <option>DevOps, SRE & Cloud Security</option>
-                    <option>Robotics, Embedded & Hardware</option>
-                    <option>Executive Search (CTO / VP)</option>
-                    <option>Full Engineering Squad Relocation</option>
-                  </select>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="+971 4 557 0778"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Target Location & Visa Need
+                    Primary Industry / Sector *
                   </label>
                   <select
-                    value={formData.targetLocation}
-                    onChange={(e) => setFormData({ ...formData, targetLocation: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
+                    value={formData.industrySector}
+                    onChange={(e) => setFormData({ ...formData, industrySector: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
                   >
-                    <option>Europe (Germany / Netherlands / Ireland)</option>
-                    <option>United Kingdom (London tech hub)</option>
-                    <option>Singapore / APAC regional center</option>
-                    <option>Japan (Tokyo / Robotics)</option>
-                    <option>UAE / Dubai (Tax-free hub)</option>
-                    <option>North America (US / Canada GSS)</option>
-                    <option>Global Remote (EOR Payroll Needed)</option>
+                    <option>MEP, Electrical & Technical Trades</option>
+                    <option>Hospitality, Resorts & Tourism</option>
+                    <option>Construction & Civil Engineering</option>
+                    <option>Manufacturing & Logistics</option>
+                    <option>Healthcare & Nursing Support</option>
+                    <option>Professional Services & IT</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Hiring Timeline
+                    Destination Work Location *
                   </label>
                   <select
-                    value={formData.timeline}
-                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
+                    value={formData.destinationCountry}
+                    onChange={(e) => setFormData({ ...formData, destinationCountry: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
                   >
-                    <option>Immediate (Within 30 Days)</option>
-                    <option>Upcoming Quarter (1-3 Months)</option>
-                    <option>Strategic Pipeline / Exploration</option>
+                    {COUNTRIES.map(c => (
+                      <option key={c.name} value={c.name}>{c.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Specific Stack Requirements or Hiring Goals
+                  Required Profiles, Headcount & Job Descriptions
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="e.g. Looking for 2 Staff Go/K8s engineers with distributed tracing experience willing to relocate to Munich."
+                  placeholder="e.g. Sourcing 4 licensed Electricians and 2 Plumbers for resort refurbishment project in Malta starting next month."
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                 />
               </div>
 
-              {/* Trust Callout */}
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-2.5 text-xs text-slate-600">
-                <ShieldCheck className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
+                <ShieldCheck className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
                 <span>
-                  <strong>SkyGlobal Guarantee:</strong> All candidates undergo thorough technical coding assessments. 90-day free replacement guarantee on all placements.
+                  <strong>Ethical Recruitment Commitment:</strong> Sky Global adheres to transparent, compliant international labor and visa procedures.
                 </span>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-sky-600/25 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
-                Request Candidate Shortlist
+                Request Talent Shortlist
               </button>
             </form>
           )}

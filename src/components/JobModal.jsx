@@ -4,14 +4,15 @@ import {
   MapPin, 
   Briefcase, 
   Plane, 
-  DollarSign, 
   CheckCircle2, 
   ShieldCheck, 
   FileText, 
   Upload, 
   Sparkles,
-  Send
+  Send,
+  Building
 } from 'lucide-react';
+import { COMPANY_INFO } from '../data/skyGlobalData';
 
 export default function JobModal({ job, isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('details'); // 'details' or 'apply'
@@ -20,8 +21,8 @@ export default function JobModal({ job, isOpen, onClose }) {
     fullName: '',
     email: '',
     phone: '',
-    linkedin: '',
-    currentLocation: '',
+    currentCountry: '',
+    experienceYears: '3-5 years',
     note: '',
     fileName: ''
   });
@@ -32,7 +33,6 @@ export default function JobModal({ job, isOpen, onClose }) {
     e.preventDefault();
     setSubmitted(true);
     setTimeout(() => {
-      // Keep feedback visible for 2.5s then close
       setTimeout(() => {
         setSubmitted(false);
         setActiveTab('details');
@@ -48,13 +48,13 @@ export default function JobModal({ job, isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
       <div 
         className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden relative max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="bg-slate-900 text-white p-6 sm:p-7 relative shrink-0">
+        <div className="bg-[#09152b] text-white p-6 sm:p-7 relative shrink-0">
           <button
             onClick={onClose}
             className="absolute top-5 right-5 text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-slate-800 transition-colors"
@@ -63,15 +63,15 @@ export default function JobModal({ job, isOpen, onClose }) {
           </button>
 
           <div className="flex flex-wrap items-center gap-2 mb-2 text-xs">
-            <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 font-medium">
-              {job.category}
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium">
+              {job.sector || job.category}
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 font-medium">
-              {job.workMode}
+              {job.contract || job.type}
             </span>
             {job.visaSponsorship && (
               <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3" />
+                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
                 Visa Sponsored
               </span>
             )}
@@ -80,7 +80,7 @@ export default function JobModal({ job, isOpen, onClose }) {
           <h2 className="text-xl sm:text-2xl font-bold font-display text-white pr-8">
             {job.title}
           </h2>
-          <p className="text-sky-300 font-medium text-sm mt-1">
+          <p className="text-amber-300 font-medium text-xs sm:text-sm mt-1">
             {job.company} • <span className="text-slate-300">{job.location}</span>
           </p>
 
@@ -88,23 +88,23 @@ export default function JobModal({ job, isOpen, onClose }) {
           <div className="flex items-center gap-3 mt-5 pt-3 border-t border-slate-800">
             <button
               onClick={() => setActiveTab('details')}
-              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
+              className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-lg transition-colors ${
                 activeTab === 'details'
-                  ? 'bg-sky-600 text-white shadow-sm'
+                  ? 'bg-amber-400 text-slate-950 shadow-sm'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
-              Role & Relocation Details
+              Role & Requirements
             </button>
             <button
               onClick={() => setActiveTab('apply')}
-              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
+              className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-lg transition-colors ${
                 activeTab === 'apply'
-                  ? 'bg-sky-600 text-white shadow-sm'
+                  ? 'bg-amber-400 text-slate-950 shadow-sm'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
-              Fast-Track Application
+              Apply Online
             </button>
           </div>
         </div>
@@ -113,35 +113,35 @@ export default function JobModal({ job, isOpen, onClose }) {
         <div className="p-6 sm:p-7 overflow-y-auto flex-1 space-y-6">
           {activeTab === 'details' ? (
             <>
-              {/* Compensation & Relocation Highlight Box */}
-              <div className="bg-sky-50/80 rounded-2xl p-4 sm:p-5 border border-sky-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Highlight Box */}
+              <div className="bg-amber-50/80 rounded-2xl p-4 sm:p-5 border border-amber-200/80 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <span className="text-xs uppercase font-bold tracking-wider text-sky-800 block mb-0.5">
-                    Package Compensation
+                  <span className="text-xs uppercase font-bold tracking-wider text-amber-800 block mb-0.5">
+                    Package / Remuneration
                   </span>
                   <span className="text-xl font-extrabold text-slate-900 font-display">
                     {job.salary}
                   </span>
-                  <p className="text-xs text-slate-500 mt-1">Base + Equity & Bonus options</p>
+                  <p className="text-xs text-slate-500 mt-1">Contract: {job.contract || '1 Year Renewable'}</p>
                 </div>
                 <div>
-                  <span className="text-xs uppercase font-bold tracking-wider text-sky-800 block mb-0.5">
-                    Relocation & Legal Visa
+                  <span className="text-xs uppercase font-bold tracking-wider text-amber-800 block mb-0.5">
+                    Destination & Sponsorship
                   </span>
-                  <span className="text-sm font-bold text-sky-900 flex items-center gap-1.5">
-                    <Plane className="w-4 h-4 text-sky-600 shrink-0" />
-                    {job.relocationPackage || 'Full Visa Assistance'}
+                  <span className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                    <Plane className="w-4 h-4 text-amber-600 shrink-0" />
+                    {job.location} ({job.country})
                   </span>
-                  <p className="text-xs text-slate-500 mt-1">100% legal fees covered</p>
+                  <p className="text-xs text-slate-500 mt-1">Managed by Sky Global HR Consultancy</p>
                 </div>
               </div>
 
               {/* Description */}
               <div>
-                <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                  Role Overview
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Job Description
                 </h4>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-line">
                   {job.description}
                 </p>
               </div>
@@ -149,13 +149,13 @@ export default function JobModal({ job, isOpen, onClose }) {
               {/* Requirements */}
               {job.requirements && (
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
-                    Key Technical Requirements
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
+                    Role Requirements & Qualifications
                   </h4>
                   <ul className="space-y-2">
                     {job.requirements.map((req, i) => (
                       <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
-                        <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                         <span>{req}</span>
                       </li>
                     ))}
@@ -163,10 +163,10 @@ export default function JobModal({ job, isOpen, onClose }) {
                 </div>
               )}
 
-              {/* Benefits & Relocation Perks */}
+              {/* Benefits */}
               {job.benefits && (
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
                     Relocation, Visa & Perks
                   </h4>
                   <ul className="space-y-2">
@@ -180,10 +180,10 @@ export default function JobModal({ job, isOpen, onClose }) {
                 </div>
               )}
 
-              {/* Tech Stack Tags */}
+              {/* Tags */}
               <div>
-                <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                  Required Technology Stack
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Skills & Key Competencies
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {job.tags?.map((tag) => (
@@ -205,19 +205,19 @@ export default function JobModal({ job, isOpen, onClose }) {
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 font-display">
-                  Application Submitted!
+                  Application Received!
                 </h3>
                 <p className="text-slate-600 text-sm max-w-md mx-auto">
-                  Thank you! Our international recruitment specialist for {job.location} will review your credentials and contact you within 24 hours.
+                  Thank you! Our overseas recruitment desk at Sky Global HR Consultancy ({COMPANY_INFO.address}) will review your application and contact you directly.
                 </p>
                 <div className="inline-block px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold">
-                  Reference: SKG-{job.id}-{Math.floor(1000 + Math.random() * 9000)}
+                  Reference: SKG-APPLY-{Math.floor(10000 + Math.random() * 90000)}
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="bg-sky-50/60 p-3.5 rounded-xl border border-sky-100 text-xs text-sky-900">
-                  <span className="font-bold">Applying for:</span> {job.title} at {job.company} ({job.location})
+                <div className="bg-amber-50/70 p-3 rounded-xl border border-amber-200/80 text-xs text-amber-900">
+                  <span className="font-bold">Applying for:</span> {job.title} in {job.location}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -228,10 +228,10 @@ export default function JobModal({ job, isOpen, onClose }) {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Alex Henderson"
+                      placeholder="e.g. John Smith"
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                     />
                   </div>
 
@@ -242,10 +242,10 @@ export default function JobModal({ job, isOpen, onClose }) {
                     <input
                       type="email"
                       required
-                      placeholder="alex@example.com"
+                      placeholder="john@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                     />
                   </div>
                 </div>
@@ -253,43 +253,43 @@ export default function JobModal({ job, isOpen, onClose }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Current City & Country *
+                      Phone Number (WhatsApp) *
                     </label>
                     <input
-                      type="text"
+                      type="tel"
                       required
-                      placeholder="e.g. Toronto, Canada"
-                      value={formData.currentLocation}
-                      onChange={(e) => setFormData({ ...formData, currentLocation: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      placeholder="+971 50 123 4567"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      LinkedIn / GitHub URL
+                      Current Country of Residence *
                     </label>
                     <input
-                      type="url"
-                      placeholder="https://linkedin.com/in/alex"
-                      value={formData.linkedin}
-                      onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      type="text"
+                      required
+                      placeholder="e.g. UAE, India, Nepal, Philippines"
+                      value={formData.currentCountry}
+                      onChange={(e) => setFormData({ ...formData, currentCountry: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                     />
                   </div>
                 </div>
 
-                {/* Resume Upload Box */}
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Upload Resume / CV (PDF or Word) *
                   </label>
-                  <label className="border-2 border-dashed border-slate-300 hover:border-sky-500 rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-sky-50/50 transition-colors">
+                  <label className="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-amber-50/50 transition-colors">
                     <Upload className="w-6 h-6 text-slate-400 mb-1" />
                     <span className="text-xs font-semibold text-slate-700">
-                      {formData.fileName ? formData.fileName : 'Click to upload or drag & drop'}
+                      {formData.fileName ? formData.fileName : 'Click to upload your CV'}
                     </span>
-                    <span className="text-[11px] text-slate-400 mt-0.5">PDF, DOCX up to 10MB</span>
+                    <span className="text-[11px] text-slate-400 mt-0.5">PDF or DOCX up to 10MB</span>
                     <input
                       type="file"
                       accept=".pdf,.doc,.docx"
@@ -301,27 +301,27 @@ export default function JobModal({ job, isOpen, onClose }) {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Brief Note on Visa / Relocation Timeline (Optional)
+                    Relevant Experience & Qualifications Summary
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="e.g. Looking to relocate within 3 months, require EU Blue Card sponsorship."
+                    placeholder="Briefly state your years of experience, trade licenses, or previous overseas work history."
                     value={formData.note}
                     onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3 px-6 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm shadow-md shadow-sky-600/25 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3 px-6 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
-                    Submit Application & Request Visa Screening
+                    Submit Application to SkyGlobal HR
                   </button>
                   <p className="text-[11px] text-slate-400 text-center mt-2">
-                    SkyGlobal respects your privacy. We never share your profile without explicit written consent.
+                    Your details are processed strictly in accordance with ethical recruitment standards.
                   </p>
                 </div>
               </form>
@@ -329,11 +329,11 @@ export default function JobModal({ job, isOpen, onClose }) {
           )}
         </div>
 
-        {/* Footer Actions (Only when in details mode) */}
+        {/* Footer Actions */}
         {activeTab === 'details' && (
           <div className="bg-slate-50 p-4 sm:p-5 border-t border-slate-200 flex items-center justify-between shrink-0">
             <span className="text-xs text-slate-500 hidden sm:inline">
-              Ref: SKG-{job.id}
+              Ref: {job.id}
             </span>
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <button
@@ -344,9 +344,9 @@ export default function JobModal({ job, isOpen, onClose }) {
               </button>
               <button
                 onClick={() => setActiveTab('apply')}
-                className="px-6 py-2.5 rounded-xl text-xs font-semibold text-white bg-sky-600 hover:bg-sky-500 shadow-md shadow-sky-600/20 flex-1 sm:flex-none text-center flex items-center justify-center gap-1.5"
+                className="px-6 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 shadow-md flex-1 sm:flex-none text-center flex items-center justify-center gap-1.5"
               >
-                <span>Apply for this Role</span>
+                <span>Apply for this Position</span>
                 <Sparkles className="w-3.5 h-3.5" />
               </button>
             </div>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import StatsBanner from './components/StatsBanner';
-import Services from './components/Services';
-import JobBoard from './components/JobBoard';
-import GlobalReach from './components/GlobalReach';
-import SalaryGuide from './components/SalaryGuide';
-import Testimonials from './components/Testimonials';
+import HowWeAreDifferent from './components/HowWeAreDifferent';
+import CountriesSection from './components/CountriesSection';
+import SectorsSection from './components/SectorsSection';
+import JobsSection from './components/JobsSection';
+import BlogsSection from './components/BlogsSection';
+import TestimonialsSection from './components/TestimonialsSection';
 import Footer from './components/Footer';
 import JobModal from './components/JobModal';
 import HireTalentModal from './components/HireTalentModal';
@@ -14,7 +14,7 @@ import SubmitResumeModal from './components/SubmitResumeModal';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRegion, setSelectedRegion] = useState('All Regions');
+  const [selectedCountry, setSelectedCountry] = useState('All Countries');
   
   // Modals state
   const [selectedJob, setSelectedJob] = useState(null);
@@ -22,12 +22,22 @@ export default function App() {
   const [isHireModalOpen, setIsHireModalOpen] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
-  // Handle Hero search submission -> scroll to #jobs
-  const handleHeroSearchSubmit = () => {
+  // Scroll to jobs section helper
+  const handleScrollToJobs = () => {
     const jobSection = document.getElementById('jobs');
     if (jobSection) {
       jobSection.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleSelectCountryJobs = (countryName) => {
+    setSelectedCountry(countryName);
+    handleScrollToJobs();
+  };
+
+  const handleSelectSectorJobs = (sectorTitle) => {
+    setSearchQuery(sectorTitle.split(',')[0]);
+    handleScrollToJobs();
   };
 
   const handleSelectJob = (job) => {
@@ -41,62 +51,67 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
-      {/* Navigation */}
+    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-amber-400 selection:text-slate-950">
+      {/* Navigation & Header */}
       <Navbar 
         onOpenHireModal={() => setIsHireModalOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
       />
 
-      {/* Hero with live Search sync */}
+      {/* Main Content Body */}
       <main className="flex-1">
+        {/* Hero Section */}
         <Hero 
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          selectedRegion={selectedRegion}
-          setSelectedRegion={setSelectedRegion}
-          onSearchSubmit={handleHeroSearchSubmit}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+          onSearchSubmit={handleScrollToJobs}
+          onOpenHireModal={() => setIsHireModalOpen(true)}
+          onOpenResumeModal={() => setIsResumeModalOpen(true)}
+        />
+
+        {/* How We Are Different (From skyglobalhr.com) */}
+        <HowWeAreDifferent 
           onOpenHireModal={() => setIsHireModalOpen(true)}
         />
 
-        {/* Dynamic Metric & Partner Banner */}
-        <StatsBanner />
+        {/* Destination Countries We Serve (Malta, Australia, UAE, Bulgaria, Greece, Romania) */}
+        <CountriesSection 
+          onSelectCountryJobs={handleSelectCountryJobs}
+          onOpenResumeModal={() => setIsResumeModalOpen(true)}
+        />
 
-        {/* Core Practice Areas & Specializations */}
-        <Services 
+        {/* Practice Sectors (MEP, Hospitality, Construction, Manufacturing, Healthcare, IT) */}
+        <SectorsSection 
+          onSelectSectorJobs={handleSelectSectorJobs}
           onOpenHireModal={() => setIsHireModalOpen(true)}
         />
 
-        {/* Interactive Job Board with Filters */}
-        <JobBoard 
+        {/* Active Job Openings with live search & filters */}
+        <JobsSection 
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          selectedRegion={selectedRegion}
-          setSelectedRegion={setSelectedRegion}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
           onSelectJob={handleSelectJob}
           onApplyJob={handleApplyJob}
         />
 
-        {/* Global Reach & Relocation Concierge */}
-        <GlobalReach 
-          onOpenResumeModal={() => setIsResumeModalOpen(true)}
-          onOpenHireModal={() => setIsHireModalOpen(true)}
-        />
+        {/* Latest Visa News & Immigration Blogs */}
+        <BlogsSection />
 
-        {/* 2026/2027 Salary Benchmarks & PDF download */}
-        <SalaryGuide />
-
-        {/* Client & Candidate Testimonials */}
-        <Testimonials />
+        {/* Verified Customer & Candidate Testimonials */}
+        <TestimonialsSection />
       </main>
 
-      {/* Footer */}
+      {/* Official Footer with Dubai Office details & links */}
       <Footer 
         onOpenHireModal={() => setIsHireModalOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
       />
 
-      {/* Interactive Modals */}
+      {/* Modals */}
       <JobModal 
         job={selectedJob}
         isOpen={isJobModalOpen}
