@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CMSProvider, useCMS } from './context/CMSContext';
 
 import Navbar from './components/Navbar';
+import PageHeader from './components/PageHeader';
 import Hero from './components/Hero';
 import AboutSection from './components/AboutSection';
 import HowWeAreDifferent from './components/HowWeAreDifferent';
@@ -21,11 +22,27 @@ import LoginModal from './components/admin/LoginModal';
 
 // CMS Dashboard
 import AdminDashboard from './components/admin/AdminDashboard';
-import { Crown, ShieldCheck, LayoutDashboard } from 'lucide-react';
+import { 
+  Crown, 
+  ShieldCheck, 
+  LayoutDashboard, 
+  Globe2, 
+  Layers, 
+  Briefcase, 
+  FileText, 
+  Info 
+} from 'lucide-react';
 
 function MainWebsite() {
   const { currentUser, isSuperAdmin, isAuthenticated } = useAuth();
   const { jobs, countries, companyInfo } = useCMS();
+
+  // Page Routing State ('home' | 'about' | 'countries' | 'sectors' | 'jobs' | 'blogs')
+  const [currentPage, setCurrentPage] = useState(() => {
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'blogs'];
+    return valid.includes(hash) ? hash : 'home';
+  });
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('All Countries');
@@ -40,22 +57,46 @@ function MainWebsite() {
   // CMS Dashboard view mode
   const [isViewingAdminDashboard, setIsViewingAdminDashboard] = useState(false);
 
-  // Scroll to jobs section helper
+  // Synchronize hash with browser navigation (back/forward)
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'blogs'];
+      if (valid.includes(hash)) {
+        setCurrentPage(hash);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const navigateTo = (pageId) => {
+    setCurrentPage(pageId);
+    window.location.hash = pageId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Scroll to jobs or navigate to Jobs page
   const handleScrollToJobs = () => {
-    const jobSection = document.getElementById('jobs');
-    if (jobSection) {
-      jobSection.scrollIntoView({ behavior: 'smooth' });
+    if (currentPage === 'home') {
+      const jobSection = document.getElementById('jobs');
+      if (jobSection) {
+        jobSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigateTo('jobs');
     }
   };
 
   const handleSelectCountryJobs = (countryName) => {
     setSelectedCountry(countryName);
-    handleScrollToJobs();
+    navigateTo('jobs');
   };
 
   const handleSelectSectorJobs = (sectorTitle) => {
     setSearchQuery(sectorTitle.split(',')[0]);
-    handleScrollToJobs();
+    navigateTo('jobs');
   };
 
   const handleSelectJob = (job) => {
@@ -94,7 +135,7 @@ function MainWebsite() {
 
           <button
             onClick={() => setIsViewingAdminDashboard(true)}
-            className="px-3 py-1 rounded-lg bg-slate-950 text-amber-300 hover:bg-slate-900 transition-colors flex items-center gap-1.5 font-bold shadow-sm"
+            className="px-3 py-1 rounded-lg bg-slate-950 text-amber-300 hover:bg-slate-900 transition-colors flex items-center gap-1.5 font-bold shadow-sm cursor-pointer"
           >
             <LayoutDashboard className="w-3.5 h-3.5" />
             <span>Open CMS Dashboard</span>
@@ -104,67 +145,143 @@ function MainWebsite() {
 
       {/* Navigation & Header */}
       <Navbar 
+        currentPage={currentPage}
+        onNavigate={navigateTo}
         onOpenHireModal={() => setIsHireModalOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
         onOpenDashboard={() => setIsViewingAdminDashboard(true)}
       />
 
-      {/* Main Content Body */}
+      {/* Main Content Body - Dedicated Pages */}
       <main className="flex-1">
-        {/* Hero Section */}
-        <Hero 
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          onSearchSubmit={handleScrollToJobs}
-          onOpenHireModal={() => setIsHireModalOpen(true)}
-          onOpenResumeModal={() => setIsResumeModalOpen(true)}
-        />
+        {/* 1. HOME PAGE: Only Hero, "Find Job" section, How We Are Different, Blogs, and Testimonials */}
+        {currentPage === 'home' && (
+          <>
+            {/* Hero Section */}
+            <Hero 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedCountry={selectedCountry}
+              setSelectedCountry={setSelectedCountry}
+              onSearchSubmit={handleScrollToJobs}
+              onOpenHireModal={() => setIsHireModalOpen(true)}
+              onOpenResumeModal={() => setIsResumeModalOpen(true)}
+            />
 
-        {/* About SkyGlobal HR Consultancy (From skyglobalhr.com/about) */}
-        <AboutSection 
-          onOpenHireModal={() => setIsHireModalOpen(true)}
-          onOpenResumeModal={() => setIsResumeModalOpen(true)}
-        />
+            {/* "Find Job" Section */}
+            <JobsSection 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedCountry={selectedCountry}
+              setSelectedCountry={setSelectedCountry}
+              onSelectJob={handleSelectJob}
+              onApplyJob={handleApplyJob}
+            />
 
-        {/* How We Are Different (From skyglobalhr.com) */}
-        <HowWeAreDifferent 
-          onOpenHireModal={() => setIsHireModalOpen(true)}
-        />
+            {/* How We Are Different (From skyglobalhr.com) */}
+            <HowWeAreDifferent 
+              onOpenHireModal={() => setIsHireModalOpen(true)}
+            />
 
-        {/* Destination Countries We Serve (Malta, Australia, UAE, Bulgaria, Greece, Romania) */}
-        <CountriesSection 
-          onSelectCountryJobs={handleSelectCountryJobs}
-          onOpenResumeModal={() => setIsResumeModalOpen(true)}
-        />
+            {/* Latest Visa News & Immigration Blogs */}
+            <BlogsSection />
 
-        {/* Practice Sectors (MEP, Hospitality, Construction, Manufacturing, Healthcare, IT) */}
-        <SectorsSection 
-          onSelectSectorJobs={handleSelectSectorJobs}
-          onOpenHireModal={() => setIsHireModalOpen(true)}
-        />
+            {/* Verified Customer & Candidate Testimonials */}
+            <TestimonialsSection />
+          </>
+        )}
 
-        {/* Active Job Openings with live search & filters */}
-        <JobsSection 
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          onSelectJob={handleSelectJob}
-          onApplyJob={handleApplyJob}
-        />
+        {/* 2. DEDICATED ABOUT PAGE */}
+        {currentPage === 'about' && (
+          <div>
+            <PageHeader 
+              badge="About SkyGlobal HR Consultancy"
+              icon={Info}
+              title="About SkyGlobal"
+              subtitle="Your trusted licensed partner in global recruitment, ethical workforce solutions, and international career placement."
+              onBackToHome={() => navigateTo('home')}
+            />
+            <AboutSection 
+              onOpenHireModal={() => setIsHireModalOpen(true)}
+              onOpenResumeModal={() => setIsResumeModalOpen(true)}
+            />
+          </div>
+        )}
 
-        {/* Latest Visa News & Immigration Blogs */}
-        <BlogsSection />
+        {/* 3. DEDICATED DESTINATION COUNTRIES PAGE */}
+        {currentPage === 'countries' && (
+          <div>
+            <PageHeader 
+              badge="Destination Countries"
+              icon={Globe2}
+              title="Global Destination Hubs"
+              subtitle="Explore authorized work permit pathways, employer sponsorship, and living standards across our premier placement countries."
+              onBackToHome={() => navigateTo('home')}
+            />
+            <CountriesSection 
+              onSelectCountryJobs={handleSelectCountryJobs}
+              onOpenResumeModal={() => setIsResumeModalOpen(true)}
+            />
+          </div>
+        )}
 
-        {/* Verified Customer & Candidate Testimonials */}
-        <TestimonialsSection />
+        {/* 4. DEDICATED CORE SECTORS PAGE */}
+        {currentPage === 'sectors' && (
+          <div>
+            <PageHeader 
+              badge="Core Practice Sectors"
+              icon={Layers}
+              title="Our Industry Sectors"
+              subtitle="Specialized recruitment across high-demand MEP trades, hospitality, construction, manufacturing, healthcare, and IT."
+              onBackToHome={() => navigateTo('home')}
+            />
+            <SectorsSection 
+              onSelectSectorJobs={handleSelectSectorJobs}
+              onOpenHireModal={() => setIsHireModalOpen(true)}
+            />
+          </div>
+        )}
+
+        {/* 5. DEDICATED FIND JOBS PAGE */}
+        {currentPage === 'jobs' && (
+          <div>
+            <PageHeader 
+              badge="Current Vacancies"
+              icon={Briefcase}
+              title="Explore International Jobs"
+              subtitle="Find verified positions with work visa sponsorship across Malta, Australia, UAE, Bulgaria, Romania, and Greece."
+              onBackToHome={() => navigateTo('home')}
+            />
+            <JobsSection 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedCountry={selectedCountry}
+              setSelectedCountry={setSelectedCountry}
+              onSelectJob={handleSelectJob}
+              onApplyJob={handleApplyJob}
+            />
+          </div>
+        )}
+
+        {/* 6. DEDICATED VISA UPDATES & BLOGS PAGE */}
+        {currentPage === 'blogs' && (
+          <div>
+            <PageHeader 
+              badge="Visa Intelligence & News"
+              icon={FileText}
+              title="Visa Updates & Immigration News"
+              subtitle="Timely legal developments, European immigration changes, and international hiring updates curated by Sky Global HR Consultancy."
+              onBackToHome={() => navigateTo('home')}
+            />
+            <BlogsSection />
+          </div>
+        )}
       </main>
 
       {/* Official Footer with Dubai Office details & links */}
       <Footer 
+        onNavigate={navigateTo}
         onOpenHireModal={() => setIsHireModalOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
         onOpenLoginModal={() => {

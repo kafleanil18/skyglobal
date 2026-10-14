@@ -12,9 +12,18 @@ import {
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/skyGlobalData';
 
-export default function Footer({ onOpenHireModal, onOpenResumeModal, onOpenLoginModal }) {
+export default function Footer({ onNavigate, onOpenHireModal, onOpenResumeModal, onOpenLoginModal }) {
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState('');
+
+  const handleFooterNav = (pageId, e) => {
+    if (e) e.preventDefault();
+    if (onNavigate) {
+      onNavigate(pageId);
+    } else {
+      window.location.hash = pageId;
+    }
+  };
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -142,13 +151,13 @@ export default function Footer({ onOpenHireModal, onOpenResumeModal, onOpenLogin
               Extra Links
             </h3>
             <div className="grid grid-cols-2 gap-2.5 text-xs text-slate-400">
-              <a href="#home" className="hover:text-amber-400 transition-colors">Home</a>
-              <a href="#about" className="hover:text-amber-400 transition-colors">About Us</a>
-              <a href="#how-we-are-different" className="hover:text-amber-400 transition-colors">Why Choose Us</a>
-              <a href="#countries" className="hover:text-amber-400 transition-colors">Destinations</a>
-              <a href="#sectors" className="hover:text-amber-400 transition-colors">Our Core Sectors</a>
-              <a href="#jobs" className="hover:text-amber-400 transition-colors">Browse Jobs</a>
-              <a href="#blogs" className="hover:text-amber-400 transition-colors">Visa Updates</a>
+              <button onClick={(e) => handleFooterNav('home', e)} className="text-left hover:text-amber-400 transition-colors cursor-pointer">Home</button>
+              <button onClick={(e) => handleFooterNav('about', e)} className="text-left hover:text-amber-400 transition-colors cursor-pointer">About Us</button>
+              <button onClick={(e) => handleFooterNav('countries', e)} className="text-left hover:text-amber-400 transition-colors cursor-pointer">Destinations</button>
+              <button onClick={(e) => handleFooterNav('sectors', e)} className="text-left hover:text-amber-400 transition-colors cursor-pointer">Our Core Sectors</button>
+              <button onClick={(e) => handleFooterNav('jobs', e)} className="text-left hover:text-amber-400 transition-colors cursor-pointer">Browse Jobs</button>
+              <button onClick={(e) => handleFooterNav('blogs', e)} className="text-left hover:text-amber-400 transition-colors cursor-pointer">Visa Updates</button>
+              <a href="#how-we-are-different" onClick={(e) => handleFooterNav('home', e)} className="hover:text-amber-400 transition-colors cursor-pointer">Why Choose Us</a>
               <button 
                 onClick={onOpenLoginModal} 
                 className="text-left text-amber-400/90 hover:text-amber-300 font-semibold transition-colors"

@@ -15,7 +15,14 @@ import { COMPANY_INFO } from '../data/skyGlobalData';
 import TopContactBar from './TopContactBar';
 import { useAuth } from '../context/AuthContext';
 
-export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLoginModal, onOpenDashboard }) {
+export default function Navbar({ 
+  currentPage = 'home',
+  onNavigate,
+  onOpenHireModal, 
+  onOpenResumeModal, 
+  onOpenLoginModal, 
+  onOpenDashboard 
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { currentUser, isSuperAdmin, isAuthenticated } = useAuth();
@@ -29,15 +36,23 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Why Us', href: '#how-we-are-different' },
-    { label: 'Countries', href: '#countries' },
-    { label: 'Sectors', href: '#sectors' },
-    { label: 'Job Openings', href: '#jobs' },
-    { label: 'Visa News', href: '#blogs' },
-    { label: 'Testimonials', href: '#testimonials' },
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'countries', label: 'Destinations' },
+    { id: 'sectors', label: 'Sectors' },
+    { id: 'jobs', label: 'Find Jobs' },
+    { id: 'blogs', label: 'Visa News' },
   ];
+
+  const handleNavClick = (pageId, e) => {
+    if (e) e.preventDefault();
+    if (onNavigate) {
+      onNavigate(pageId);
+    } else {
+      window.location.hash = pageId;
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -56,7 +71,11 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
           <div className="flex items-center justify-between">
             
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-3 group">
+            <a 
+              href="#home" 
+              onClick={(e) => handleNavClick('home', e)}
+              className="flex items-center gap-3 group cursor-pointer"
+            >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-sky-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-sky-900/40 group-hover:scale-105 transition-transform">
                 <Globe className="w-5 h-5 text-amber-300" />
               </div>
@@ -76,17 +95,26 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
             </a>
 
             {/* Desktop Navigation */}
-            <nav className="hidden xl:flex items-center gap-7">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-xs uppercase tracking-wider font-semibold text-slate-300 hover:text-amber-400 transition-colors py-1 relative group"
-                >
-                  {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-400 group-hover:w-full transition-all duration-200" />
-                </a>
-              ))}
+            <nav className="hidden xl:flex items-center gap-6">
+              {navLinks.map((link) => {
+                const isActive = currentPage === link.id;
+                return (
+                  <button
+                    key={link.id}
+                    onClick={(e) => handleNavClick(link.id, e)}
+                    className={`text-xs uppercase tracking-wider font-semibold transition-colors py-1 relative group cursor-pointer ${
+                      isActive ? 'text-amber-400 font-bold' : 'text-slate-300 hover:text-amber-400'
+                    }`}
+                  >
+                    {link.label}
+                    <span 
+                      className={`absolute bottom-0 left-0 h-0.5 bg-amber-400 transition-all duration-200 ${
+                        isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`} 
+                    />
+                  </button>
+                );
+              })}
             </nav>
 
             {/* Action Buttons & Log In */}
@@ -167,17 +195,23 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
       {mobileMenuOpen && (
         <div className="xl:hidden bg-slate-900/98 backdrop-blur-xl border-b border-slate-800 px-5 pt-3 pb-6 space-y-3 shadow-2xl">
           <div className="flex flex-col space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800 hover:text-amber-400 flex items-center justify-between"
-              >
-                <span>{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = currentPage === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={(e) => handleNavClick(link.id, e)}
+                  className={`w-full px-3 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-between text-left transition-colors ${
+                    isActive 
+                      ? 'bg-amber-400/10 text-amber-300 font-bold border border-amber-400/30' 
+                      : 'text-slate-200 hover:bg-slate-800 hover:text-amber-400'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <ChevronRight className={`w-4 h-4 ${isActive ? 'text-amber-400' : 'text-slate-500'}`} />
+                </button>
+              );
+            })}
           </div>
 
           <div className="pt-4 border-t border-slate-800 flex flex-col gap-2.5">
