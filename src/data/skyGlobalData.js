@@ -542,6 +542,11 @@ export const INITIAL_GALLERY = [
     timeframe: 'October 2026',
     date: '2026-10-08',
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'SkyGlobal Operations Center, Dubai, UAE',
     description: 'Celebrating the successful issuance and handover of European single work permits for our latest batch of MEP electricians and hospitality supervisors relocating to Malta.',
     tags: ['Malta', 'Visa Handover', 'MEP Trades', 'October 2026']
@@ -553,6 +558,11 @@ export const INITIAL_GALLERY = [
     timeframe: 'September 2026',
     date: '2026-09-22',
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'Dubai International Airport (DXB)',
     description: 'Our dedicated welfare officer seeing off 14 certified HVAC and maintenance technicians bound for employment with top tier contractors across Malta and Cyprus.',
     tags: ['Airport Departure', 'Malta Deployment', 'Technicians', 'September 2026']
@@ -564,6 +574,11 @@ export const INITIAL_GALLERY = [
     timeframe: 'August 2026',
     date: '2026-08-14',
     image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'Technical Evaluation Center, Kathmandu',
     description: 'Visiting HR directors and engineering executives from Malta assessing prospective candidates in live electrical wiring, pipe fabrication, and structural welding.',
     tags: ['Trade Testing', 'Client Delegation', 'Skill Verification', 'August 2026']
@@ -575,6 +590,11 @@ export const INITIAL_GALLERY = [
     timeframe: 'July 2026',
     date: '2026-07-29',
     image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'SkyGlobal Training Academy, Dubai, UAE',
     description: 'Interactive cultural adaptation, European workplace etiquette, and labor rights orientation workshop conducted for food & beverage and front-office hospitality personnel.',
     tags: ['Cultural Orientation', 'Hospitality', 'Labor Rights', 'July 2026']
@@ -586,6 +606,11 @@ export const INITIAL_GALLERY = [
     timeframe: 'June 2026',
     date: '2026-06-18',
     image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'Toronto Building, Bur Dubai, UAE',
     description: 'Quarterly review with our international recruitment specialists, compliance auditors, and consular liaison officers optimizing candidate processing timelines.',
     tags: ['Dubai HQ', 'Management', 'Strategy', 'June 2026']
@@ -597,6 +622,10 @@ export const INITIAL_GALLERY = [
     timeframe: 'May 2026',
     date: '2026-05-11',
     image: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'SkyGlobal Immigration Desk, Dubai, UAE',
     description: 'Congratulating candidates on receiving approved Australian temporary activity training visa grants for occupational training programs across Sydney and Melbourne.',
     tags: ['Australia', 'Subclass 407', 'Visa Grant', 'May 2026']
@@ -608,6 +637,11 @@ export const INITIAL_GALLERY = [
     timeframe: 'March 2026',
     date: '2026-03-20',
     image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'SkyGlobal International Desk, Dubai',
     description: 'Finalizing mutual bilateral staffing agreements with manufacturing and logistics partners from Sofia and Bucharest to supply verified Asian workforce talent.',
     tags: ['Bulgaria', 'Romania', 'Bilateral Agreement', 'March 2026']
@@ -619,6 +653,10 @@ export const INITIAL_GALLERY = [
     timeframe: 'November 2025',
     date: '2025-11-15',
     image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80'
+    ],
     location: 'Grand Hyatt Dubai Convention Centre',
     description: 'Keynote presentation and stakeholder panel addressing fair hiring practices, employer-pays standards, and zero-fee overseas candidate placement.',
     tags: ['Conference', 'Ethical Recruitment', 'Dubai Forum', 'November 2025']

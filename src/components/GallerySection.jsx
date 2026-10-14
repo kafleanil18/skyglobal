@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Camera, 
   Calendar, 
@@ -13,6 +13,7 @@ import {
   Sparkles,
   Clock,
   Layers,
+  Images,
   ArrowRight,
   RotateCcw
 } from 'lucide-react';
@@ -23,7 +24,10 @@ export default function GallerySection() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedTimeframe, setSelectedTimeframe] = useState('All Timeframes');
   const [searchQuery, setSearchQuery] = useState('');
-  const [lightboxIndex, setLightboxIndex] = useState(null);
+  
+  // Lightbox State (Event Album + Photo Index within that Album)
+  const [lightboxEventIndex, setLightboxEventIndex] = useState(null);
+  const [lightboxPhotoIndex, setLightboxPhotoIndex] = useState(0);
 
   // Extract unique timeframes for the filter dropdown
   const availableTimeframes = useMemo(() => {
@@ -49,29 +53,70 @@ export default function GallerySection() {
     });
   }, [gallery, selectedCategory, selectedTimeframe, searchQuery]);
 
-  const openLightbox = (index) => {
-    setLightboxIndex(index);
+  const openLightbox = (eventIdx, photoIdx = 0) => {
+    setLightboxEventIndex(eventIdx);
+    setLightboxPhotoIndex(photoIdx);
   };
 
   const closeLightbox = () => {
-    setLightboxIndex(null);
+    setLightboxEventIndex(null);
+    setLightboxPhotoIndex(0);
   };
 
-  const prevImage = (e) => {
+  const activeEvent = lightboxEventIndex !== null ? filteredGallery[lightboxEventIndex] : null;
+  const activePhotos = useMemo(() => {
+    if (!activeEvent) return [];
+    if (Array.isArray(activeEvent.images) && activeEvent.images.length > 0) {
+      return activeEvent.images;
+    }
+    return activeEvent.image ? [activeEvent.image] : [];
+  }, [activeEvent]);
+
+  const prevPhoto = (e) => {
     e?.stopPropagation();
-    if (lightboxIndex !== null && filteredGallery.length > 0) {
-      setLightboxIndex((lightboxIndex - 1 + filteredGallery.length) % filteredGallery.length);
+    if (activePhotos.length > 0) {
+      setLightboxPhotoIndex(prev => (prev - 1 + activePhotos.length) % activePhotos.length);
     }
   };
 
-  const nextImage = (e) => {
+  const nextPhoto = (e) => {
     e?.stopPropagation();
-    if (lightboxIndex !== null && filteredGallery.length > 0) {
-      setLightboxIndex((lightboxIndex + 1) % filteredGallery.length);
+    if (activePhotos.length > 0) {
+      setLightboxPhotoIndex(prev => (prev + 1) % activePhotos.length);
     }
   };
 
-  const activeLightboxItem = lightboxIndex !== null ? filteredGallery[lightboxIndex] : null;
+  // Switch to previous or next event album
+  const prevEvent = (e) => {
+    e?.stopPropagation();
+    if (lightboxEventIndex !== null && filteredGallery.length > 0) {
+      const newIdx = (lightboxEventIndex - 1 + filteredGallery.length) % filteredGallery.length;
+      setLightboxEventIndex(newIdx);
+      setLightboxPhotoIndex(0);
+    }
+  };
+
+  const nextEvent = (e) => {
+    e?.stopPropagation();
+    if (lightboxEventIndex !== null && filteredGallery.length > 0) {
+      const newIdx = (lightboxEventIndex + 1) % filteredGallery.length;
+      setLightboxEventIndex(newIdx);
+      setLightboxPhotoIndex(0);
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!activeEvent) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prevPhoto();
+      if (e.key === 'ArrowRight') nextPhoto();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeEvent, activePhotos.length]);
 
   return (
     <section id="gallery" className="py-16 md:py-24 bg-slate-50 text-slate-800 relative">
@@ -87,7 +132,7 @@ export default function GallerySection() {
             Milestones, Deployments & <span className="text-[#101a6d]">Life at SkyGlobal</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
-            A chronological visual record of candidate visa grants, airport departures, technical trade testing sessions, and corporate delegations managed by SkyGlobal HR Consultancy across each recruitment time frame.
+            Browse multiple photo records documenting each recruitment time frame. Explore candidate visa handovers, departure orientations, and international employer trade testing delegations.
           </p>
         </div>
 
@@ -102,7 +147,7 @@ export default function GallerySection() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search photos by title, country, batch or location..."
+                placeholder="Search event albums by title, country, batch, or location..."
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] transition-all bg-slate-50/50"
               />
             </div>
@@ -161,73 +206,89 @@ export default function GallerySection() {
         {/* Gallery Grid */}
         {filteredGallery.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredGallery.map((item, idx) => (
-              <div 
-                key={item.id}
-                onClick={() => openLightbox(idx)}
-                className="group bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410] transition-all duration-300 flex flex-col cursor-pointer transform hover:-translate-y-1"
-              >
-                {/* Image Container with Badges */}
-                <div className="relative aspect-4/3 overflow-hidden bg-slate-900">
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  
-                  {/* Subtle Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/30 opacity-70 group-hover:opacity-50 transition-opacity" />
+            {filteredGallery.map((item, idx) => {
+              const photoCount = Array.isArray(item.images) && item.images.length > 0
+                ? item.images.length
+                : item.image ? 1 : 0;
+              const coverPhoto = (item.images && item.images[0]) || item.image;
 
-                  {/* Top Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#020024] bg-[#faf8ee] px-2.5 py-1 rounded-lg border border-[#a99410]/50 shadow-md">
-                      <Calendar className="w-3 h-3 text-[#a99410]" />
-                      <span>{item.timeframe}</span>
-                    </span>
-
-                    <span className="text-[10px] font-bold text-white bg-[#101a6d]/90 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/20">
-                      {item.category}
-                    </span>
-                  </div>
-
-                  {/* Quick Zoom Icon */}
-                  <div className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/90 text-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
-                    <Maximize2 className="w-4 h-4 text-[#101a6d]" />
-                  </div>
-                </div>
-
-                {/* Card Info */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-[#101a6d] transition-colors line-clamp-1">
-                      {item.title}
-                    </h3>
+              return (
+                <div 
+                  key={item.id}
+                  onClick={() => openLightbox(idx, 0)}
+                  className="group bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410] transition-all duration-300 flex flex-col cursor-pointer transform hover:-translate-y-1"
+                >
+                  {/* Image Container with Badges */}
+                  <div className="relative aspect-4/3 overflow-hidden bg-slate-900">
+                    <img 
+                      src={coverPhoto} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                      loading="lazy"
+                    />
                     
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                      {item.description}
-                    </p>
+                    {/* Subtle Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/30 opacity-70 group-hover:opacity-50 transition-opacity" />
+
+                    {/* Top Badges */}
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#020024] bg-[#faf8ee] px-2.5 py-1 rounded-lg border border-[#a99410]/50 shadow-md">
+                        <Calendar className="w-3 h-3 text-[#a99410]" />
+                        <span>{item.timeframe}</span>
+                      </span>
+
+                      {/* Photo Count Pill */}
+                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-white bg-black/65 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/20 shadow-md">
+                        <Images className="w-3 h-3 text-[#a99410]" />
+                        <span>{photoCount} {photoCount === 1 ? 'Photo' : 'Photos'}</span>
+                      </span>
+                    </div>
+
+                    {/* Quick Category Tag on bottom left of image */}
+                    <div className="absolute bottom-3 left-3 pointer-events-none">
+                      <span className="text-[10px] font-bold text-white bg-[#101a6d]/90 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/20">
+                        {item.category}
+                      </span>
+                    </div>
+
+                    {/* Quick Zoom Icon */}
+                    <div className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/90 text-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                      <Maximize2 className="w-4 h-4 text-[#101a6d]" />
+                    </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                    <span className="flex items-center gap-1 font-medium truncate max-w-[70%]">
-                      <MapPin className="w-3 h-3 text-[#a99410] shrink-0" />
-                      <span className="truncate">{item.location}</span>
-                    </span>
+                  {/* Card Info */}
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900 group-hover:text-[#101a6d] transition-colors line-clamp-1">
+                        {item.title}
+                      </h3>
+                      
+                      <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
 
-                    <span className="text-[#a99410] font-bold group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
-                      View
-                      <ChevronRight className="w-3 h-3" />
-                    </span>
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                      <span className="flex items-center gap-1 font-medium truncate max-w-[70%]">
+                        <MapPin className="w-3 h-3 text-[#a99410] shrink-0" />
+                        <span className="truncate">{item.location}</span>
+                      </span>
+
+                      <span className="text-[#a99410] font-bold group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
+                        View Album
+                        <ChevronRight className="w-3 h-3" />
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 max-w-md mx-auto shadow-sm">
             <Camera className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <h4 className="text-base font-bold text-slate-800">No photos found</h4>
+            <h4 className="text-base font-bold text-slate-800">No event photos found</h4>
             <p className="text-xs text-slate-500 mt-1">
               No gallery images match the selected category or time frame filter.
             </p>
@@ -244,144 +305,165 @@ export default function GallerySection() {
           </div>
         )}
 
-        {/* Bottom Milestone Stats */}
-        <div className="mt-16 bg-gradient-to-r from-[#101a6d] via-[#0b1456] to-[#020024] text-white rounded-3xl p-8 sm:p-10 border border-[#25c0f3]/20 shadow-xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <span className="text-3xl sm:text-4xl font-extrabold text-[#a99410] font-display block">
-              {gallery.length}+
-            </span>
-            <span className="text-xs sm:text-sm font-bold text-white mt-1 block">
-              Documented Milestones
-            </span>
-            <span className="text-[11px] text-[#b6eafb]/70 block">
-              In our official photo archive
-            </span>
-          </div>
-
-          <div>
-            <span className="text-3xl sm:text-4xl font-extrabold text-[#a99410] font-display block">
-              6+
-            </span>
-            <span className="text-xs sm:text-sm font-bold text-white mt-1 block">
-              Time Frame Periods
-            </span>
-            <span className="text-[11px] text-[#b6eafb]/70 block">
-              Continuous deployment history
-            </span>
-          </div>
-
-          <div>
-            <span className="text-3xl sm:text-4xl font-extrabold text-[#a99410] font-display block">
-              100%
-            </span>
-            <span className="text-xs sm:text-sm font-bold text-white mt-1 block">
-              Authentic Deployments
-            </span>
-            <span className="text-[11px] text-[#b6eafb]/70 block">
-              Verified legal work permits
-            </span>
-          </div>
-
-          <div>
-            <span className="text-3xl sm:text-4xl font-extrabold text-[#a99410] font-display block">
-              Dubai & Global
-            </span>
-            <span className="text-xs sm:text-sm font-bold text-white mt-1 block">
-              Cross-Border Footprint
-            </span>
-            <span className="text-[11px] text-[#b6eafb]/70 block">
-              Licensed recruitment network
-            </span>
-          </div>
-        </div>
-
       </div>
 
-      {/* Lightbox Modal */}
-      {activeLightboxItem && (
+      {/* Multi-Photo Event Lightbox Modal */}
+      {activeEvent && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/92 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in"
           onClick={closeLightbox}
         >
-          {/* Close button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute top-5 right-5 text-slate-300 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-20 cursor-pointer"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          {/* Previous image button */}
-          <button
-            onClick={prevImage}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white p-3 rounded-full bg-white/10 hover:bg-[#a99410] hover:text-[#020024] transition-all z-20 cursor-pointer hidden sm:flex items-center justify-center"
-            title="Previous Photo"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          {/* Next image button */}
-          <button
-            onClick={nextImage}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white p-3 rounded-full bg-white/10 hover:bg-[#a99410] hover:text-[#020024] transition-all z-20 cursor-pointer hidden sm:flex items-center justify-center"
-            title="Next Photo"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Modal Content */}
-          <div 
-            className="max-w-4xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Main Image */}
-            <div className="relative bg-black flex items-center justify-center max-h-[60vh] overflow-hidden">
-              <img 
-                src={activeLightboxItem.image} 
-                alt={activeLightboxItem.title} 
-                className="w-full h-full max-h-[60vh] object-contain"
-              />
+          {/* Top Bar Actions */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-none">
+            <div className="flex items-center gap-2 pointer-events-auto">
+              <span className="text-xs font-bold text-[#020024] bg-[#a99410] px-3 py-1 rounded-full shadow-md flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" />
+                {activeEvent.timeframe}
+              </span>
+              <span className="text-xs font-medium text-white/80 bg-white/10 px-2.5 py-1 rounded-full border border-white/20">
+                Photo {lightboxPhotoIndex + 1} of {activePhotos.length}
+              </span>
             </div>
 
+            <button
+              onClick={closeLightbox}
+              className="pointer-events-auto text-slate-300 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              title="Close (Esc)"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Left Arrow (Previous Photo in Album) */}
+          {activePhotos.length > 1 && (
+            <button
+              onClick={prevPhoto}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white p-3.5 rounded-full bg-white/10 hover:bg-[#a99410] hover:text-[#020024] transition-all z-20 cursor-pointer hidden sm:flex items-center justify-center"
+              title="Previous Photo (Left Arrow)"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Right Arrow (Next Photo in Album) */}
+          {activePhotos.length > 1 && (
+            <button
+              onClick={nextPhoto}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white p-3.5 rounded-full bg-white/10 hover:bg-[#a99410] hover:text-[#020024] transition-all z-20 cursor-pointer hidden sm:flex items-center justify-center"
+              title="Next Photo (Right Arrow)"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Modal Container */}
+          <div 
+            className="max-w-4xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col max-h-[92vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Main Active Photo */}
+            <div className="relative bg-black flex items-center justify-center max-h-[55vh] overflow-hidden">
+              <img 
+                src={activePhotos[lightboxPhotoIndex] || activeEvent.image} 
+                alt={`${activeEvent.title} - Photo ${lightboxPhotoIndex + 1}`} 
+                className="w-full h-full max-h-[55vh] object-contain"
+              />
+
+              {/* Mobile Prev / Next Overlays */}
+              {activePhotos.length > 1 && (
+                <div className="sm:hidden absolute inset-x-2 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none">
+                  <button
+                    onClick={prevPhoto}
+                    className="p-2 rounded-full bg-black/60 text-white pointer-events-auto"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={nextPhoto}
+                    className="p-2 rounded-full bg-black/60 text-white pointer-events-auto"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail Strip (Interactive Thumbnail Bar) */}
+            {activePhotos.length > 1 && (
+              <div className="p-3 bg-slate-950 flex items-center gap-2 overflow-x-auto border-t border-slate-800">
+                <span className="text-[10px] uppercase font-bold text-slate-400 shrink-0 ml-1">
+                  Album Photos:
+                </span>
+                {activePhotos.map((imgSrc, pIdx) => (
+                  <button
+                    key={pIdx}
+                    onClick={() => setLightboxPhotoIndex(pIdx)}
+                    className={`w-14 h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                      pIdx === lightboxPhotoIndex 
+                        ? 'border-[#a99410] scale-105 shadow-md' 
+                        : 'border-white/10 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img 
+                      src={imgSrc} 
+                      alt={`Thumb ${pIdx + 1}`} 
+                      className="w-full h-full object-cover" 
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
             {/* Image Details Bottom Bar */}
-            <div className="p-6 bg-slate-900 text-white space-y-3 overflow-y-auto">
+            <div className="p-5 sm:p-6 bg-slate-900 text-white space-y-3 overflow-y-auto">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1 font-bold text-[#020024] bg-[#a99410] px-2.5 py-1 rounded-md">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>Time Frame: {activeLightboxItem.timeframe}</span>
-                  </span>
-                  <span className="px-2.5 py-1 rounded-md bg-white/10 text-[#b6eafb] font-medium border border-white/10">
-                    {activeLightboxItem.category}
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#101a6d] text-[#b6eafb] font-bold border border-[#25c0f3]/30">
+                    {activeEvent.category}
                   </span>
                   <span className="text-slate-400 text-xs">
-                    Recorded Date: {activeLightboxItem.date}
+                    Event Date: {activeEvent.date}
                   </span>
                 </div>
 
-                <span className="text-xs text-slate-400">
-                  Photo {lightboxIndex + 1} of {filteredGallery.length}
-                </span>
+                {/* Event switcher */}
+                {filteredGallery.length > 1 && (
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <button 
+                      onClick={prevEvent}
+                      className="hover:text-white flex items-center gap-0.5 cursor-pointer"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" /> Previous Event
+                    </button>
+                    <span>•</span>
+                    <button 
+                      onClick={nextEvent}
+                      className="hover:text-white flex items-center gap-0.5 cursor-pointer"
+                    >
+                      Next Event <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
               </div>
 
               <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
-                {activeLightboxItem.title}
+                {activeEvent.title}
               </h3>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                {activeLightboxItem.description}
+                {activeEvent.description}
               </p>
 
               <div className="flex flex-wrap items-center justify-between pt-2 border-t border-white/10 text-xs text-slate-400 gap-2">
                 <span className="flex items-center gap-1.5 font-medium text-slate-200">
                   <MapPin className="w-4 h-4 text-[#a99410]" />
-                  <span>{activeLightboxItem.location}</span>
+                  <span>{activeEvent.location}</span>
                 </span>
 
                 {/* Tags */}
-                {activeLightboxItem.tags && activeLightboxItem.tags.length > 0 && (
+                {activeEvent.tags && activeEvent.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
-                    {activeLightboxItem.tags.map(t => (
+                    {activeEvent.tags.map(t => (
                       <span key={t} className="px-2 py-0.5 rounded bg-white/5 text-[11px] text-slate-300 border border-white/10">
                         #{t}
                       </span>
@@ -390,6 +472,7 @@ export default function GallerySection() {
                 )}
               </div>
             </div>
+
           </div>
         </div>
       )}

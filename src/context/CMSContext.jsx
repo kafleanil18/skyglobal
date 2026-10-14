@@ -139,8 +139,20 @@ export function CMSProvider({ children }) {
   // Company Information
   const [companyInfo, setCompanyInfo] = useState(() => safeStorageGet('skyglobal_cms_company_info', COMPANY_INFO));
 
-  // Gallery
-  const [gallery, setGallery] = useState(() => safeStorageGet('skyglobal_cms_gallery', INITIAL_GALLERY));
+  // Gallery (supports multiple photos per event album)
+  const [gallery, setGallery] = useState(() => {
+    const loaded = safeStorageGet('skyglobal_cms_gallery', INITIAL_GALLERY);
+    return loaded.map(item => {
+      const images = Array.isArray(item.images) && item.images.length > 0
+        ? item.images
+        : item.image ? [item.image] : [];
+      return {
+        ...item,
+        images,
+        image: images[0] || item.image || 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80'
+      };
+    });
+  });
 
   // Persistence side-effects
   useEffect(() => {
@@ -411,13 +423,23 @@ export function CMSProvider({ children }) {
 
   // --- Gallery Operations ---
   const addGalleryItem = (itemData) => {
+    let images = [];
+    if (Array.isArray(itemData.images) && itemData.images.length > 0) {
+      images = itemData.images.filter(Boolean);
+    } else if (itemData.image) {
+      images = [itemData.image];
+    } else {
+      images = ['https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80'];
+    }
+
     const newItem = {
       id: `gal-${Date.now()}`,
       title: itemData.title || 'SkyGlobal Milestone',
       category: itemData.category || 'Visa Handovers',
       timeframe: itemData.timeframe || 'October 2026',
       date: itemData.date || new Date().toISOString().split('T')[0],
-      image: itemData.image || 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+      images: images,
+      image: images[0],
       location: itemData.location || 'SkyGlobal Dubai, UAE',
       description: itemData.description || '',
       tags: Array.isArray(itemData.tags)
@@ -433,9 +455,20 @@ export function CMSProvider({ children }) {
   const updateGalleryItem = (itemId, updatedFields) => {
     setGallery(prev => prev.map(item => {
       if (item.id === itemId || String(item.id) === String(itemId)) {
+        let mergedImages = item.images || (item.image ? [item.image] : []);
+        if (updatedFields.images !== undefined) {
+          mergedImages = Array.isArray(updatedFields.images) 
+            ? updatedFields.images.filter(Boolean) 
+            : [updatedFields.images].filter(Boolean);
+        } else if (updatedFields.image && !mergedImages.includes(updatedFields.image)) {
+          mergedImages = [updatedFields.image, ...mergedImages];
+        }
+
         return {
           ...item,
           ...updatedFields,
+          images: mergedImages,
+          image: mergedImages[0] || updatedFields.image || item.image,
           tags: updatedFields.tags !== undefined
             ? Array.isArray(updatedFields.tags)
               ? updatedFields.tags
