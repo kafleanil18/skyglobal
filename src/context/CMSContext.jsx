@@ -9,6 +9,7 @@ import {
   INITIAL_GALLERY,
   GALLERY_CATEGORIES
 } from '../data/skyGlobalData';
+import { FALLBACK_GALLERY_IMAGE } from '../utils/imageOptimizer';
 
 const CMSContext = createContext();
 
@@ -143,13 +144,33 @@ export function CMSProvider({ children }) {
   const [gallery, setGallery] = useState(() => {
     const loaded = safeStorageGet('skyglobal_cms_gallery', INITIAL_GALLERY);
     return loaded.map(item => {
-      const images = Array.isArray(item.images) && item.images.length > 0
+      let images = Array.isArray(item.images) && item.images.length > 0
         ? item.images
         : item.image ? [item.image] : [];
+
+      // Sanitize: filter out local file paths (e.g. /Users/..., file://, C:\) or empty values
+      images = images.map(img => {
+        if (!img || typeof img !== 'string') return FALLBACK_GALLERY_IMAGE;
+        const trimmed = img.trim();
+        if (
+          trimmed.startsWith('/') || 
+          trimmed.startsWith('file:') || 
+          /^[a-zA-Z]:[\\/]/.test(trimmed) ||
+          trimmed.length < 5
+        ) {
+          return FALLBACK_GALLERY_IMAGE;
+        }
+        return trimmed;
+      });
+
+      if (images.length === 0) {
+        images = [FALLBACK_GALLERY_IMAGE];
+      }
+
       return {
         ...item,
         images,
-        image: images[0] || item.image || 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80'
+        image: images[0] || FALLBACK_GALLERY_IMAGE
       };
     });
   });

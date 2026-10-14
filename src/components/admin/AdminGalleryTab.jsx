@@ -22,10 +22,19 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Loader2,
+  AlertCircle,
+  Info,
+  FolderPlus
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { useAuth } from '../../context/AuthContext';
+import { 
+  optimizeImageFile, 
+  PRESET_GALLERY_PHOTOS, 
+  FALLBACK_GALLERY_IMAGE 
+} from '../../utils/imageOptimizer';
 
 export default function AdminGalleryTab() {
   const { gallery, addGalleryItem, updateGalleryItem, deleteGalleryItem, galleryCategories } = useCMS();
@@ -43,6 +52,12 @@ export default function AdminGalleryTab() {
   // Quick Preview state
   const [previewEvent, setPreviewEvent] = useState(null);
   const [previewPhotoIndex, setPreviewPhotoIndex] = useState(0);
+
+  // Image Processing & Compression state
+  const [isProcessingImages, setIsProcessingImages] = useState(false);
+  const [processingStatus, setProcessingStatus] = useState('');
+  const [uploadError, setUploadError] = useState('');
+  const [showPresetPicker, setShowPresetPicker] = useState(false);
 
   const initialFormState = {
     title: '',
@@ -95,11 +110,15 @@ export default function AdminGalleryTab() {
   const handleOpenAdd = () => {
     setEditingItemId(null);
     setFormData(initialFormState);
+    setUploadError('');
+    setShowPresetPicker(false);
     setIsModalOpen(true);
   };
 
   const handleOpenEdit = (item) => {
     setEditingItemId(item.id);
+    setUploadError('');
+    setShowPresetPicker(false);
     const itemImages = Array.isArray(item.images) && item.images.length > 0
       ? item.images
       : item.image ? [item.image] : [];
@@ -126,36 +145,90 @@ export default function AdminGalleryTab() {
     }
   };
 
-  // Multiple File Upload Handler
-  const handleMultipleFileUpload = (e) => {
+  // Multiple File Upload Handler with Auto-Optimization & HEIC Detection
+  const handleMultipleFileUpload = async (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result) {
-          setFormData(prev => ({
-            ...prev,
-            images: [...prev.images, reader.result]
-          }));
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    setIsProcessingImages(true);
+    setUploadError('');
 
+    const newOptimizedImages = [];
+    const errorList = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      setProcessingStatus(`Optimizing photo ${i + 1} of ${files.length} (${file.name})...`);
+      
+      try {
+        const compressedDataUrl = await optimizeImageFile(file, 1400, 0.85);
+        newOptimizedImages.push(compressedDataUrl);
+      } catch (err) {
+        console.error('Error processing image:', err);
+        errorList.push(err.message || `Could not read "${file.name}"`);
+      }
+    }
+
+    if (newOptimizedImages.length > 0) {
+      setFormData(prev => ({
+        ...prev,
+        images: [...prev.images, ...newOptimizedImages]
+      }));
+      setToastMsg(`Added & optimized ${newOptimizedImages.length} photo${newOptimizedImages.length > 1 ? 's' : ''}!`);
+      setTimeout(() => setToastMsg(''), 3500);
+    }
+
+    if (errorList.length > 0) {
+      setUploadError(errorList.join('\n'));
+    }
+
+    setIsProcessingImages(false);
+    setProcessingStatus('');
     e.target.value = '';
   };
 
-  // Add Photo by URL
+  // Add Photo by URL with Local Path Interception
   const handleAddImageUrl = (e) => {
     e?.preventDefault();
-    if (!formData.urlInput.trim()) return;
+    const raw = (formData.urlInput || '').trim();
+    if (!raw) return;
+
+    // Detect if user pasted a local file system path like /Users/..., C:\..., file:///...
+    if (
+      raw.startsWith('/') || 
+      raw.startsWith('file:') || 
+      /^[a-zA-Z]:[\\/]/.test(raw) ||
+      raw.includes('\\')
+    ) {
+      setUploadError(
+        'Local file paths (e.g. /Users/... or C:\\...) cannot be loaded by the browser directly. Please click the "Upload Multiple Photos from Device" button above to select your file directly from your computer!'
+      );
+      return;
+    }
+
+    // Must start with http://, https://, or data:
+    if (!raw.startsWith('http://') && !raw.startsWith('https://') && !raw.startsWith('data:')) {
+      setUploadError('Please provide a valid image URL starting with https:// or http://');
+      return;
+    }
+
+    setUploadError('');
     setFormData(prev => ({
       ...prev,
-      images: [...prev.images, prev.urlInput.trim()],
+      images: [...prev.images, raw],
       urlInput: ''
     }));
+  };
+
+  // Add Preset Curated Photo
+  const handleAddPresetPhoto = (presetPhoto) => {
+    setUploadError('');
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, presetPhoto.url]
+    }));
+    setToastMsg(`Added "${presetPhoto.title}" to album.`);
+    setTimeout(() => setToastMsg(''), 2500);
   };
 
   // Remove Photo from Event
@@ -382,6 +455,10 @@ export default function AdminGalleryTab() {
                     <img 
                       src={coverPhoto} 
                       alt={item.title} 
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
 
@@ -583,27 +660,104 @@ export default function AdminGalleryTab() {
                   </span>
                 </div>
 
-                {/* Upload Buttons & URL Input */}
+                {/* Progress / Spinner indicator during compression */}
+                {isProcessingImages && (
+                  <div className="p-3 bg-amber-50 rounded-xl border border-amber-300 text-amber-900 flex items-center gap-2.5 text-xs font-semibold animate-pulse">
+                    <Loader2 className="w-4 h-4 text-[#a99410] animate-spin shrink-0" />
+                    <span>{processingStatus || 'Optimizing & compressing photos for instant loading...'}</span>
+                  </div>
+                )}
+
+                {/* Upload Error / Warning Banner */}
+                {uploadError && (
+                  <div className="p-3 bg-rose-50 rounded-xl border border-rose-300 text-rose-900 flex items-start gap-2.5 text-xs font-semibold">
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <div className="flex-1 whitespace-pre-line leading-relaxed">
+                      {uploadError}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setUploadError('')}
+                      className="text-rose-500 hover:text-rose-700 p-0.5 cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Upload Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-2 pt-1">
-                  {/* File Upload Button (Multiple) */}
+                  {/* File Upload Button (Multiple with Auto-Compression) */}
                   <label className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#101a6d] to-[#020024] hover:from-[#182a98] hover:to-[#0b1456] text-white text-xs font-bold flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
                     <Upload className="w-4 h-4 text-[#a99410]" />
                     <span>Upload Multiple Photos from Device</span>
                     <input
                       type="file"
                       multiple
-                      accept="image/*"
+                      accept="image/*,.heic,.heif"
                       onChange={handleMultipleFileUpload}
                       className="hidden"
                     />
                   </label>
+
+                  {/* Preset Library Quick Selector Button */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPresetPicker(!showPresetPicker)}
+                    className="py-3 px-4 rounded-xl bg-white border border-[#a99410]/60 hover:bg-[#faf8ee] text-[#020024] text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                  >
+                    <FolderPlus className="w-4 h-4 text-[#a99410]" />
+                    <span>{showPresetPicker ? 'Hide Photo Library' : 'SkyGlobal Photo Library'}</span>
+                  </button>
                 </div>
+
+                {/* Preset Library Shelf */}
+                {showPresetPicker && (
+                  <div className="p-3 bg-white rounded-xl border border-[#a99410]/40 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-[#020024] flex items-center gap-1">
+                        <Sparkles className="w-3.5 h-3.5 text-[#a99410]" />
+                        SkyGlobal Verified Photo Library (1-Click Add):
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        High-resolution pre-optimized images
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 max-h-44 overflow-y-auto p-1 bg-slate-50 rounded-lg">
+                      {PRESET_GALLERY_PHOTOS.map((preset, pIdx) => (
+                        <div 
+                          key={pIdx}
+                          onClick={() => handleAddPresetPhoto(preset)}
+                          className="group relative aspect-video rounded-lg overflow-hidden border border-slate-200 hover:border-[#a99410] cursor-pointer shadow-xs"
+                          title={`Click to add "${preset.title}"`}
+                        >
+                          <img 
+                            src={preset.url} 
+                            alt={preset.title}
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                            }}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
+                          />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] font-bold text-white">
+                            + Add
+                          </div>
+                          <div className="absolute bottom-0 inset-x-0 bg-black/70 px-1 py-0.5 text-[8px] text-white truncate text-center">
+                            {preset.title}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Add Image URL bar */}
                 <div className="flex gap-2">
                   <input
                     type="url"
-                    placeholder="Or paste photo image URL (https://...)"
+                    placeholder="Or paste web image URL (e.g. https://...)"
                     value={formData.urlInput}
                     onChange={(e) => setFormData({ ...formData, urlInput: e.target.value })}
                     onKeyDown={(e) => {
@@ -641,6 +795,10 @@ export default function AdminGalleryTab() {
                           <img 
                             src={imgSrc} 
                             alt={`Photo ${idx + 1}`} 
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                            }}
                             className="w-full h-full object-cover"
                           />
 
@@ -754,12 +912,20 @@ export default function AdminGalleryTab() {
                 <img 
                   src={previewEvent.images[previewPhotoIndex] || previewEvent.image} 
                   alt={previewEvent.title} 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                  }}
                   className="w-full h-full object-contain" 
                 />
               ) : (
                 <img 
                   src={previewEvent.image} 
                   alt={previewEvent.title} 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                  }}
                   className="w-full h-full object-contain" 
                 />
               )}
@@ -799,7 +965,15 @@ export default function AdminGalleryTab() {
                       i === previewPhotoIndex ? 'border-[#a99410] scale-105' : 'border-slate-700 opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt={`Thumb ${i+1}`} className="w-full h-full object-cover" />
+                    <img 
+                      src={img} 
+                      alt={`Thumb ${i+1}`} 
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                      }}
+                      className="w-full h-full object-cover" 
+                    />
                   </button>
                 ))}
               </div>

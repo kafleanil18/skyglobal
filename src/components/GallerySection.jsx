@@ -18,6 +18,7 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
+import { FALLBACK_GALLERY_IMAGE } from '../utils/imageOptimizer';
 
 export default function GallerySection() {
   const { gallery, galleryCategories } = useCMS();
@@ -223,6 +224,10 @@ export default function GallerySection() {
                     <img 
                       src={coverPhoto} 
                       alt={item.title} 
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                      }}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                       loading="lazy"
                     />
@@ -366,6 +371,10 @@ export default function GallerySection() {
               <img 
                 src={activePhotos[lightboxPhotoIndex] || activeEvent.image} 
                 alt={`${activeEvent.title} - Photo ${lightboxPhotoIndex + 1}`} 
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                }}
                 className="w-full h-full max-h-[55vh] object-contain"
               />
 
@@ -407,6 +416,10 @@ export default function GallerySection() {
                     <img 
                       src={imgSrc} 
                       alt={`Thumb ${pIdx + 1}`} 
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
+                      }}
                       className="w-full h-full object-cover" 
                     />
                   </button>
