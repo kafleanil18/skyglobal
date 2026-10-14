@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { useAuth } from '../../context/AuthContext';
-import { downloadApplicantCV } from '../../utils/cvDownloader';
+import { downloadApplicantCV, openApplicantCVSafe } from '../../utils/cvDownloader';
 
 export default function AdminApplicationsTab() {
   const { applications, updateApplicationStatus, deleteApplication } = useCMS();
@@ -370,46 +370,47 @@ export default function AdminApplicationsTab() {
               </div>
             </div>
 
-            {/* Document Preview Box */}
-            <div className="mb-6 space-y-2">
+            {/* Document Details Box */}
+            <div className="mb-6 space-y-3">
               <span className="text-xs font-bold text-slate-700 block">
                 Attached Candidate Document:
               </span>
               
-              <div className="bg-[#faf8ee] border border-[#a99410]/40 p-4 rounded-2xl flex items-center justify-between">
+              <div className="bg-[#faf8ee] border border-[#a99410]/40 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-[#a99410]/30 flex items-center justify-center text-[#101a6d]">
-                    <FileText className="w-5 h-5" />
+                  <div className="w-11 h-11 rounded-2xl bg-white border border-[#a99410]/30 flex items-center justify-center text-[#101a6d] shrink-0">
+                    <FileText className="w-6 h-6 text-[#101a6d]" />
                   </div>
                   <div>
                     <span className="text-xs font-bold text-slate-900 block truncate max-w-sm">
                       {previewApp.resumeName || 'Candidate_Resume.pdf'}
                     </span>
                     <span className="text-[11px] text-slate-500">
-                      {previewApp.resumeDataUrl ? 'Uploaded original candidate file' : 'Generated SkyGlobal candidate profile document'}
+                      {previewApp.resumeDataUrl ? 'Verified Candidate Upload' : 'SkyGlobal Official Candidate Dossier'} • PDF 1.4 Standard
                     </span>
                   </div>
                 </div>
 
-                <button
-                  onClick={() => handleDownload(previewApp)}
-                  className="px-4 py-2 rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-xs font-extrabold flex items-center gap-1.5 shadow-sm shadow-[#a99410]/25 transition-all cursor-pointer"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download</span>
-                </button>
-              </div>
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <button
+                    onClick={() => openApplicantCVSafe(previewApp)}
+                    className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer flex-1 sm:flex-none shadow-xs"
+                    title="Open PDF document in a new tab"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-600" />
+                    <span>Open in New Tab</span>
+                  </button>
 
-              {/* If previewApp has a PDF data URL, show iframe preview */}
-              {previewApp.resumeDataUrl && previewApp.resumeDataUrl.startsWith('data:application/pdf') && (
-                <div className="mt-4 h-80 rounded-2xl overflow-hidden border border-slate-200">
-                  <iframe 
-                    src={previewApp.resumeDataUrl} 
-                    className="w-full h-full"
-                    title="PDF CV Document Preview"
-                  />
+                  <button
+                    onClick={() => handleDownload(previewApp)}
+                    className="px-4 py-2 rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-sm shadow-[#a99410]/25 transition-all cursor-pointer flex-1 sm:flex-none"
+                    title="Download PDF to your computer"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download PDF</span>
+                  </button>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Recruiter Notes & Applicant statement */}
