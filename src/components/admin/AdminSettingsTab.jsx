@@ -64,7 +64,7 @@ export default function AdminSettingsTab() {
             <h2 className="text-xl font-bold font-display text-slate-900">
               Company & Portal Configuration
             </h2>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#fff8d6] text-[#101a6d] text-[10px] font-bold border border-[#ffd300]/50">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#fff8d6] text-[#101a6d] text-[10px] font-bold border border-[#a99410]/50">
               Super Admin Privilege
             </span>
           </div>
@@ -190,7 +190,7 @@ export default function AdminSettingsTab() {
             </span>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-xs flex items-center gap-1.5 shadow-md shadow-[#ffd300]/25"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-bold text-xs flex items-center gap-1.5 shadow-md shadow-[#a99410]/25"
             >
               <Save className="w-4 h-4" />
               <span>Save Portal Settings</span>

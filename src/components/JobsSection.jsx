@@ -91,7 +91,7 @@ export default function JobsSection({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search job title, skills (e.g. Electrician, Plumbing, MEP)..."
-                className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] focus:bg-white"
+                className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] focus:bg-white"
               />
             </div>
 
@@ -100,7 +100,7 @@ export default function JobsSection({
               <select
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] focus:bg-white cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] focus:bg-white cursor-pointer"
               >
                 <option value="All Countries">All Destination Countries</option>
                 {countries.map((c) => (
@@ -121,7 +121,7 @@ export default function JobsSection({
                 onClick={() => setSelectedSector(sec)}
                 className={`px-3.5 py-1.5 rounded-lg text-xs transition-all ${
                   selectedSector === sec
-                    ? 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] shadow-sm font-extrabold'
+                    ? 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] shadow-sm font-extrabold'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold'
                 }`}
               >
@@ -137,7 +137,7 @@ export default function JobsSection({
             {filteredJobs.map((job) => (
               <div
                 key={job.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col lg:flex-row lg:items-center justify-between gap-6 group"
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410]/80 transition-all duration-300 flex flex-col lg:flex-row lg:items-center justify-between gap-6 group"
               >
                 {/* Details */}
                 <div className="space-y-3 flex-1">
@@ -168,7 +168,7 @@ export default function JobsSection({
 
                   {/* Location & Summary */}
                   <div className="flex items-center gap-2 text-xs font-bold text-[#101a6d]">
-                    <MapPin className="w-4 h-4 text-[#f9c913] shrink-0" />
+                    <MapPin className="w-4 h-4 text-[#8e7c0c] shrink-0" />
                     <span>Location: {job.location} ({job.country})</span>
                   </div>
 
@@ -206,7 +206,7 @@ export default function JobsSection({
                     </button>
                     <button
                       onClick={() => onApplyJob(job)}
-                      className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/20 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
+                      className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/20 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
                     >
                       <span>Apply Now</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -223,7 +223,7 @@ export default function JobsSection({
             <p className="text-xs text-slate-500 mb-4">Try clearing filters or search terms.</p>
             <button
               onClick={resetFilters}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-sm"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Reset Filters

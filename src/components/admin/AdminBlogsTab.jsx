@@ -62,7 +62,7 @@ export default function AdminBlogsTab() {
 
         <button
           onClick={handleOpenAdd}
-          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
+          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>New Article</span>
@@ -83,7 +83,7 @@ export default function AdminBlogsTab() {
                   alt={blog.title}
                   className="w-full h-full object-cover"
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-950/80 text-[#ffd300] text-[10px] font-bold">
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-950/80 text-[#a99410] text-[10px] font-bold">
                   {blog.category}
                 </span>
               </div>
@@ -227,7 +227,7 @@ export default function AdminBlogsTab() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] font-bold shadow-md shadow-[#ffd300]/25"
+                  className="px-6 py-2 rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] font-bold shadow-md shadow-[#a99410]/25"
                 >
                   {editingBlogId ? 'Save Changes' : 'Publish Now'}
                 </button>

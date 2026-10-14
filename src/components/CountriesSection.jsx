@@ -40,7 +40,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
           {countriesList.map((country) => (
             <div
               key={country.id}
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-md hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col justify-between group"
+              className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-md hover:shadow-xl hover:border-[#a99410]/80 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 {/* Image Banner */}
@@ -61,7 +61,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                       className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
                         country.status.includes('Active')
                           ? 'bg-emerald-500 text-white shadow-sm'
-                          : 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] font-black'
+                          : 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] font-black'
                       }`}
                     >
                       {country.status}
@@ -107,7 +107,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                 </button>
                 <button
                   onClick={() => onSelectCountryJobs(country.name)}
-                  className="px-4 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/20 transition-all flex items-center justify-center gap-1.5 flex-1"
+                  className="px-4 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/20 transition-all flex items-center justify-center gap-1.5 flex-1"
                 >
                   <span>View Jobs</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -135,7 +135,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                   <X className="w-5 h-5" />
                 </button>
                 <div className="absolute bottom-5 left-6 right-6">
-                  <span className="text-xs uppercase font-bold text-[#ffd300] tracking-wider">
+                  <span className="text-xs uppercase font-bold text-[#a99410] tracking-wider">
                     {activeModalCountry.badge}
                   </span>
                   <h3 className="text-3xl font-extrabold text-white font-display">
@@ -190,7 +190,7 @@ export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModa
                       setActiveModalCountry(null);
                       onSelectCountryJobs(cName);
                     }}
-                    className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/25"
+                    className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/25"
                   >
                     View Open Positions in {activeModalCountry.name}
                   </button>

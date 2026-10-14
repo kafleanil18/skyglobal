@@ -40,16 +40,16 @@ export default function Hero({
         <div className="text-center max-w-4xl mx-auto">
           
           {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101a6d]/90 border border-[#ffd300]/50 text-[#ffd300] text-xs font-bold uppercase tracking-wider mb-6 shadow-lg shadow-[#101a6d]/50">
-            <span className="flex h-2 w-2 rounded-full bg-[#ffd300] animate-ping" />
-            <Globe className="w-3.5 h-3.5 text-[#ffd300]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101a6d]/90 border border-[#a99410]/50 text-[#a99410] text-xs font-bold uppercase tracking-wider mb-6 shadow-lg shadow-[#101a6d]/50">
+            <span className="flex h-2 w-2 rounded-full bg-[#a99410] animate-ping" />
+            <Globe className="w-3.5 h-3.5 text-[#a99410]" />
             <span>Licensed Overseas Recruitment • Bur Dubai, UAE</span>
           </div>
 
           {/* Main Title */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-display leading-[1.15] mb-6">
             Connecting World Talent with{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffd300] via-[#ffdf47] to-[#b6eafb]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a99410] via-[#bfa715] to-[#b6eafb]">
               International Careers
             </span>
           </h1>
@@ -57,7 +57,7 @@ export default function Hero({
           {/* Subtitle from skyglobalhr.com */}
           <p className="text-base sm:text-lg md:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed mb-10">
             {COMPANY_INFO.description} Specializing in verified overseas placements across 
-            <span className="text-[#ffd300] font-semibold"> Malta, Australia, UAE, Bulgaria, Romania, and Greece</span>.
+            <span className="text-[#a99410] font-semibold"> Malta, Australia, UAE, Bulgaria, Romania, and Greece</span>.
           </p>
 
           {/* Integrated Search Engine */}
@@ -77,17 +77,17 @@ export default function Hero({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Job position (e.g. Electrician, MEP, Plumber, Server)..."
-                  className="w-full pl-11 pr-3 py-3 rounded-xl bg-[#101a6d]/90 text-white placeholder-[#b6eafb]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#ffd300] border border-[#25c0f3]/30"
+                  className="w-full pl-11 pr-3 py-3 rounded-xl bg-[#101a6d]/90 text-white placeholder-[#b6eafb]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#a99410] border border-[#25c0f3]/30"
                 />
               </div>
 
               {/* Destination Country */}
               <div className="relative sm:w-56 flex items-center">
-                <MapPin className="w-4 h-4 text-[#ffd300] ml-3.5 absolute pointer-events-none" />
+                <MapPin className="w-4 h-4 text-[#a99410] ml-3.5 absolute pointer-events-none" />
                 <select
                   value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.target.value)}
-                  className="w-full pl-10 pr-8 py-3 rounded-xl bg-[#101a6d]/90 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#ffd300] border border-[#25c0f3]/30 appearance-none cursor-pointer"
+                  className="w-full pl-10 pr-8 py-3 rounded-xl bg-[#101a6d]/90 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#a99410] border border-[#25c0f3]/30 appearance-none cursor-pointer"
                 >
                   <option value="All Countries">All Destination Countries</option>
                   {COUNTRIES.map((c) => (
@@ -102,7 +102,7 @@ export default function Hero({
               {/* Find Button */}
               <button
                 type="submit"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd300] via-[#ffdf47] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] text-[#020024] font-extrabold text-sm shadow-lg shadow-[#ffd300]/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#a99410] via-[#bfa715] to-[#8e7c0c] hover:from-[#cbb218] hover:to-[#a99410] text-[#020024] font-extrabold text-sm shadow-lg shadow-[#a99410]/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <span>Find Jobs</span>
                 <ArrowRight className="w-4 h-4 text-[#020024]" />
@@ -112,7 +112,7 @@ export default function Hero({
 
           {/* Trending Searches */}
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-300 mb-12">
-            <span className="font-semibold text-[#ffd300]">Popular Opportunities:</span>
+            <span className="font-semibold text-[#a99410]">Popular Opportunities:</span>
             {trendingSearches.map((tag) => (
               <button
                 key={tag}
@@ -120,7 +120,7 @@ export default function Hero({
                   setSearchQuery(tag.split(' ')[0]);
                   onSearchSubmit();
                 }}
-                className="px-2.5 py-1 rounded-md bg-[#101a6d]/80 hover:bg-[#182a98] text-[#b6eafb] hover:text-[#ffd300] border border-[#25c0f3]/30 hover:border-[#ffd300] transition-colors cursor-pointer"
+                className="px-2.5 py-1 rounded-md bg-[#101a6d]/80 hover:bg-[#182a98] text-[#b6eafb] hover:text-[#a99410] border border-[#25c0f3]/30 hover:border-[#a99410] transition-colors cursor-pointer"
               >
                 {tag}
               </button>
@@ -130,8 +130,8 @@ export default function Hero({
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6 border-t border-[#182a98]/60">
             {COMPANY_INFO.stats.map((st) => (
-              <div key={st.label} className="bg-[#101a6d]/60 border border-[#25c0f3]/30 hover:border-[#ffd300] transition-colors rounded-2xl p-4 text-left">
-                <span className="text-2xl sm:text-3xl font-extrabold text-[#ffd300] font-display block">
+              <div key={st.label} className="bg-[#101a6d]/60 border border-[#25c0f3]/30 hover:border-[#a99410] transition-colors rounded-2xl p-4 text-left">
+                <span className="text-2xl sm:text-3xl font-extrabold text-[#a99410] font-display block">
                   {st.value}
                 </span>
                 <span className="text-xs font-bold text-white block mt-0.5">

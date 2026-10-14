@@ -38,7 +38,7 @@ export default function BlogsSection() {
           {blogList.map((blog) => (
             <article 
               key={blog.id}
-              className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col justify-between group"
+              className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410]/80 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 <div className="relative h-48 overflow-hidden">
@@ -48,7 +48,7 @@ export default function BlogsSection() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-950/80 text-[#ffd300] backdrop-blur-md">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-950/80 text-[#a99410] backdrop-blur-md">
                       {blog.category}
                     </span>
                   </div>
@@ -78,7 +78,7 @@ export default function BlogsSection() {
               <div className="p-6 pt-0">
                 <button
                   onClick={() => setActiveBlog(blog)}
-                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#ffd300] hover:to-[#f9c913] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#a99410] hover:to-[#8e7c0c] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <span>Read Full Update</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -106,7 +106,7 @@ export default function BlogsSection() {
                   <X className="w-5 h-5" />
                 </button>
                 <div className="absolute bottom-4 left-6 right-6">
-                  <span className="text-xs font-bold text-[#ffd300] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#a99410] uppercase tracking-wider">
                     {activeBlog.category} • {activeBlog.date}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-bold font-display text-white mt-1">
@@ -128,7 +128,7 @@ export default function BlogsSection() {
               <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
                 <button
                   onClick={() => setActiveBlog(null)}
-                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/25"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/25"
                 >
                   Close
                 </button>

@@ -70,7 +70,7 @@ export default function AboutSection({ onOpenHireModal, onOpenResumeModal }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#fff8d6] text-[#713f12] border border-[#ffd300]/50 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#fff8d6] text-[#713f12] border border-[#a99410]/50 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
             <Building2 className="w-3.5 h-3.5 text-[#a99410]" />
             About SkyGlobal HR Consultancy
           </div>
@@ -116,14 +116,14 @@ export default function AboutSection({ onOpenHireModal, onOpenResumeModal }) {
             <div className="pt-2 flex flex-wrap gap-4">
               <button
                 onClick={onOpenHireModal}
-                className="px-6 py-3 rounded-xl bg-[#101a6d] hover:bg-[#182a98] text-[#ffd300] border border-[#ffd300]/40 font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3 rounded-xl bg-[#101a6d] hover:bg-[#182a98] text-[#a99410] border border-[#a99410]/40 font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
-                <Briefcase className="w-4 h-4 text-[#ffd300]" />
+                <Briefcase className="w-4 h-4 text-[#a99410]" />
                 Partner With Us (Hire Talent)
               </button>
               <button
                 onClick={onOpenResumeModal}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd300] via-[#ffdf47] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] text-[#020024] font-extrabold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#a99410] via-[#bfa715] to-[#8e7c0c] hover:from-[#cbb218] hover:to-[#a99410] text-[#020024] font-extrabold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
                 <Globe2 className="w-4 h-4 text-[#020024]" />
                 Explore International Jobs
@@ -134,7 +134,7 @@ export default function AboutSection({ onOpenHireModal, onOpenResumeModal }) {
           {/* Key Quick Facts & Reach Card (5 cols) */}
           <div className="lg:col-span-5 bg-gradient-to-br from-[#101a6d] via-[#09113e] to-[#020024] text-white p-8 rounded-3xl shadow-xl border border-[#182a98] space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#ffd300]/20 border border-[#ffd300]/40 flex items-center justify-center text-[#ffd300]">
+              <div className="w-12 h-12 rounded-2xl bg-[#a99410]/20 border border-[#a99410]/40 flex items-center justify-center text-[#a99410]">
                 <Building2 className="w-6 h-6" />
               </div>
               <div>
@@ -145,34 +145,34 @@ export default function AboutSection({ onOpenHireModal, onOpenResumeModal }) {
 
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#182a98]/80">
               <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
-                <span className="text-2xl font-black text-[#ffd300] block">2024</span>
+                <span className="text-2xl font-black text-[#a99410] block">2024</span>
                 <span className="text-xs text-[#b6eafb]/80">Year Established</span>
               </div>
               <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
-                <span className="text-2xl font-black text-[#ffd300] block">10+ Yrs</span>
+                <span className="text-2xl font-black text-[#a99410] block">10+ Yrs</span>
                 <span className="text-xs text-[#b6eafb]/80">Leadership Experience</span>
               </div>
               <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
-                <span className="text-2xl font-black text-[#ffd300] block">6+</span>
+                <span className="text-2xl font-black text-[#a99410] block">6+</span>
                 <span className="text-xs text-[#b6eafb]/80">Global Hubs</span>
               </div>
               <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
-                <span className="text-2xl font-black text-[#ffd300] block">100%</span>
+                <span className="text-2xl font-black text-[#a99410] block">100%</span>
                 <span className="text-xs text-[#b6eafb]/80">Ethical & Compliant</span>
               </div>
             </div>
 
             <div className="space-y-3 pt-2 text-xs text-slate-200">
               <div className="flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#ffd300] mt-1.5 shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#a99410] mt-1.5 shrink-0" />
                 <span><strong>Registered Office:</strong> Toronto Building, 202 2nd Floor, Bur Dubai, Dubai, UAE</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#ffd300] mt-1.5 shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#a99410] mt-1.5 shrink-0" />
                 <span><strong>Primary Markets:</strong> Malta, Australia, UAE, Croatia, Bulgaria, Romania</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#ffd300] mt-1.5 shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#a99410] mt-1.5 shrink-0" />
                 <span><strong>Contact Direct:</strong> +971 04 5570778 | info@skyglobalhr.com</span>
               </div>
             </div>

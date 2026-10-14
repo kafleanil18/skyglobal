@@ -73,8 +73,8 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
             <X className="w-5 h-5" />
           </button>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd300]/20 text-[#ffd300] text-xs font-bold mb-2 border border-[#ffd300]/30">
-            <Globe className="w-3.5 h-3.5 text-[#ffd300]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#a99410]/20 text-[#a99410] text-xs font-bold mb-2 border border-[#a99410]/30">
+            <Globe className="w-3.5 h-3.5 text-[#a99410]" />
             International Career Registration
           </div>
 
@@ -116,7 +116,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="e.g. Michael Fernando"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
 
@@ -130,7 +130,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="michael@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="+971 50 123 4567"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
 
@@ -160,7 +160,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="e.g. UAE, Nepal, India, Philippines"
                     value={formData.currentCountry}
                     onChange={(e) => setFormData({ ...formData, currentCountry: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="e.g. Electrician, Plumber, F&B Server"
                     value={formData.profession}
                     onChange={(e) => setFormData({ ...formData, profession: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                   <select
                     value={formData.preferredDestination}
                     onChange={(e) => setFormData({ ...formData, preferredDestination: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] bg-white"
                   >
                     <option>Malta (Europe / Schengen)</option>
                     <option>Australia (Training Visa 407 / Skilled)</option>
@@ -205,7 +205,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Upload Resume / CV *
                 </label>
-                <label className="border-2 border-dashed border-slate-300 hover:border-[#ffd300] rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-[#fff8d6]/50 transition-colors">
+                <label className="border-2 border-dashed border-slate-300 hover:border-[#a99410] rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-[#fff8d6]/50 transition-colors">
                   <Upload className="w-6 h-6 text-slate-400 mb-1" />
                   <span className="text-xs font-semibold text-slate-700">
                     {fileName ? fileName : 'Click to choose PDF or DOCX file'}
@@ -227,7 +227,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-md shadow-[#ffd300]/25 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-bold text-sm shadow-md shadow-[#a99410]/25 transition-all flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
                 Submit CV to SkyGlobal Pool

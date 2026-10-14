@@ -59,8 +59,8 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             <X className="w-5 h-5" />
           </button>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd300]/20 text-[#ffd300] text-xs font-bold mb-2 border border-[#ffd300]/30">
-            <Lock className="w-3.5 h-3.5 text-[#ffd300]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#a99410]/20 text-[#a99410] text-xs font-bold mb-2 border border-[#a99410]/30">
+            <Lock className="w-3.5 h-3.5 text-[#a99410]" />
             Portal Log In
           </div>
 
@@ -90,7 +90,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
               <button
                 type="button"
                 onClick={() => handleQuickFill('superadmin@skyglobalhr.com', 'admin123')}
-                className="py-2 px-3 rounded-xl bg-[#fff8d6] border border-[#ffd300]/60 hover:bg-[#fef9c3] text-left transition-all group"
+                className="py-2 px-3 rounded-xl bg-[#fff8d6] border border-[#a99410]/60 hover:bg-[#fef9c3] text-left transition-all group"
               >
                 <div className="flex items-center gap-1.5 text-xs font-bold text-[#101a6d]">
                   <Crown className="w-3.5 h-3.5 text-[#101a6d]" />
@@ -127,7 +127,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                   placeholder="admin@skyglobalhr.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                 />
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                 />
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-md shadow-[#ffd300]/25 transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-bold text-sm shadow-md shadow-[#a99410]/25 transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
             >
               {loading ? (
                 <span>Authenticating...</span>

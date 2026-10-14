@@ -48,10 +48,10 @@ export default function SectorsSection({ onSelectSectorJobs, onOpenHireModal }) 
           {SECTORS.map((sector) => (
             <div
               key={sector.id}
-              className="rounded-3xl p-7 bg-slate-50/70 border border-slate-200/90 hover:border-[#ffd300]/80 hover:bg-white hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              className="rounded-3xl p-7 bg-slate-50/70 border border-slate-200/90 hover:border-[#a99410]/80 hover:bg-white hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-[#fff8d6] border border-[#ffd300]/50 shadow-sm flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-[#fff8d6] border border-[#a99410]/50 shadow-sm flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                   {getSectorIcon(sector.icon)}
                 </div>
 
@@ -81,7 +81,7 @@ export default function SectorsSection({ onSelectSectorJobs, onOpenHireModal }) 
               <div className="pt-2 flex items-center gap-2">
                 <button
                   onClick={() => onSelectSectorJobs(sector.title)}
-                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#ffd300] hover:to-[#f9c913] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#a99410] hover:to-[#8e7c0c] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <span>Explore Openings</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -95,7 +95,7 @@ export default function SectorsSection({ onSelectSectorJobs, onOpenHireModal }) 
         <div className="mt-16 text-center rounded-3xl bg-gradient-to-r from-[#101a6d] via-[#0b1456] to-[#020024] py-10 px-6 sm:px-12 text-white border border-[#25c0f3]/30 shadow-2xl relative overflow-hidden">
           <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-[#25c0f3]/10 blur-3xl pointer-events-none" />
           <div className="relative z-10">
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#ffd300] font-display mb-3">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#a99410] font-display mb-3">
               Ready to explore international job opportunities?
             </h3>
             <p className="text-[#b6eafb] text-sm max-w-xl mx-auto mb-6">
@@ -103,7 +103,7 @@ export default function SectorsSection({ onSelectSectorJobs, onOpenHireModal }) 
             </p>
             <a
               href="#jobs"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-extrabold text-sm shadow-lg shadow-[#ffd300]/25 transition-all transform hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-extrabold text-sm shadow-lg shadow-[#a99410]/25 transition-all transform hover:scale-105"
             >
               <span>Browse All Vacancies</span>
               <ArrowRight className="w-4 h-4" />

@@ -64,10 +64,10 @@ export default function AdminDashboard({ onExitDashboard }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-base tracking-tight font-display text-white">
-                SKYGLOBAL <span className="text-[#ffd300]">CMS</span>
+                SKYGLOBAL <span className="text-[#a99410]">CMS</span>
               </span>
               {isSuperAdmin ? (
-                <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] px-2 py-0.5 rounded-full shadow-sm">
+                <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] px-2 py-0.5 rounded-full shadow-sm">
                   <Crown className="w-3 h-3 text-[#020024]" />
                   Super Admin
                 </span>
@@ -90,7 +90,7 @@ export default function AdminDashboard({ onExitDashboard }) {
             onClick={onExitDashboard}
             className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center gap-1.5"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-[#ffd300]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#a99410]" />
             <span className="hidden sm:inline">View Public Website</span>
           </button>
 
@@ -127,7 +127,7 @@ export default function AdminDashboard({ onExitDashboard }) {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   isActive 
-                    ? 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] shadow-sm font-black'
+                    ? 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] shadow-sm font-black'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >

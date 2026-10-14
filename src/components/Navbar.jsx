@@ -89,7 +89,7 @@ export default function Navbar({
                   <span className="text-xl font-black tracking-tight text-white font-display">
                     SKY<span className="text-[#25c0f3]">GLOBAL</span>
                   </span>
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#ffd300]/20 text-[#ffd300] border border-[#ffd300]/30">
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#a99410]/20 text-[#a99410] border border-[#a99410]/30">
                     HR Consultancy
                   </span>
                 </div>
@@ -108,13 +108,13 @@ export default function Navbar({
                     key={link.id}
                     onClick={(e) => handleNavClick(link.id, e)}
                     className={`text-xs uppercase tracking-wider font-semibold transition-colors py-1 relative group cursor-pointer ${
-                      isActive ? 'text-[#ffd300] font-bold' : 'text-slate-200 hover:text-[#ffd300]'
+                      isActive ? 'text-[#a99410] font-bold' : 'text-slate-200 hover:text-[#a99410]'
                     }`}
                   >
                     {link.label}
                     <span 
-                      className={`absolute bottom-0 left-0 h-0.5 bg-[#ffd300] transition-all duration-200 ${
-                        isActive ? 'w-full shadow-sm shadow-[#ffd300]' : 'w-0 group-hover:w-full'
+                      className={`absolute bottom-0 left-0 h-0.5 bg-[#a99410] transition-all duration-200 ${
+                        isActive ? 'w-full shadow-sm shadow-[#a99410]' : 'w-0 group-hover:w-full'
                       }`} 
                     />
                   </button>
@@ -127,7 +127,7 @@ export default function Navbar({
               {isAuthenticated ? (
                 <button
                   onClick={onOpenDashboard}
-                  className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/20 transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#cbb218] hover:to-[#a99410] shadow-md shadow-[#a99410]/20 transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   {isSuperAdmin ? (
                     <Crown className="w-3.5 h-3.5 text-[#020024]" />
@@ -139,10 +139,10 @@ export default function Navbar({
               ) : (
                 <button
                   onClick={onOpenLoginModal}
-                  className="px-3.5 py-2 text-xs font-semibold rounded-xl text-[#ffd300] hover:text-white bg-[#101a6d]/90 hover:bg-[#182a98] border border-[#ffd300]/40 hover:border-[#ffd300] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl text-[#a99410] hover:text-white bg-[#101a6d]/90 hover:bg-[#182a98] border border-[#a99410]/40 hover:border-[#a99410] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                   title="Log In to Portal"
                 >
-                  <Lock className="w-3.5 h-3.5 text-[#ffd300]" />
+                  <Lock className="w-3.5 h-3.5 text-[#a99410]" />
                   <span>Log In</span>
                 </button>
               )}
@@ -157,7 +157,7 @@ export default function Navbar({
 
               <button
                 onClick={onOpenHireModal}
-                className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] via-[#ffdf47] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/25 transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5 cursor-pointer"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] via-[#bfa715] to-[#8e7c0c] hover:from-[#cbb218] hover:to-[#a99410] shadow-md shadow-[#a99410]/25 transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5 cursor-pointer"
               >
                 <UserCheck className="w-3.5 h-3.5 text-[#020024]" />
                 <span>Hire Talent</span>

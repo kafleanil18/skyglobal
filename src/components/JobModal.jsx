@@ -77,7 +77,7 @@ export default function JobModal({ job, isOpen, onClose }) {
           </button>
 
           <div className="flex flex-wrap items-center gap-2 mb-2 text-xs">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#ffd300]/20 text-[#ffd300] border border-[#ffd300]/30 font-semibold">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#a99410]/20 text-[#a99410] border border-[#a99410]/30 font-semibold">
               {job.sector || job.category}
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-slate-200 font-medium">
@@ -94,7 +94,7 @@ export default function JobModal({ job, isOpen, onClose }) {
           <h2 className="text-xl sm:text-2xl font-bold font-display text-white pr-8">
             {job.title}
           </h2>
-          <p className="text-[#ffd300] font-semibold text-xs sm:text-sm mt-1">
+          <p className="text-[#a99410] font-semibold text-xs sm:text-sm mt-1">
             {job.company} • <span className="text-[#b6eafb]">{job.location}</span>
           </p>
 
@@ -104,7 +104,7 @@ export default function JobModal({ job, isOpen, onClose }) {
               onClick={() => setActiveTab('details')}
               className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-lg transition-all ${
                 activeTab === 'details'
-                  ? 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] shadow-sm font-extrabold'
+                  ? 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] shadow-sm font-extrabold'
                   : 'text-slate-300 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -114,7 +114,7 @@ export default function JobModal({ job, isOpen, onClose }) {
               onClick={() => setActiveTab('apply')}
               className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-lg transition-all ${
                 activeTab === 'apply'
-                  ? 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] shadow-sm font-extrabold'
+                  ? 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] shadow-sm font-extrabold'
                   : 'text-slate-300 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -245,7 +245,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                       placeholder="e.g. John Smith"
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                     />
                   </div>
 
@@ -259,7 +259,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                       placeholder="john@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                     />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                       placeholder="+971 50 123 4567"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                     />
                   </div>
 
@@ -289,7 +289,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                       placeholder="e.g. UAE, India, Nepal, Philippines"
                       value={formData.currentCountry}
                       onChange={(e) => setFormData({ ...formData, currentCountry: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                     />
                   </div>
                 </div>
@@ -298,7 +298,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Upload Resume / CV (PDF or Word) *
                   </label>
-                  <label className="border-2 border-dashed border-slate-300 hover:border-[#ffd300] rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-[#fff8d6]/50 transition-colors">
+                  <label className="border-2 border-dashed border-slate-300 hover:border-[#a99410] rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-[#fff8d6]/50 transition-colors">
                     <Upload className="w-6 h-6 text-slate-400 mb-1" />
                     <span className="text-xs font-semibold text-slate-700">
                       {formData.fileName ? formData.fileName : 'Click to upload your CV'}
@@ -322,14 +322,14 @@ export default function JobModal({ job, isOpen, onClose }) {
                     placeholder="Briefly state your years of experience, trade licenses, or previous overseas work history."
                     value={formData.note}
                     onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-md shadow-[#ffd300]/25 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-bold text-sm shadow-md shadow-[#a99410]/25 transition-all flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     Submit Application to SkyGlobal HR
@@ -358,7 +358,7 @@ export default function JobModal({ job, isOpen, onClose }) {
               </button>
               <button
                 onClick={() => setActiveTab('apply')}
-                className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/25 flex-1 sm:flex-none text-center flex items-center justify-center gap-1.5"
+                className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/25 flex-1 sm:flex-none text-center flex items-center justify-center gap-1.5"
               >
                 <span>Apply for this Position</span>
                 <Sparkles className="w-3.5 h-3.5" />

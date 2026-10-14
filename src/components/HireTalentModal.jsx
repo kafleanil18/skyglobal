@@ -69,8 +69,8 @@ export default function HireTalentModal({ isOpen, onClose }) {
             <X className="w-5 h-5" />
           </button>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd300]/20 text-[#ffd300] text-xs font-bold mb-2 border border-[#ffd300]/30">
-            <Zap className="w-3.5 h-3.5 text-[#ffd300]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#a99410]/20 text-[#a99410] text-xs font-bold mb-2 border border-[#a99410]/30">
+            <Zap className="w-3.5 h-3.5 text-[#a99410]" />
             Employer Recruitment Request
           </div>
 
@@ -112,7 +112,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                     placeholder="e.g. Ramla Bay Resort / MEP Ltd"
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
 
@@ -126,7 +126,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                     placeholder="e.g. David Miller, Operations Dir"
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                     placeholder="david@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
 
@@ -156,7 +156,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                     placeholder="+971 4 557 0778"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                   />
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                   <select
                     value={formData.industrySector}
                     onChange={(e) => setFormData({ ...formData, industrySector: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] bg-white"
                   >
                     <option>MEP, Electrical & Technical Trades</option>
                     <option>Hospitality, Resorts & Tourism</option>
@@ -187,7 +187,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                   <select
                     value={formData.destinationCountry}
                     onChange={(e) => setFormData({ ...formData, destinationCountry: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410] bg-white"
                   >
                     {COUNTRIES.map(c => (
                       <option key={c.name} value={c.name}>{c.name}</option>
@@ -205,7 +205,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
                   placeholder="e.g. Sourcing 4 licensed Electricians and 2 Plumbers for resort refurbishment project in Malta starting next month."
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#a99410] focus:border-[#a99410]"
                 />
               </div>
 
@@ -218,7 +218,7 @@ export default function HireTalentModal({ isOpen, onClose }) {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-md shadow-[#ffd300]/25 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] font-bold text-sm shadow-md shadow-[#a99410]/25 transition-all flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
                 Request Talent Shortlist

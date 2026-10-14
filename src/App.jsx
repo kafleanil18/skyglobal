@@ -117,11 +117,11 @@ function MainWebsite() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-[#ffd300] selection:text-[#020024]">
+    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-[#a99410] selection:text-[#020024]">
       
       {/* Sticky Staff Quick Access Bar when authenticated */}
       {isAuthenticated && (
-        <div className="bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] py-1.5 px-4 sm:px-8 text-xs font-bold flex items-center justify-between sticky top-0 z-50 shadow-md">
+        <div className="bg-gradient-to-r from-[#a99410] to-[#8e7c0c] text-[#020024] py-1.5 px-4 sm:px-8 text-xs font-bold flex items-center justify-between sticky top-0 z-50 shadow-md">
           <div className="flex items-center gap-2">
             {isSuperAdmin ? (
               <Crown className="w-4 h-4 text-[#020024]" />
@@ -135,7 +135,7 @@ function MainWebsite() {
 
           <button
             onClick={() => setIsViewingAdminDashboard(true)}
-            className="px-3 py-1 rounded-lg bg-[#020024] text-[#ffd300] hover:bg-[#101a6d] transition-colors flex items-center gap-1.5 font-bold shadow-sm cursor-pointer"
+            className="px-3 py-1 rounded-lg bg-[#020024] text-[#a99410] hover:bg-[#101a6d] transition-colors flex items-center gap-1.5 font-bold shadow-sm cursor-pointer"
           >
             <LayoutDashboard className="w-3.5 h-3.5" />
             <span>Open CMS Dashboard</span>

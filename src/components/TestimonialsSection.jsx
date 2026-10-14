@@ -29,13 +29,13 @@ export default function TestimonialsSection() {
           {list.map((item) => (
             <div 
               key={item.id}
-              className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col justify-between group"
+              className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410]/80 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 {/* 5 Stars */}
-                <div className="flex items-center gap-1 text-[#ffd300] mb-4">
+                <div className="flex items-center gap-1 text-[#a99410] mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#ffd300] text-[#ffd300]" />
+                    <Star key={i} className="w-4 h-4 fill-[#a99410] text-[#a99410]" />
                   ))}
                 </div>
 
@@ -52,7 +52,7 @@ export default function TestimonialsSection() {
 
               <div>
                 {/* Category Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#fff8d6] text-[#101a6d] text-xs font-bold mb-4 border border-[#ffd300]/40">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#fff8d6] text-[#101a6d] text-xs font-bold mb-4 border border-[#a99410]/40">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#101a6d] shrink-0" />
                   <span>{item.category}</span>
                 </div>
@@ -82,7 +82,7 @@ export default function TestimonialsSection() {
               <p className="text-xs text-slate-500">Document preparation, embassy submission guidance & ethical compliance.</p>
             </div>
           </div>
-          <span className="text-xs font-bold text-[#101a6d] bg-[#fff8d6] px-3.5 py-1.5 rounded-full border border-[#ffd300]/50 shrink-0">
+          <span className="text-xs font-bold text-[#101a6d] bg-[#fff8d6] px-3.5 py-1.5 rounded-full border border-[#a99410]/50 shrink-0">
             100% Transparency
           </span>
         </div>
