@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/skyGlobalData';
 
-export default function Footer({ onOpenHireModal, onOpenResumeModal }) {
+export default function Footer({ onOpenHireModal, onOpenResumeModal, onOpenLoginModal }) {
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -148,7 +148,12 @@ export default function Footer({ onOpenHireModal, onOpenResumeModal }) {
               <a href="#sectors" className="hover:text-amber-400 transition-colors">Our Core Sectors</a>
               <a href="#jobs" className="hover:text-amber-400 transition-colors">Browse Jobs</a>
               <a href="#blogs" className="hover:text-amber-400 transition-colors">Visa Updates</a>
-              <a href="#testimonials" className="hover:text-amber-400 transition-colors">Testimonials</a>
+              <button 
+                onClick={onOpenLoginModal} 
+                className="text-left text-amber-400/90 hover:text-amber-300 font-semibold transition-colors"
+              >
+                Staff Login / CMS
+              </button>
               <button onClick={onOpenResumeModal} className="text-left hover:text-amber-400 transition-colors">
                 Submit CV
               </button>

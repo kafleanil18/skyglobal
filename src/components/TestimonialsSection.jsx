@@ -1,8 +1,9 @@
 import React from 'react';
-import { TESTIMONIALS } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 import { Star, Quote, CheckCircle2, Award } from 'lucide-react';
 
 export default function TestimonialsSection() {
+  const { testimonials } = useCMS();
   return (
     <section id="testimonials" className="py-24 bg-slate-50 text-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

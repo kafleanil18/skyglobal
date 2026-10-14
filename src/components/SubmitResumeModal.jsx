@@ -10,8 +10,10 @@ import {
   Globe
 } from 'lucide-react';
 import { COMPANY_INFO, COUNTRIES } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 
 export default function SubmitResumeModal({ isOpen, onClose }) {
+  const { addApplication } = useCMS();
   const [submitted, setSubmitted] = useState(false);
   const [fileName, setFileName] = useState('');
   const [formData, setFormData] = useState({
@@ -28,6 +30,18 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    addApplication({
+      jobId: 'general-cv-pool',
+      jobTitle: `General Pool (${formData.profession || 'Skilled Talent'})`,
+      applicantName: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      currentCountry: formData.currentCountry,
+      experienceYears: formData.experienceYears,
+      preferredDestination: formData.preferredDestination,
+      note: `Profession: ${formData.profession || 'Not specified'}. Registered through Fast-Track CV drop.`,
+      fileName: fileName || 'Candidate_CV.pdf'
+    });
     setSubmitted(true);
     setTimeout(() => {
       setTimeout(() => {

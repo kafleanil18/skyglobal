@@ -13,8 +13,10 @@ import {
   Building
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 
 export default function JobModal({ job, isOpen, onClose }) {
+  const { addApplication } = useCMS();
   const [activeTab, setActiveTab] = useState('details'); // 'details' or 'apply'
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -31,6 +33,18 @@ export default function JobModal({ job, isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    addApplication({
+      jobId: job.id,
+      jobTitle: job.title,
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      currentCountry: formData.currentCountry,
+      experienceYears: formData.experienceYears,
+      preferredDestination: job.country || job.location,
+      note: formData.note,
+      fileName: formData.fileName || 'Applicant_Resume.pdf'
+    });
     setSubmitted(true);
     setTimeout(() => {
       setTimeout(() => {

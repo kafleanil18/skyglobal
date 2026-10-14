@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BLOGS } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 import { 
   FileText, 
   Calendar, 
@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 
 export default function BlogsSection() {
+  const { blogs } = useCMS();
   const [activeBlog, setActiveBlog] = useState(null);
 
   return (

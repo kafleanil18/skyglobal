@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { JOBS_LIST, COUNTRIES } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 import { 
   Search, 
   MapPin, 
@@ -20,6 +20,7 @@ export default function JobsSection({
   onSelectJob,
   onApplyJob
 }) {
+  const { jobs, countries } = useCMS();
   const [selectedSector, setSelectedSector] = useState('All Sectors');
 
   const sectorTabs = [
@@ -29,7 +30,7 @@ export default function JobsSection({
   ];
 
   const filteredJobs = useMemo(() => {
-    return JOBS_LIST.filter((job) => {
+    return jobs.filter((job) => {
       const matchesSearch = 
         searchQuery.trim() === '' ||
         job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -102,7 +103,7 @@ export default function JobsSection({
                 className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white cursor-pointer"
               >
                 <option value="All Countries">All Destination Countries</option>
-                {COUNTRIES.map((c) => (
+                {countries.map((c) => (
                   <option key={c.name} value={c.name}>{c.name}</option>
                 ))}
               </select>

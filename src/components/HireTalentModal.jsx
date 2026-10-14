@@ -13,8 +13,10 @@ import {
   Phone
 } from 'lucide-react';
 import { COMPANY_INFO, COUNTRIES } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 
 export default function HireTalentModal({ isOpen, onClose }) {
+  const { addEmployerRequest } = useCMS();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -32,6 +34,17 @@ export default function HireTalentModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    addEmployerRequest({
+      companyName: formData.companyName,
+      contactName: formData.contactName,
+      email: formData.email,
+      phone: formData.phone,
+      industrySector: formData.industrySector,
+      headcount: formData.headcount,
+      destinationCountry: formData.destinationCountry,
+      timeline: formData.timeline,
+      notes: formData.notes
+    });
     setSubmitted(true);
     setTimeout(() => {
       setTimeout(() => {

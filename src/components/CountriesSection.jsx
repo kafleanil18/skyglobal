@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { COUNTRIES } from '../data/skyGlobalData';
+import { useCMS } from '../context/CMSContext';
 import { 
   Globe2, 
   MapPin, 
   CheckCircle, 
   ArrowRight, 
   Clock, 
-  Sparkles,
-  Plane,
-  X
+  Sparkles, 
+  Plane, 
+  X 
 } from 'lucide-react';
 
 export default function CountriesSection({ onSelectCountryJobs, onOpenResumeModal }) {
+  const { countries } = useCMS();
   const [activeModalCountry, setActiveModalCountry] = useState(null);
 
   return (
