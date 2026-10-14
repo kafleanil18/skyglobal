@@ -5,10 +5,10 @@ import { HOW_WE_ARE_DIFFERENT } from '../data/skyGlobalData';
 export default function HowWeAreDifferent({ onOpenHireModal }) {
   const getIcon = (iconName) => {
     switch (iconName) {
-      case 'Zap': return <Zap className="w-7 h-7 text-amber-500" />;
-      case 'TrendingUp': return <TrendingUp className="w-7 h-7 text-amber-500" />;
-      case 'Users': return <Users className="w-7 h-7 text-amber-500" />;
-      default: return <Star className="w-7 h-7 text-amber-500" />;
+      case 'Zap': return <Zap className="w-7 h-7 text-[#101a6d] fill-[#ffd300]/30" />;
+      case 'TrendingUp': return <TrendingUp className="w-7 h-7 text-[#101a6d]" />;
+      case 'Users': return <Users className="w-7 h-7 text-[#101a6d]" />;
+      default: return <Star className="w-7 h-7 text-[#101a6d] fill-[#ffd300]/30" />;
     }
   };
 
@@ -18,13 +18,13 @@ export default function HowWeAreDifferent({ onOpenHireModal }) {
         
         {/* Section Header matching skyglobalhr.com */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
-            <Star className="w-6 h-6 text-blue-600 fill-blue-600/20" />
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#e5f2f9] border border-[#25c0f3]/40 text-[#101a6d]">
+            <Star className="w-6 h-6 text-[#101a6d] fill-[#ffd300]" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold uppercase tracking-wide text-amber-700 font-display mb-3">
+          <h2 className="text-3xl sm:text-4xl font-extrabold uppercase tracking-wide text-[#101a6d] font-display mb-3">
             How Are We Different
           </h2>
-          <div className="mx-auto h-1 w-20 rounded-full bg-amber-500/80 mb-4" />
+          <div className="mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-[#ffd300] to-[#f9c913] mb-4" />
           <p className="text-base sm:text-lg text-slate-600">
             Setting the benchmark for ethical overseas recruitment, verified employer sponsorships, and candidate success.
           </p>
@@ -43,13 +43,13 @@ export default function HowWeAreDifferent({ onOpenHireModal }) {
                 {/* Title & Icon Side */}
                 <div className="flex-1 flex flex-col justify-center">
                   <div className="mb-4 flex items-center">
-                    <div className="mr-4 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-amber-50 border border-amber-200/80 shadow-sm">
+                    <div className="mr-4 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#fff8d6] border border-[#ffd300]/50 shadow-sm">
                       {getIcon(item.iconName)}
                     </div>
-                    <div className="h-px flex-1 bg-gradient-to-r from-amber-400/40 to-transparent" />
+                    <div className="h-px flex-1 bg-gradient-to-r from-[#ffd300]/60 via-[#25c0f3]/40 to-transparent" />
                   </div>
 
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#101a6d] mb-1">
                     {item.badge}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 leading-tight mb-4">
@@ -59,7 +59,7 @@ export default function HowWeAreDifferent({ onOpenHireModal }) {
 
                 {/* Content Card Side */}
                 <div className="flex-1 w-full">
-                  <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-sky-50/50 p-1 shadow-lg border border-slate-200/80 hover:shadow-xl transition-all duration-300">
+                  <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-[#e5f2f9]/60 p-1 shadow-lg border border-slate-200/90 hover:border-[#25c0f3]/60 hover:shadow-xl transition-all duration-300">
                     <div className="rounded-2xl bg-white p-7 sm:p-9">
                       <p className="text-base sm:text-lg leading-relaxed text-slate-700">
                         {item.description}
@@ -81,21 +81,22 @@ export default function HowWeAreDifferent({ onOpenHireModal }) {
         </div>
 
         {/* Employer Inquiry CTA Strip */}
-        <div className="mt-20 rounded-3xl bg-[#09152b] p-8 sm:p-12 text-white flex flex-col lg:flex-row items-center justify-between gap-8 border border-slate-800 shadow-xl">
-          <div className="max-w-2xl text-center lg:text-left">
-            <span className="text-amber-400 font-bold text-xs uppercase tracking-widest">
+        <div className="mt-20 rounded-3xl bg-gradient-to-r from-[#101a6d] via-[#0b1456] to-[#020024] p-8 sm:p-12 text-white flex flex-col lg:flex-row items-center justify-between gap-8 border border-[#25c0f3]/30 shadow-2xl relative overflow-hidden">
+          <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-[#25c0f3]/10 blur-3xl pointer-events-none" />
+          <div className="max-w-2xl text-center lg:text-left relative z-10">
+            <span className="text-[#ffd300] font-bold text-xs uppercase tracking-widest">
               Organizational Hiring Assistance
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold font-display mt-2 mb-2">
+            <h3 className="text-2xl sm:text-3xl font-bold font-display mt-2 mb-2 text-white">
               Looking to source verified talent for your organization?
             </h3>
-            <p className="text-slate-300 text-sm">
+            <p className="text-[#b6eafb] text-sm">
               We design job specifications, screen candidate skill requirements, and manage the full overseas legal and visa onboarding for employers in Europe, Australia, and the Middle East.
             </p>
           </div>
           <button
             onClick={onOpenHireModal}
-            className="shrink-0 px-8 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-lg shadow-amber-400/20 transition-all transform hover:scale-105"
+            className="shrink-0 relative z-10 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-lg shadow-[#ffd300]/25 transition-all transform hover:scale-105"
           >
             Partner With SkyGlobal
           </button>

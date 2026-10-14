@@ -14,6 +14,7 @@ import {
 import { COMPANY_INFO } from '../data/skyGlobalData';
 import TopContactBar from './TopContactBar';
 import { useAuth } from '../context/AuthContext';
+import skyGlobalLogo from '../assets/SkyGlobalLogo.png';
 
 export default function Navbar({ 
   currentPage = 'home',
@@ -63,8 +64,8 @@ export default function Navbar({
       <div 
         className={`transition-all duration-300 ${
           scrolled 
-            ? 'bg-slate-900/95 backdrop-blur-md shadow-xl border-b border-slate-800 py-3' 
-            : 'bg-slate-900/80 backdrop-blur-sm py-4 border-b border-slate-800/60'
+            ? 'bg-gradient-to-r from-[#101a6d]/98 via-[#0b144d]/98 to-[#020024]/98 backdrop-blur-md shadow-xl border-b border-[#182a98]/60 py-3' 
+            : 'bg-gradient-to-r from-[#101a6d]/92 via-[#0b144d]/92 to-[#020024]/92 backdrop-blur-sm py-3.5 border-b border-[#182a98]/40'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,19 +77,23 @@ export default function Navbar({
               onClick={(e) => handleNavClick('home', e)}
               className="flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-sky-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-sky-900/40 group-hover:scale-105 transition-transform">
-                <Globe className="w-5 h-5 text-amber-300" />
+              <div className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg shadow-[#101a6d]/60 group-hover:scale-105 transition-transform overflow-hidden border border-[#25c0f3]/40">
+                <img 
+                  src={skyGlobalLogo} 
+                  alt="SkyGlobal HR Consultancy Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <span className="text-xl font-black tracking-tight text-white font-display">
-                    SKY<span className="text-sky-400">GLOBAL</span>
+                    SKY<span className="text-[#25c0f3]">GLOBAL</span>
                   </span>
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#ffd300]/20 text-[#ffd300] border border-[#ffd300]/30">
                     HR Consultancy
                   </span>
                 </div>
-                <span className="text-[10px] tracking-wider uppercase font-semibold text-slate-400 -mt-0.5">
+                <span className="text-[10px] tracking-wider uppercase font-semibold text-[#b6eafb]/80 -mt-0.5">
                   Dubai • Worldwide Staffing
                 </span>
               </div>
@@ -103,13 +108,13 @@ export default function Navbar({
                     key={link.id}
                     onClick={(e) => handleNavClick(link.id, e)}
                     className={`text-xs uppercase tracking-wider font-semibold transition-colors py-1 relative group cursor-pointer ${
-                      isActive ? 'text-amber-400 font-bold' : 'text-slate-300 hover:text-amber-400'
+                      isActive ? 'text-[#ffd300] font-bold' : 'text-slate-200 hover:text-[#ffd300]'
                     }`}
                   >
                     {link.label}
                     <span 
-                      className={`absolute bottom-0 left-0 h-0.5 bg-amber-400 transition-all duration-200 ${
-                        isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                      className={`absolute bottom-0 left-0 h-0.5 bg-[#ffd300] transition-all duration-200 ${
+                        isActive ? 'w-full shadow-sm shadow-[#ffd300]' : 'w-0 group-hover:w-full'
                       }`} 
                     />
                   </button>
@@ -122,39 +127,39 @@ export default function Navbar({
               {isAuthenticated ? (
                 <button
                   onClick={onOpenDashboard}
-                  className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-amber-950 bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-400/20 transition-all flex items-center gap-1.5"
+                  className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/20 transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   {isSuperAdmin ? (
-                    <Crown className="w-3.5 h-3.5 text-slate-950" />
+                    <Crown className="w-3.5 h-3.5 text-[#020024]" />
                   ) : (
-                    <ShieldCheck className="w-3.5 h-3.5 text-slate-950" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#020024]" />
                   )}
                   <span>CMS Dashboard</span>
                 </button>
               ) : (
                 <button
                   onClick={onOpenLoginModal}
-                  className="px-3.5 py-2 text-xs font-semibold rounded-xl text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 transition-colors flex items-center gap-1.5"
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl text-[#ffd300] hover:text-white bg-[#101a6d]/90 hover:bg-[#182a98] border border-[#ffd300]/40 hover:border-[#ffd300] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                   title="Log In to Portal"
                 >
-                  <Lock className="w-3.5 h-3.5 text-amber-400" />
+                  <Lock className="w-3.5 h-3.5 text-[#ffd300]" />
                   <span>Log In</span>
                 </button>
               )}
 
               <button
                 onClick={onOpenResumeModal}
-                className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 transition-all flex items-center gap-1.5"
+                className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-slate-100 bg-[#182a98]/80 hover:bg-[#1e3a8a] border border-[#25c0f3]/40 hover:border-[#25c0f3] transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                <FileText className="w-3.5 h-3.5 text-amber-400" />
+                <FileText className="w-3.5 h-3.5 text-[#25c0f3]" />
                 <span>Submit CV</span>
               </button>
 
               <button
                 onClick={onOpenHireModal}
-                className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] via-[#ffdf47] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/25 transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5 cursor-pointer"
               >
-                <UserCheck className="w-3.5 h-3.5 text-slate-950" />
+                <UserCheck className="w-3.5 h-3.5 text-[#020024]" />
                 <span>Hire Talent</span>
               </button>
             </div>

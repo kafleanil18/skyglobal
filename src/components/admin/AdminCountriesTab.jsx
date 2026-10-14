@@ -161,7 +161,7 @@ export default function AdminCountriesTab() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-xl text-slate-950 bg-amber-400 hover:bg-amber-300 font-bold"
+                  className="px-6 py-2 rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] font-bold shadow-md shadow-[#ffd300]/25"
                 >
                   Save Hub Settings
                 </button>

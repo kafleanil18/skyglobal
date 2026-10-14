@@ -51,23 +51,23 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#071328] text-white p-6 sm:p-7 relative">
+        <div className="bg-gradient-to-r from-[#101a6d] via-[#0b1456] to-[#020024] border-b border-[#25c0f3]/20 text-white p-6 sm:p-7 relative">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-slate-800 transition-colors"
+            className="absolute top-5 right-5 text-slate-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
-            <Lock className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd300]/20 text-[#ffd300] text-xs font-bold mb-2 border border-[#ffd300]/30">
+            <Lock className="w-3.5 h-3.5 text-[#ffd300]" />
             Portal Log In
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold font-display text-white">
             Log In to SkyGlobal CMS
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm mt-1">
+          <p className="text-[#b6eafb] text-xs sm:text-sm mt-1">
             Access the content management system to manage jobs, applicants, destination hubs, and portal settings.
           </p>
         </div>
@@ -90,25 +90,25 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
               <button
                 type="button"
                 onClick={() => handleQuickFill('superadmin@skyglobalhr.com', 'admin123')}
-                className="py-2 px-3 rounded-xl bg-amber-50 border border-amber-300 hover:bg-amber-100 text-left transition-all group"
+                className="py-2 px-3 rounded-xl bg-[#fff8d6] border border-[#ffd300]/60 hover:bg-[#fef9c3] text-left transition-all group"
               >
-                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-900">
-                  <Crown className="w-3.5 h-3.5 text-amber-600" />
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#101a6d]">
+                  <Crown className="w-3.5 h-3.5 text-[#101a6d]" />
                   <span>Super Admin</span>
                 </div>
-                <span className="text-[10px] text-amber-700 block truncate">Full System Rights</span>
+                <span className="text-[10px] text-slate-600 block truncate">Full System Rights</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickFill('admin@skyglobalhr.com', 'admin123')}
-                className="py-2 px-3 rounded-xl bg-sky-50 border border-sky-300 hover:bg-sky-100 text-left transition-all group"
+                className="py-2 px-3 rounded-xl bg-[#e5f2f9] border border-[#25c0f3]/40 hover:bg-[#d6ecf7] text-left transition-all group"
               >
-                <div className="flex items-center gap-1.5 text-xs font-bold text-sky-900">
-                  <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#101a6d]">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#101a6d]" />
                   <span>Admin</span>
                 </div>
-                <span className="text-[10px] text-sky-700 block truncate">Content & Jobs</span>
+                <span className="text-[10px] text-slate-600 block truncate">Content & Jobs</span>
               </button>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                   placeholder="admin@skyglobalhr.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                 />
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                 />
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-md shadow-[#ffd300]/25 transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
             >
               {loading ? (
                 <span>Authenticating...</span>

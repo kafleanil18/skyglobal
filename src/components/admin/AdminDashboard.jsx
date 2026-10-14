@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCMS } from '../../context/CMSContext';
+import skyGlobalLogo from '../../assets/SkyGlobalLogo.png';
 
 import AdminJobsTab from './AdminJobsTab';
 import AdminApplicationsTab from './AdminApplicationsTab';
@@ -51,29 +52,33 @@ export default function AdminDashboard({ onExitDashboard }) {
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans text-slate-800">
       
       {/* Top Bar */}
-      <header className="bg-[#071328] text-white border-b border-slate-800 sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-md">
+      <header className="bg-gradient-to-r from-[#101a6d] via-[#0b1456] to-[#020024] text-white border-b border-[#25c0f3]/20 sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-sky-500 to-amber-400 flex items-center justify-center font-bold text-white shadow-md">
-            <Globe2 className="w-5 h-5 text-amber-200" />
+          <div className="h-10 px-2 py-1 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 flex items-center justify-center">
+            <img 
+              src={skyGlobalLogo} 
+              alt="SkyGlobal HR Consultancy" 
+              className="h-7 w-auto object-contain brightness-0 invert"
+            />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-base tracking-tight font-display text-white">
-                SKY<span className="text-sky-400">GLOBAL</span> CMS
+                SKYGLOBAL <span className="text-[#ffd300]">CMS</span>
               </span>
               {isSuperAdmin ? (
-                <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-amber-900 bg-amber-400 px-2 py-0.5 rounded-full shadow-sm">
-                  <Crown className="w-3 h-3 text-slate-950" />
+                <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] px-2 py-0.5 rounded-full shadow-sm">
+                  <Crown className="w-3 h-3 text-[#020024]" />
                   Super Admin
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-200 bg-sky-950 border border-sky-800 px-2 py-0.5 rounded-full">
-                  <ShieldCheck className="w-3 h-3 text-sky-400" />
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#101a6d] bg-[#e5f2f9] border border-[#25c0f3]/40 px-2 py-0.5 rounded-full">
+                  <ShieldCheck className="w-3 h-3 text-[#101a6d]" />
                   Admin
                 </span>
               )}
             </div>
-            <span className="text-[10px] text-slate-400 block -mt-0.5">
+            <span className="text-[10px] text-[#b6eafb] block -mt-0.5">
               Logged in as: {currentUser?.name} ({currentUser?.department})
             </span>
           </div>
@@ -83,9 +88,9 @@ export default function AdminDashboard({ onExitDashboard }) {
         <div className="flex items-center gap-3">
           <button
             onClick={onExitDashboard}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center gap-1.5"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#ffd300]" />
             <span className="hidden sm:inline">View Public Website</span>
           </button>
 
@@ -108,7 +113,7 @@ export default function AdminDashboard({ onExitDashboard }) {
         
         {/* Sidebar Nav */}
         <aside className="w-full md:w-64 shrink-0 bg-white rounded-3xl p-4 border border-slate-200 shadow-sm space-y-1.5 h-fit sticky md:top-24">
-          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-[#101a6d]">
             Content & Operations
           </div>
 
@@ -122,17 +127,17 @@ export default function AdminDashboard({ onExitDashboard }) {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   isActive 
-                    ? 'bg-amber-400 text-slate-950 shadow-sm'
+                    ? 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] shadow-sm font-black'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#020024]' : 'text-slate-400'}`} />
                   <span>{item.label}</span>
                 </div>
                 {item.count !== undefined && (
                   <span className={`px-2 py-0.5 rounded-md text-[10px] ${
-                    isActive ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-600'
+                    isActive ? 'bg-[#020024] text-white' : 'bg-slate-100 text-slate-600'
                   }`}>
                     {item.count}
                   </span>

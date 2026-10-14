@@ -21,8 +21,8 @@ export default function BlogsSection() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider mb-3">
-            <FileText className="w-3.5 h-3.5 text-amber-600" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#e5f2f9] text-[#101a6d] border border-[#25c0f3]/30 text-xs font-bold uppercase tracking-wider mb-3">
+            <FileText className="w-3.5 h-3.5 text-[#101a6d]" />
             Visa & Immigration Intelligence
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-slate-900 mb-4">
@@ -38,7 +38,7 @@ export default function BlogsSection() {
           {blogList.map((blog) => (
             <article 
               key={blog.id}
-              className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 flex flex-col justify-between group"
+              className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 <div className="relative h-48 overflow-hidden">
@@ -48,7 +48,7 @@ export default function BlogsSection() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-950/80 text-amber-300 backdrop-blur-md">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-950/80 text-[#ffd300] backdrop-blur-md">
                       {blog.category}
                     </span>
                   </div>
@@ -59,12 +59,12 @@ export default function BlogsSection() {
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{blog.date}</span>
                     <span>•</span>
-                    <span className="text-amber-700">{blog.source}</span>
+                    <span className="text-[#101a6d] font-bold">{blog.source}</span>
                   </div>
 
                   <h3 
                     onClick={() => setActiveBlog(blog)}
-                    className="text-lg font-bold font-display text-slate-900 group-hover:text-blue-700 transition-colors cursor-pointer line-clamp-2 mb-3"
+                    className="text-lg font-bold font-display text-slate-900 group-hover:text-[#101a6d] transition-colors cursor-pointer line-clamp-2 mb-3"
                   >
                     {blog.title}
                   </h3>
@@ -78,7 +78,7 @@ export default function BlogsSection() {
               <div className="p-6 pt-0">
                 <button
                   onClick={() => setActiveBlog(blog)}
-                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-amber-400 hover:text-slate-950 border border-slate-200 transition-all flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#ffd300] hover:to-[#f9c913] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <span>Read Full Update</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -106,7 +106,7 @@ export default function BlogsSection() {
                   <X className="w-5 h-5" />
                 </button>
                 <div className="absolute bottom-4 left-6 right-6">
-                  <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#ffd300] uppercase tracking-wider">
                     {activeBlog.category} • {activeBlog.date}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-bold font-display text-white mt-1">
@@ -116,7 +116,7 @@ export default function BlogsSection() {
               </div>
 
               <div className="p-6 sm:p-8 overflow-y-auto space-y-4 text-sm text-slate-700 leading-relaxed">
-                <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs font-semibold text-amber-900">
+                <div className="bg-[#e5f2f9] p-3 rounded-xl border border-[#25c0f3]/30 text-xs font-semibold text-[#101a6d]">
                   Source: {activeBlog.source}
                 </div>
 
@@ -128,7 +128,7 @@ export default function BlogsSection() {
               <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
                 <button
                   onClick={() => setActiveBlog(null)}
-                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-slate-900 bg-amber-400 hover:bg-amber-300"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/25"
                 >
                   Close
                 </button>

@@ -99,7 +99,7 @@ export default function AdminJobsTab() {
 
         <button
           onClick={handleOpenAdd}
-          className="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
+          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>Post New Vacancy</span>
@@ -115,14 +115,14 @@ export default function AdminJobsTab() {
             placeholder="Search by job title or location..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-sm"
+            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] shadow-sm"
           />
         </div>
 
         <select
           value={selectedCountryFilter}
           onChange={(e) => setSelectedCountryFilter(e.target.value)}
-          className="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-sm"
+          className="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] shadow-sm"
         >
           <option value="All">All Destination Countries</option>
           {COUNTRIES.map(c => (
@@ -347,7 +347,7 @@ export default function AdminJobsTab() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-xl text-slate-950 bg-amber-400 hover:bg-amber-300 font-bold"
+                  className="px-6 py-2 rounded-xl text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] font-bold shadow-md shadow-[#ffd300]/25"
                 >
                   {editingJobId ? 'Save Changes' : 'Publish Vacancy'}
                 </button>

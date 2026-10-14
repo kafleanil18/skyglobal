@@ -63,8 +63,8 @@ export default function JobsSection({
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-900 text-xs font-bold uppercase tracking-wider mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#e5f2f9] text-[#101a6d] border border-[#25c0f3]/30 text-xs font-bold uppercase tracking-wider mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-[#101a6d]" />
               Verified Overseas Vacancies
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-slate-900">
@@ -76,7 +76,7 @@ export default function JobsSection({
           </div>
 
           <div className="text-sm font-semibold text-slate-600 bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-200 self-start md:self-auto">
-            Showing <span className="text-amber-600 font-bold">{filteredJobs.length}</span> active vacancies
+            Showing <span className="text-[#101a6d] font-black">{filteredJobs.length}</span> active vacancies
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export default function JobsSection({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search job title, skills (e.g. Electrician, Plumbing, MEP)..."
-                className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white"
+                className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] focus:bg-white"
               />
             </div>
 
@@ -100,7 +100,7 @@ export default function JobsSection({
               <select
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] focus:bg-white cursor-pointer"
               >
                 <option value="All Countries">All Destination Countries</option>
                 {countries.map((c) => (
@@ -119,10 +119,10 @@ export default function JobsSection({
               <button
                 key={sec}
                 onClick={() => setSelectedSector(sec)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs transition-all ${
                   selectedSector === sec
-                    ? 'bg-amber-400 text-slate-950 shadow-sm font-bold'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-gradient-to-r from-[#ffd300] to-[#f9c913] text-[#020024] shadow-sm font-extrabold'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold'
                 }`}
               >
                 {sec}
@@ -137,12 +137,12 @@ export default function JobsSection({
             {filteredJobs.map((job) => (
               <div
                 key={job.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 flex flex-col lg:flex-row lg:items-center justify-between gap-6 group"
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col lg:flex-row lg:items-center justify-between gap-6 group"
               >
                 {/* Details */}
                 <div className="space-y-3 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-bold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">
+                    <span className="text-xs font-bold text-[#101a6d] bg-[#e5f2f9] px-2.5 py-1 rounded-md border border-[#25c0f3]/30">
                       {job.sector}
                     </span>
                     <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100 flex items-center gap-1">
@@ -157,7 +157,7 @@ export default function JobsSection({
                   <div>
                     <h3 
                       onClick={() => onSelectJob(job)}
-                      className="text-xl sm:text-2xl font-bold font-display text-slate-900 group-hover:text-blue-700 transition-colors cursor-pointer"
+                      className="text-xl sm:text-2xl font-bold font-display text-slate-900 group-hover:text-[#101a6d] transition-colors cursor-pointer"
                     >
                       {job.title}
                     </h3>
@@ -167,8 +167,8 @@ export default function JobsSection({
                   </div>
 
                   {/* Location & Summary */}
-                  <div className="flex items-center gap-2 text-xs font-bold text-amber-800">
-                    <MapPin className="w-4 h-4 text-amber-600 shrink-0" />
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#101a6d]">
+                    <MapPin className="w-4 h-4 text-[#f9c913] shrink-0" />
                     <span>Location: {job.location} ({job.country})</span>
                   </div>
 
@@ -206,7 +206,7 @@ export default function JobsSection({
                     </button>
                     <button
                       onClick={() => onApplyJob(job)}
-                      className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 shadow-sm transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
+                      className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-md shadow-[#ffd300]/20 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
                     >
                       <span>Apply Now</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -223,7 +223,7 @@ export default function JobsSection({
             <p className="text-xs text-slate-500 mb-4">Try clearing filters or search terms.</p>
             <button
               onClick={resetFilters}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-amber-800 bg-amber-100 hover:bg-amber-200"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] shadow-sm"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Reset Filters

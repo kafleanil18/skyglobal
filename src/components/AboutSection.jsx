@@ -70,11 +70,11 @@ export default function AboutSection({ onOpenHireModal, onOpenResumeModal }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider mb-3">
-            <Building2 className="w-3.5 h-3.5 text-amber-600" />
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#fff8d6] text-[#713f12] border border-[#ffd300]/50 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
+            <Building2 className="w-3.5 h-3.5 text-[#a99410]" />
             About SkyGlobal HR Consultancy
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-slate-900 mb-4">
+          <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#101a6d] mb-4">
             Your Global Talent Partner
           </h2>
           <p className="text-base sm:text-xl text-slate-600 leading-relaxed">
@@ -87,92 +87,92 @@ export default function AboutSection({ onOpenHireModal, onOpenResumeModal }) {
           
           {/* Main Story (7 cols) */}
           <div className="lg:col-span-7 space-y-5 text-slate-700 leading-relaxed">
-            <h3 className="text-2xl font-bold font-display text-slate-950">
+            <h3 className="text-2xl font-bold font-display text-[#101a6d]">
               Licensed Overseas Placements & Strategic Workforce Solutions
             </h3>
             
             <p className="text-justify text-slate-700">
-              <strong className="text-slate-900">SkyGlobal HR Consultancy</strong>, established in <strong>2024</strong>, is a premier recruitment and job placement firm located on the <strong>2nd floor of the Toronto Building, Room 202, in Bur Dubai, UAE</strong>. We excel in connecting employers with top-tier talent across a diverse array of industries, including MEP, electrical trades, healthcare, hospitality, retail, service companies, manufacturing, agriculture, finance, administration, transportation, and construction.
+              <strong className="text-[#101a6d]">SkyGlobal HR Consultancy</strong>, established in <strong>2024</strong>, is a premier recruitment and job placement firm located on the <strong>2nd floor of the Toronto Building, Room 202, in Bur Dubai, UAE</strong>. We excel in connecting employers with top-tier talent across a diverse array of industries, including MEP, electrical trades, healthcare, hospitality, retail, service companies, manufacturing, agriculture, finance, administration, transportation, and construction.
             </p>
 
             <p className="text-justify text-slate-700">
               Our placement reach currently extends to high-demand regions such as <strong>Malta, Croatia, and the UAE</strong>, with active expansion programs into additional <strong>EU countries, Australia, Bulgaria, and Romania</strong>.
             </p>
 
-            <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80">
-              <p className="text-slate-900 font-semibold mb-1 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+            <div className="p-5 rounded-2xl bg-[#e5f2f9]/70 border border-[#b6eafb]">
+              <p className="text-[#101a6d] font-bold mb-1 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#a99410] shrink-0" />
                 Founder & Executive Leadership
               </p>
               <p className="text-sm text-slate-700 text-justify">
-                Our founder and director, <strong className="text-slate-950">Mr. Bhim Lal Gaire</strong>, brings over a decade of extensive experience in the HR and recruitment sector. Throughout his distinguished career, he has significantly contributed to enhancing the reputation of several renowned HR consultancies, delivering exceptional results and forging strong, lasting relationships across the Gulf and European markets.
+                Our founder and director, <strong className="text-[#101a6d]">Mr. Bhim Lal Gaire</strong>, brings over a decade of extensive experience in the HR and recruitment sector. Throughout his distinguished career, he has significantly contributed to enhancing the reputation of several renowned HR consultancies, delivering exceptional results and forging strong, lasting relationships across the Gulf and European markets.
               </p>
             </div>
 
-            <p className="italic text-slate-800 font-medium">
+            <p className="italic text-[#101a6d] font-semibold">
               "Experience the SkyGlobal difference—where talent meets opportunity, and excellence is our standard."
             </p>
 
             <div className="pt-2 flex flex-wrap gap-4">
               <button
                 onClick={onOpenHireModal}
-                className="px-6 py-3 rounded-xl bg-slate-950 text-white hover:bg-slate-850 font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                className="px-6 py-3 rounded-xl bg-[#101a6d] hover:bg-[#182a98] text-[#ffd300] border border-[#ffd300]/40 font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
-                <Briefcase className="w-4 h-4 text-amber-400" />
+                <Briefcase className="w-4 h-4 text-[#ffd300]" />
                 Partner With Us (Hire Talent)
               </button>
               <button
                 onClick={onOpenResumeModal}
-                className="px-6 py-3 rounded-xl bg-amber-400 text-slate-950 hover:bg-amber-300 font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd300] via-[#ffdf47] to-[#f9c913] hover:from-[#ffe56b] hover:to-[#ffd300] text-[#020024] font-extrabold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
-                <Globe2 className="w-4 h-4 text-slate-950" />
+                <Globe2 className="w-4 h-4 text-[#020024]" />
                 Explore International Jobs
               </button>
             </div>
           </div>
 
           {/* Key Quick Facts & Reach Card (5 cols) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 to-[#071328] text-white p-8 rounded-3xl shadow-xl border border-slate-800 space-y-6">
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#101a6d] via-[#09113e] to-[#020024] text-white p-8 rounded-3xl shadow-xl border border-[#182a98] space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-400">
+              <div className="w-12 h-12 rounded-2xl bg-[#ffd300]/20 border border-[#ffd300]/40 flex items-center justify-center text-[#ffd300]">
                 <Building2 className="w-6 h-6" />
               </div>
               <div>
                 <h4 className="font-bold text-lg text-white">SkyGlobal Headquarters</h4>
-                <p className="text-xs text-slate-400">Bur Dubai, United Arab Emirates</p>
+                <p className="text-xs text-[#b6eafb]/80">Bur Dubai, United Arab Emirates</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-800">
-              <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/50">
-                <span className="text-2xl font-black text-amber-400 block">2024</span>
-                <span className="text-xs text-slate-400">Year Established</span>
+            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#182a98]/80">
+              <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
+                <span className="text-2xl font-black text-[#ffd300] block">2024</span>
+                <span className="text-xs text-[#b6eafb]/80">Year Established</span>
               </div>
-              <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/50">
-                <span className="text-2xl font-black text-amber-400 block">10+ Yrs</span>
-                <span className="text-xs text-slate-400">Leadership Experience</span>
+              <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
+                <span className="text-2xl font-black text-[#ffd300] block">10+ Yrs</span>
+                <span className="text-xs text-[#b6eafb]/80">Leadership Experience</span>
               </div>
-              <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/50">
-                <span className="text-2xl font-black text-amber-400 block">6+</span>
-                <span className="text-xs text-slate-400">Global Hubs</span>
+              <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
+                <span className="text-2xl font-black text-[#ffd300] block">6+</span>
+                <span className="text-xs text-[#b6eafb]/80">Global Hubs</span>
               </div>
-              <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/50">
-                <span className="text-2xl font-black text-amber-400 block">100%</span>
-                <span className="text-xs text-slate-400">Ethical & Compliant</span>
+              <div className="p-3 bg-[#101a6d]/60 rounded-xl border border-[#25c0f3]/30">
+                <span className="text-2xl font-black text-[#ffd300] block">100%</span>
+                <span className="text-xs text-[#b6eafb]/80">Ethical & Compliant</span>
               </div>
             </div>
 
-            <div className="space-y-3 pt-2 text-xs text-slate-300">
+            <div className="space-y-3 pt-2 text-xs text-slate-200">
               <div className="flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#ffd300] mt-1.5 shrink-0" />
                 <span><strong>Registered Office:</strong> Toronto Building, 202 2nd Floor, Bur Dubai, Dubai, UAE</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#ffd300] mt-1.5 shrink-0" />
                 <span><strong>Primary Markets:</strong> Malta, Australia, UAE, Croatia, Bulgaria, Romania</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#ffd300] mt-1.5 shrink-0" />
                 <span><strong>Contact Direct:</strong> +971 04 5570778 | info@skyglobalhr.com</span>
               </div>
             </div>

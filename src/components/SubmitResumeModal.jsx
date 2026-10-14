@@ -65,23 +65,23 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#09152b] text-white p-6 sm:p-7 relative">
+        <div className="bg-gradient-to-r from-[#101a6d] via-[#0b1456] to-[#020024] border-b border-[#25c0f3]/20 text-white p-6 sm:p-7 relative">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-slate-800 transition-colors"
+            className="absolute top-5 right-5 text-slate-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
-            <Globe className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd300]/20 text-[#ffd300] text-xs font-bold mb-2 border border-[#ffd300]/30">
+            <Globe className="w-3.5 h-3.5 text-[#ffd300]" />
             International Career Registration
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold font-display text-white">
             Submit Your CV to SkyGlobal HR
           </h2>
-          <p className="text-slate-300 text-xs sm:text-sm mt-1">
+          <p className="text-[#b6eafb] text-xs sm:text-sm mt-1">
             Register your profile with our Dubai recruitment team for upcoming opportunities in Malta, Australia, UAE, Bulgaria, Romania, and Greece.
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="e.g. Michael Fernando"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                   />
                 </div>
 
@@ -130,7 +130,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="michael@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                   />
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="+971 50 123 4567"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                   />
                 </div>
 
@@ -160,7 +160,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="e.g. UAE, Nepal, India, Philippines"
                     value={formData.currentCountry}
                     onChange={(e) => setFormData({ ...formData, currentCountry: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                   />
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                     placeholder="e.g. Electrician, Plumber, F&B Server"
                     value={formData.profession}
                     onChange={(e) => setFormData({ ...formData, profession: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300]"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                   <select
                     value={formData.preferredDestination}
                     onChange={(e) => setFormData({ ...formData, preferredDestination: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#ffd300] focus:border-[#ffd300] bg-white"
                   >
                     <option>Malta (Europe / Schengen)</option>
                     <option>Australia (Training Visa 407 / Skilled)</option>
@@ -205,7 +205,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Upload Resume / CV *
                 </label>
-                <label className="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-amber-50/50 transition-colors">
+                <label className="border-2 border-dashed border-slate-300 hover:border-[#ffd300] rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-[#fff8d6]/50 transition-colors">
                   <Upload className="w-6 h-6 text-slate-400 mb-1" />
                   <span className="text-xs font-semibold text-slate-700">
                     {fileName ? fileName : 'Click to choose PDF or DOCX file'}
@@ -227,7 +227,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-6 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#ffd300] to-[#f9c913] hover:from-[#ffdf47] hover:to-[#ffd300] text-[#020024] font-bold text-sm shadow-md shadow-[#ffd300]/25 transition-all flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
                 Submit CV to SkyGlobal Pool

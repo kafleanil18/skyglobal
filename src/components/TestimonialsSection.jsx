@@ -12,8 +12,8 @@ export default function TestimonialsSection() {
         
         {/* Header matching skyglobalhr.com */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-900 text-xs font-bold uppercase tracking-wider mb-3">
-            <Award className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#e5f2f9] text-[#101a6d] border border-[#25c0f3]/30 text-xs font-bold uppercase tracking-wider mb-3">
+            <Award className="w-3.5 h-3.5 text-[#101a6d]" />
             Candidate & Client Reviews
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-slate-900 mb-2">
@@ -29,18 +29,18 @@ export default function TestimonialsSection() {
           {list.map((item) => (
             <div 
               key={item.id}
-              className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 flex flex-col justify-between group"
+              className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#ffd300]/80 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 {/* 5 Stars */}
-                <div className="flex items-center gap-1 text-amber-400 mb-4">
+                <div className="flex items-center gap-1 text-[#ffd300] mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400" />
+                    <Star key={i} className="w-4 h-4 fill-[#ffd300] text-[#ffd300]" />
                   ))}
                 </div>
 
                 {/* Title */}
-                <h4 className="text-base font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors">
+                <h4 className="text-base font-bold text-slate-900 mb-3 group-hover:text-[#101a6d] transition-colors">
                   "{item.title}"
                 </h4>
 
@@ -52,8 +52,8 @@ export default function TestimonialsSection() {
 
               <div>
                 {/* Category Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-50 text-amber-900 text-xs font-bold mb-4 border border-amber-200/60">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#fff8d6] text-[#101a6d] text-xs font-bold mb-4 border border-[#ffd300]/40">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#101a6d] shrink-0" />
                   <span>{item.category}</span>
                 </div>
 
@@ -82,7 +82,7 @@ export default function TestimonialsSection() {
               <p className="text-xs text-slate-500">Document preparation, embassy submission guidance & ethical compliance.</p>
             </div>
           </div>
-          <span className="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200 shrink-0">
+          <span className="text-xs font-bold text-[#101a6d] bg-[#fff8d6] px-3.5 py-1.5 rounded-full border border-[#ffd300]/50 shrink-0">
             100% Transparency
           </span>
         </div>
