@@ -23,16 +23,20 @@ const INITIAL_USERS = [
   }
 ];
 
-export function AuthProvider({ children }) {
-  const [users, setUsers] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_users');
-    return saved ? JSON.parse(saved) : INITIAL_USERS;
-  });
+function safeStorageGet(key, fallback) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (!saved || saved === 'undefined' || saved === 'null') return fallback;
+    return JSON.parse(saved);
+  } catch (e) {
+    console.warn('Error reading ' + key + ' from localStorage, falling back to default:', e);
+    return fallback;
+  }
+}
 
-  const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_auth_user');
-    return saved ? JSON.parse(saved) : null;
-  });
+export function AuthProvider({ children }) {
+  const [users, setUsers] = useState(() => safeStorageGet('skyglobal_cms_users', INITIAL_USERS));
+  const [currentUser, setCurrentUser] = useState(() => safeStorageGet('skyglobal_cms_auth_user', null));
 
   useEffect(() => {
     localStorage.setItem('skyglobal_cms_users', JSON.stringify(users));

@@ -89,48 +89,38 @@ const INITIAL_EMPLOYER_REQUESTS = [
   }
 ];
 
+function safeStorageGet(key, fallback) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (!saved || saved === 'undefined' || saved === 'null') return fallback;
+    return JSON.parse(saved);
+  } catch (e) {
+    console.warn('Error reading ' + key + ' from localStorage, falling back to default:', e);
+    return fallback;
+  }
+}
+
 export function CMSProvider({ children }) {
   // Jobs
-  const [jobs, setJobs] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_jobs');
-    return saved ? JSON.parse(saved) : JOBS_LIST;
-  });
+  const [jobs, setJobs] = useState(() => safeStorageGet('skyglobal_cms_jobs', JOBS_LIST));
 
   // Applications
-  const [applications, setApplications] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_applications');
-    return saved ? JSON.parse(saved) : INITIAL_APPLICATIONS;
-  });
+  const [applications, setApplications] = useState(() => safeStorageGet('skyglobal_cms_applications', INITIAL_APPLICATIONS));
 
   // Employer Requests
-  const [employerRequests, setEmployerRequests] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_employer_requests');
-    return saved ? JSON.parse(saved) : INITIAL_EMPLOYER_REQUESTS;
-  });
+  const [employerRequests, setEmployerRequests] = useState(() => safeStorageGet('skyglobal_cms_employer_requests', INITIAL_EMPLOYER_REQUESTS));
 
   // Countries
-  const [countries, setCountries] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_countries');
-    return saved ? JSON.parse(saved) : COUNTRIES;
-  });
+  const [countries, setCountries] = useState(() => safeStorageGet('skyglobal_cms_countries', COUNTRIES));
 
   // Blogs / News
-  const [blogs, setBlogs] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_blogs');
-    return saved ? JSON.parse(saved) : BLOGS;
-  });
+  const [blogs, setBlogs] = useState(() => safeStorageGet('skyglobal_cms_blogs', BLOGS));
 
   // Testimonials
-  const [testimonials, setTestimonials] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_testimonials');
-    return saved ? JSON.parse(saved) : TESTIMONIALS;
-  });
+  const [testimonials, setTestimonials] = useState(() => safeStorageGet('skyglobal_cms_testimonials', TESTIMONIALS));
 
   // Company Information
-  const [companyInfo, setCompanyInfo] = useState(() => {
-    const saved = localStorage.getItem('skyglobal_cms_company_info');
-    return saved ? JSON.parse(saved) : COMPANY_INFO;
-  });
+  const [companyInfo, setCompanyInfo] = useState(() => safeStorageGet('skyglobal_cms_company_info', COMPANY_INFO));
 
   // Persistence side-effects
   useEffect(() => {
