@@ -26,7 +26,10 @@ export default function JobModal({ job, isOpen, onClose }) {
     currentCountry: '',
     experienceYears: '3-5 years',
     note: '',
-    fileName: ''
+    fileName: '',
+    fileDataUrl: null,
+    fileSize: null,
+    fileType: null
   });
 
   if (!isOpen || !job) return null;
@@ -43,7 +46,10 @@ export default function JobModal({ job, isOpen, onClose }) {
       experienceYears: formData.experienceYears,
       preferredDestination: job.country || job.location,
       note: formData.note,
-      fileName: formData.fileName || 'Applicant_Resume.pdf'
+      fileName: formData.fileName || 'Applicant_Resume.pdf',
+      fileDataUrl: formData.fileDataUrl,
+      fileSize: formData.fileSize,
+      fileType: formData.fileType
     });
     setSubmitted(true);
     setTimeout(() => {
@@ -57,7 +63,18 @@ export default function JobModal({ job, isOpen, onClose }) {
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, fileName: e.target.files[0].name });
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData(prev => ({
+          ...prev,
+          fileName: file.name,
+          fileDataUrl: reader.result,
+          fileSize: file.size,
+          fileType: file.type
+        }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 

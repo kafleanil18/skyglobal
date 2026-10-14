@@ -226,7 +226,10 @@ export function CMSProvider({ children }) {
       preferredDestination: appData.preferredDestination || 'Malta',
       appliedDate: new Date().toISOString().split('T')[0],
       status: 'Pending',
-      resumeName: appData.fileName || 'Attached_Resume.pdf',
+      resumeName: appData.fileName || appData.resumeName || 'Attached_Resume.pdf',
+      resumeDataUrl: appData.fileDataUrl || appData.resumeDataUrl || null,
+      resumeSize: appData.fileSize || appData.resumeSize || null,
+      resumeType: appData.fileType || appData.resumeType || null,
       notes: appData.note || 'Online portal submission.'
     };
     setApplications(prev => [newApp, ...prev]);

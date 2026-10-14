@@ -15,7 +15,12 @@ import { useCMS } from '../context/CMSContext';
 export default function SubmitResumeModal({ isOpen, onClose }) {
   const { addApplication, countries } = useCMS();
   const [submitted, setSubmitted] = useState(false);
-  const [fileName, setFileName] = useState('');
+  const [fileState, setFileState] = useState({
+    name: '',
+    dataUrl: null,
+    size: null,
+    type: null
+  });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -40,13 +45,16 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
       experienceYears: formData.experienceYears,
       preferredDestination: formData.preferredDestination,
       note: `Profession: ${formData.profession || 'Not specified'}. Registered through Fast-Track CV drop.`,
-      fileName: fileName || 'Candidate_CV.pdf'
+      fileName: fileState.name || 'Candidate_CV.pdf',
+      fileDataUrl: fileState.dataUrl,
+      fileSize: fileState.size,
+      fileType: fileState.type
     });
     setSubmitted(true);
     setTimeout(() => {
       setTimeout(() => {
         setSubmitted(false);
-        setFileName('');
+        setFileState({ name: '', dataUrl: null, size: null, type: null });
         onClose();
       }, 2800);
     }, 500);
@@ -54,7 +62,17 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name);
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFileState({
+          name: file.name,
+          dataUrl: reader.result,
+          size: file.size,
+          type: file.type
+        });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -207,7 +225,7 @@ export default function SubmitResumeModal({ isOpen, onClose }) {
                 <label className="border-2 border-dashed border-slate-300 hover:border-[#a99410] rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-[#fff8d6]/50 transition-colors">
                   <Upload className="w-6 h-6 text-slate-400 mb-1" />
                   <span className="text-xs font-semibold text-slate-700">
-                    {fileName ? fileName : 'Click to choose PDF or DOCX file'}
+                    {fileState.name ? fileState.name : 'Click to choose PDF or DOCX file'}
                   </span>
                   <span className="text-[11px] text-slate-400 mt-0.5">Maximum file size 10MB</span>
                   <input

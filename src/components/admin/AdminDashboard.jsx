@@ -16,10 +16,12 @@ import {
   TrendingUp, 
   MapPin, 
   Clock,
-  ArrowRight
+  ArrowRight,
+  Download
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCMS } from '../../context/CMSContext';
+import { downloadApplicantCV } from '../../utils/cvDownloader';
 import skyGlobalLogo from '../../assets/SkyGlobalLogo.png';
 
 import AdminJobsTab from './AdminJobsTab';
@@ -244,6 +246,16 @@ export default function AdminDashboard({ onExitDashboard }) {
                         <span className="px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-amber-100 text-amber-800">
                           {app.status}
                         </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            downloadApplicantCV(app);
+                          }}
+                          className="p-1.5 rounded-lg bg-slate-100 hover:bg-[#faf8ee] hover:text-[#020024] text-slate-600 transition-colors cursor-pointer"
+                          title={`Download CV for ${app.applicantName}`}
+                        >
+                          <Download className="w-3.5 h-3.5 text-[#a99410]" />
+                        </button>
                       </div>
                     </div>
                   ))}
