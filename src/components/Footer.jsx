@@ -152,7 +152,7 @@ export default function Footer({ onOpenHireModal, onOpenResumeModal, onOpenLogin
                 onClick={onOpenLoginModal} 
                 className="text-left text-amber-400/90 hover:text-amber-300 font-semibold transition-colors"
               >
-                Staff Login / CMS
+                Log In
               </button>
               <button onClick={onOpenResumeModal} className="text-left hover:text-amber-400 transition-colors">
                 Submit CV

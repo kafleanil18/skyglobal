@@ -88,7 +88,7 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
               ))}
             </nav>
 
-            {/* Action Buttons & Staff CMS Access */}
+            {/* Action Buttons & Log In */}
             <div className="hidden sm:flex items-center gap-2.5">
               {isAuthenticated ? (
                 <button
@@ -105,11 +105,11 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
               ) : (
                 <button
                   onClick={onOpenLoginModal}
-                  className="px-3 py-2 text-xs font-semibold rounded-xl text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 transition-colors flex items-center gap-1.5"
-                  title="Staff & Admin Login"
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 transition-colors flex items-center gap-1.5"
+                  title="Log In to Portal"
                 >
                   <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Staff CMS</span>
+                  <span>Log In</span>
                 </button>
               )}
 
@@ -145,7 +145,7 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
                   onClick={onOpenLoginModal}
                   className="px-2.5 py-1.5 text-xs font-semibold rounded-lg text-amber-300 bg-slate-800 border border-slate-700"
                 >
-                  Staff
+                  Log In
                 </button>
               )}
 
@@ -200,7 +200,7 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
                 className="w-full py-2.5 px-4 text-xs font-bold uppercase tracking-wider rounded-xl text-center text-amber-300 bg-slate-800 border border-slate-700 flex items-center justify-center gap-2"
               >
                 <Lock className="w-4 h-4 text-amber-400" />
-                Staff CMS Login (Admin / Super Admin)
+                Log In (Admin / Super Admin)
               </button>
             )}
 

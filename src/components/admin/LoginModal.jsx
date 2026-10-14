@@ -61,11 +61,11 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold mb-2 border border-amber-500/30">
             <Lock className="w-3.5 h-3.5 text-amber-400" />
-            SkyGlobal Staff & CMS Portal
+            Portal Log In
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold font-display text-white">
-            Administrative Sign In
+            Log In to SkyGlobal CMS
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm mt-1">
             Access the content management system to manage jobs, applicants, destination hubs, and portal settings.
