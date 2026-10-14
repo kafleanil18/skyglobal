@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  
+  --color-brand-50: #f0f7ff;
+  --color-brand-100: #e0effe;
+  --color-brand-200: #bae0fd;
+  --color-brand-300: #7cc7fb;
+  --color-brand-400: #38aaf7;
+  --color-brand-500: #0e8fe7;
+  --color-brand-600: #0271c5;
+  --color-brand-700: #035aa0;
+  --color-brand-800: #074c83;
+  --color-brand-900: #0c406d;
+  --color-brand-950: #082949;
+
+  --color-navy-800: #0a192f;
+  --color-navy-900: #061122;
+  --color-navy-950: #030a14;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-panel-dark {
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Smooth gradients */
+.hero-gradient {
+  background: radial-gradient(120% 120% at 50% 0%, #0c406d 0%, #061122 60%, #030a14 100%);
+}
+
+.glow-effect {
+  position: relative;
+}
+.glow-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(14, 143, 231, 0.25) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
