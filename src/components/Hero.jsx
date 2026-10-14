@@ -58,14 +58,8 @@ export default function Hero({
           </h1>
 
           {/* Tagline from skyglobalhr.com */}
-          <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0ca7da] tracking-tight mb-4 drop-shadow-sm">
+          <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0ca7da] tracking-tight mb-8 md:mb-10 drop-shadow-sm">
             Your journey starts here.
-          </p>
-
-          {/* Subtitle from skyglobalhr.com */}
-          <p className="text-base sm:text-lg text-slate-200 max-w-3xl mx-auto leading-relaxed mb-10">
-            {COMPANY_INFO.description} Specializing in verified overseas placements across{' '}
-            <span className="text-[#a99410] font-semibold">Malta, Australia, UAE, Bulgaria, Romania, and Greece</span>.
           </p>
 
           {/* Integrated Search Engine */}
