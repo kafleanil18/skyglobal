@@ -100,6 +100,14 @@ function safeStorageGet(key, fallback) {
   }
 }
 
+function safeStorageSet(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.warn('Unable to persist ' + key + ' to localStorage:', e);
+  }
+}
+
 export function CMSProvider({ children }) {
   // Jobs
   const [jobs, setJobs] = useState(() => safeStorageGet('skyglobal_cms_jobs', JOBS_LIST));
@@ -124,31 +132,31 @@ export function CMSProvider({ children }) {
 
   // Persistence side-effects
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_jobs', JSON.stringify(jobs));
+    safeStorageSet('skyglobal_cms_jobs', jobs);
   }, [jobs]);
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_applications', JSON.stringify(applications));
+    safeStorageSet('skyglobal_cms_applications', applications);
   }, [applications]);
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_employer_requests', JSON.stringify(employerRequests));
+    safeStorageSet('skyglobal_cms_employer_requests', employerRequests);
   }, [employerRequests]);
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_countries', JSON.stringify(countries));
+    safeStorageSet('skyglobal_cms_countries', countries);
   }, [countries]);
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_blogs', JSON.stringify(blogs));
+    safeStorageSet('skyglobal_cms_blogs', blogs);
   }, [blogs]);
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_testimonials', JSON.stringify(testimonials));
+    safeStorageSet('skyglobal_cms_testimonials', testimonials);
   }, [testimonials]);
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_company_info', JSON.stringify(companyInfo));
+    safeStorageSet('skyglobal_cms_company_info', companyInfo);
   }, [companyInfo]);
 
   // --- Job Operations ---

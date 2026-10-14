@@ -34,19 +34,35 @@ function safeStorageGet(key, fallback) {
   }
 }
 
+function safeStorageSet(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.warn('Unable to persist ' + key + ' to localStorage:', e);
+  }
+}
+
+function safeStorageRemove(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (e) {
+    console.warn('Unable to remove ' + key + ' from localStorage:', e);
+  }
+}
+
 export function AuthProvider({ children }) {
   const [users, setUsers] = useState(() => safeStorageGet('skyglobal_cms_users', INITIAL_USERS));
   const [currentUser, setCurrentUser] = useState(() => safeStorageGet('skyglobal_cms_auth_user', null));
 
   useEffect(() => {
-    localStorage.setItem('skyglobal_cms_users', JSON.stringify(users));
+    safeStorageSet('skyglobal_cms_users', users);
   }, [users]);
 
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem('skyglobal_cms_auth_user', JSON.stringify(currentUser));
+      safeStorageSet('skyglobal_cms_auth_user', currentUser);
     } else {
-      localStorage.removeItem('skyglobal_cms_auth_user');
+      safeStorageRemove('skyglobal_cms_auth_user');
     }
   }, [currentUser]);
 
