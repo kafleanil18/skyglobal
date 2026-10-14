@@ -143,6 +143,7 @@ export default function Footer({ onOpenHireModal, onOpenResumeModal, onOpenLogin
             </h3>
             <div className="grid grid-cols-2 gap-2.5 text-xs text-slate-400">
               <a href="#home" className="hover:text-amber-400 transition-colors">Home</a>
+              <a href="#about" className="hover:text-amber-400 transition-colors">About Us</a>
               <a href="#how-we-are-different" className="hover:text-amber-400 transition-colors">Why Choose Us</a>
               <a href="#countries" className="hover:text-amber-400 transition-colors">Destinations</a>
               <a href="#sectors" className="hover:text-amber-400 transition-colors">Our Core Sectors</a>

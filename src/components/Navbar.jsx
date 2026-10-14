@@ -30,6 +30,7 @@ export default function Navbar({ onOpenHireModal, onOpenResumeModal, onOpenLogin
 
   const navLinks = [
     { label: 'Home', href: '#home' },
+    { label: 'About', href: '#about' },
     { label: 'Why Us', href: '#how-we-are-different' },
     { label: 'Countries', href: '#countries' },
     { label: 'Sectors', href: '#sectors' },

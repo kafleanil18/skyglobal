@@ -4,6 +4,7 @@ import { CMSProvider, useCMS } from './context/CMSContext';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import AboutSection from './components/AboutSection';
 import HowWeAreDifferent from './components/HowWeAreDifferent';
 import CountriesSection from './components/CountriesSection';
 import SectorsSection from './components/SectorsSection';
@@ -118,6 +119,12 @@ function MainWebsite() {
           selectedCountry={selectedCountry}
           setSelectedCountry={setSelectedCountry}
           onSearchSubmit={handleScrollToJobs}
+          onOpenHireModal={() => setIsHireModalOpen(true)}
+          onOpenResumeModal={() => setIsResumeModalOpen(true)}
+        />
+
+        {/* About SkyGlobal HR Consultancy (From skyglobalhr.com/about) */}
+        <AboutSection 
           onOpenHireModal={() => setIsHireModalOpen(true)}
           onOpenResumeModal={() => setIsResumeModalOpen(true)}
         />
