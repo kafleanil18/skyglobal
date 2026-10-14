@@ -17,7 +17,8 @@ import {
   MapPin, 
   Clock,
   ArrowRight,
-  Download
+  Download,
+  Camera
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCMS } from '../../context/CMSContext';
@@ -29,18 +30,20 @@ import AdminApplicationsTab from './AdminApplicationsTab';
 import AdminEmployersTab from './AdminEmployersTab';
 import AdminCountriesTab from './AdminCountriesTab';
 import AdminBlogsTab from './AdminBlogsTab';
+import AdminGalleryTab from './AdminGalleryTab';
 import AdminUsersTab from './AdminUsersTab';
 import AdminSettingsTab from './AdminSettingsTab';
 
 export default function AdminDashboard({ onExitDashboard }) {
   const { currentUser, logout, isSuperAdmin } = useAuth();
-  const { jobs, applications, employerRequests, blogs, countries } = useCMS();
+  const { jobs, applications, employerRequests, blogs, countries, gallery } = useCMS();
   const [activeTab, setActiveTab] = useState('overview');
 
   const navItems = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'jobs', label: 'Job Vacancies', icon: Briefcase, count: jobs.length },
     { id: 'applications', label: 'Candidate CVs', icon: FileText, count: applications.length },
+    { id: 'gallery', label: 'Photo Gallery', icon: Camera, count: gallery.length },
     { id: 'employers', label: 'Employer Leads', icon: Building2, count: employerRequests.length },
     { id: 'countries', label: 'Destinations', icon: Globe2, count: countries.length },
     { id: 'blogs', label: 'Visa News', icon: Newspaper, count: blogs.length },
@@ -290,12 +293,22 @@ export default function AdminDashboard({ onExitDashboard }) {
                   <h4 className="text-sm font-bold text-slate-900">Publish Visa Update</h4>
                   <p className="text-xs text-slate-500 mt-0.5">Share immigration and labor policy news.</p>
                 </button>
+
+                <button
+                  onClick={() => setActiveTab('gallery')}
+                  className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm text-left transition-all group sm:col-span-3 lg:col-span-1"
+                >
+                  <Camera className="w-5 h-5 text-[#a99410] mb-2 group-hover:scale-110 transition-transform" />
+                  <h4 className="text-sm font-bold text-slate-900">Upload to Gallery</h4>
+                  <p className="text-xs text-slate-500 mt-0.5">Add candidate deployment milestones by time frame.</p>
+                </button>
               </div>
             </div>
           )}
 
           {activeTab === 'jobs' && <AdminJobsTab />}
           {activeTab === 'applications' && <AdminApplicationsTab />}
+          {activeTab === 'gallery' && <AdminGalleryTab />}
           {activeTab === 'employers' && <AdminEmployersTab />}
           {activeTab === 'countries' && <AdminCountriesTab />}
           {activeTab === 'blogs' && <AdminBlogsTab />}

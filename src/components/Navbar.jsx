@@ -42,6 +42,7 @@ export default function Navbar({
     { id: 'countries', label: 'Destinations' },
     { id: 'sectors', label: 'Sectors' },
     { id: 'jobs', label: 'Find Jobs' },
+    { id: 'gallery', label: 'Gallery' },
     { id: 'blogs', label: 'Visa News' },
   ];
 

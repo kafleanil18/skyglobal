@@ -11,6 +11,7 @@ import CountriesSection from './components/CountriesSection';
 import SectorsSection from './components/SectorsSection';
 import JobsSection from './components/JobsSection';
 import BlogsSection from './components/BlogsSection';
+import GallerySection from './components/GallerySection';
 import TestimonialsSection from './components/TestimonialsSection';
 import Footer from './components/Footer';
 
@@ -30,17 +31,18 @@ import {
   Layers, 
   Briefcase, 
   FileText, 
-  Info 
+  Info,
+  Camera
 } from 'lucide-react';
 
 function MainWebsite() {
   const { currentUser, isSuperAdmin, isAuthenticated } = useAuth();
   const { jobs, countries, companyInfo } = useCMS();
 
-  // Page Routing State ('home' | 'about' | 'countries' | 'sectors' | 'jobs' | 'blogs')
+  // Page Routing State ('home' | 'about' | 'countries' | 'sectors' | 'jobs' | 'gallery' | 'blogs')
   const [currentPage, setCurrentPage] = useState(() => {
     const hash = window.location.hash.replace('#', '').toLowerCase();
-    const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'blogs'];
+    const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'gallery', 'blogs'];
     return valid.includes(hash) ? hash : 'home';
   });
 
@@ -61,7 +63,7 @@ function MainWebsite() {
   useEffect(() => {
     const onHashChange = () => {
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'blogs'];
+      const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'gallery', 'blogs'];
       if (valid.includes(hash)) {
         setCurrentPage(hash);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -264,7 +266,21 @@ function MainWebsite() {
           </div>
         )}
 
-        {/* 6. DEDICATED VISA UPDATES & BLOGS PAGE */}
+        {/* 6. DEDICATED VISUAL GALLERY PAGE */}
+        {currentPage === 'gallery' && (
+          <div>
+            <PageHeader 
+              badge="Milestones & Events"
+              icon={Camera}
+              title="SkyGlobal Photographic Archive"
+              subtitle="Explore photographic highlights of our candidate deployments, visa handovers, international client delegations, and company events across time."
+              onBackToHome={() => navigateTo('home')}
+            />
+            <GallerySection />
+          </div>
+        )}
+
+        {/* 7. DEDICATED VISA UPDATES & BLOGS PAGE */}
         {currentPage === 'blogs' && (
           <div>
             <PageHeader 

@@ -161,6 +161,7 @@ export default function Footer({ onNavigate, onOpenHireModal, onOpenResumeModal,
               <button onClick={(e) => handleFooterNav('countries', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Destinations</button>
               <button onClick={(e) => handleFooterNav('sectors', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Our Core Sectors</button>
               <button onClick={(e) => handleFooterNav('jobs', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Browse Jobs</button>
+              <button onClick={(e) => handleFooterNav('gallery', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Photo Gallery</button>
               <button onClick={(e) => handleFooterNav('blogs', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Visa Updates</button>
               <a href="#how-we-are-different" onClick={(e) => handleFooterNav('home', e)} className="hover:text-[#a99410] transition-colors cursor-pointer">Why Choose Us</a>
               <button 

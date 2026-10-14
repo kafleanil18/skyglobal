@@ -523,3 +523,104 @@ export const BLOGS = [
     source: "Directorate-General for Migration & Home Affairs, European Commission"
   }
 ];
+
+export const GALLERY_CATEGORIES = [
+  'All',
+  'Visa Handovers',
+  'Candidate Deployments',
+  'Client Delegations',
+  'Candidate Orientations',
+  'Dubai Office',
+  'Events & Seminars'
+];
+
+export const INITIAL_GALLERY = [
+  {
+    id: 'gal-1',
+    title: 'Malta Single Work Permit Handover Ceremony',
+    category: 'Visa Handovers',
+    timeframe: 'October 2026',
+    date: '2026-10-08',
+    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+    location: 'SkyGlobal Operations Center, Dubai, UAE',
+    description: 'Celebrating the successful issuance and handover of European single work permits for our latest batch of MEP electricians and hospitality supervisors relocating to Malta.',
+    tags: ['Malta', 'Visa Handover', 'MEP Trades', 'October 2026']
+  },
+  {
+    id: 'gal-2',
+    title: 'Group Departure: Technicians Deployment to Valletta',
+    category: 'Candidate Deployments',
+    timeframe: 'September 2026',
+    date: '2026-09-22',
+    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
+    location: 'Dubai International Airport (DXB)',
+    description: 'Our dedicated welfare officer seeing off 14 certified HVAC and maintenance technicians bound for employment with top tier contractors across Malta and Cyprus.',
+    tags: ['Airport Departure', 'Malta Deployment', 'Technicians', 'September 2026']
+  },
+  {
+    id: 'gal-3',
+    title: 'European Employer Delegation & Practical Trade Testing',
+    category: 'Client Delegations',
+    timeframe: 'August 2026',
+    date: '2026-08-14',
+    image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
+    location: 'Technical Evaluation Center, Kathmandu',
+    description: 'Visiting HR directors and engineering executives from Malta assessing prospective candidates in live electrical wiring, pipe fabrication, and structural welding.',
+    tags: ['Trade Testing', 'Client Delegation', 'Skill Verification', 'August 2026']
+  },
+  {
+    id: 'gal-4',
+    title: 'Hospitality Staff Pre-Departure Cultural Orientation',
+    category: 'Candidate Orientations',
+    timeframe: 'July 2026',
+    date: '2026-07-29',
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80',
+    location: 'SkyGlobal Training Academy, Dubai, UAE',
+    description: 'Interactive cultural adaptation, European workplace etiquette, and labor rights orientation workshop conducted for food & beverage and front-office hospitality personnel.',
+    tags: ['Cultural Orientation', 'Hospitality', 'Labor Rights', 'July 2026']
+  },
+  {
+    id: 'gal-5',
+    title: 'SkyGlobal Corporate HQ Strategic Planning Session',
+    category: 'Dubai Office',
+    timeframe: 'June 2026',
+    date: '2026-06-18',
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
+    location: 'Toronto Building, Bur Dubai, UAE',
+    description: 'Quarterly review with our international recruitment specialists, compliance auditors, and consular liaison officers optimizing candidate processing timelines.',
+    tags: ['Dubai HQ', 'Management', 'Strategy', 'June 2026']
+  },
+  {
+    id: 'gal-6',
+    title: 'Australia Subclass 407 Training Visa Grant Celebration',
+    category: 'Visa Handovers',
+    timeframe: 'May 2026',
+    date: '2026-05-11',
+    image: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80',
+    location: 'SkyGlobal Immigration Desk, Dubai, UAE',
+    description: 'Congratulating candidates on receiving approved Australian temporary activity training visa grants for occupational training programs across Sydney and Melbourne.',
+    tags: ['Australia', 'Subclass 407', 'Visa Grant', 'May 2026']
+  },
+  {
+    id: 'gal-7',
+    title: 'Bulgaria & Romania Industrial Workforce Partnership Sign-off',
+    category: 'Client Delegations',
+    timeframe: 'March 2026',
+    date: '2026-03-20',
+    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80',
+    location: 'SkyGlobal International Desk, Dubai',
+    description: 'Finalizing mutual bilateral staffing agreements with manufacturing and logistics partners from Sofia and Bucharest to supply verified Asian workforce talent.',
+    tags: ['Bulgaria', 'Romania', 'Bilateral Agreement', 'March 2026']
+  },
+  {
+    id: 'gal-8',
+    title: 'Annual Ethical Overseas Recruitment Forum',
+    category: 'Events & Seminars',
+    timeframe: 'November 2025',
+    date: '2025-11-15',
+    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
+    location: 'Grand Hyatt Dubai Convention Centre',
+    description: 'Keynote presentation and stakeholder panel addressing fair hiring practices, employer-pays standards, and zero-fee overseas candidate placement.',
+    tags: ['Conference', 'Ethical Recruitment', 'Dubai Forum', 'November 2025']
+  }
+];

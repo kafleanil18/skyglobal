@@ -5,7 +5,9 @@ import {
   COUNTRIES, 
   SECTORS, 
   TESTIMONIALS, 
-  BLOGS 
+  BLOGS,
+  INITIAL_GALLERY,
+  GALLERY_CATEGORIES
 } from '../data/skyGlobalData';
 
 const CMSContext = createContext();
@@ -137,6 +139,9 @@ export function CMSProvider({ children }) {
   // Company Information
   const [companyInfo, setCompanyInfo] = useState(() => safeStorageGet('skyglobal_cms_company_info', COMPANY_INFO));
 
+  // Gallery
+  const [gallery, setGallery] = useState(() => safeStorageGet('skyglobal_cms_gallery', INITIAL_GALLERY));
+
   // Persistence side-effects
   useEffect(() => {
     safeStorageSet('skyglobal_cms_jobs', jobs);
@@ -165,6 +170,10 @@ export function CMSProvider({ children }) {
   useEffect(() => {
     safeStorageSet('skyglobal_cms_company_info', companyInfo);
   }, [companyInfo]);
+
+  useEffect(() => {
+    safeStorageSet('skyglobal_cms_gallery', gallery);
+  }, [gallery]);
 
   // --- Job Operations ---
   const addJob = (newJobData) => {
@@ -400,6 +409,50 @@ export function CMSProvider({ children }) {
     setCompanyInfo(prev => ({ ...prev, ...newInfo }));
   };
 
+  // --- Gallery Operations ---
+  const addGalleryItem = (itemData) => {
+    const newItem = {
+      id: `gal-${Date.now()}`,
+      title: itemData.title || 'SkyGlobal Milestone',
+      category: itemData.category || 'Visa Handovers',
+      timeframe: itemData.timeframe || 'October 2026',
+      date: itemData.date || new Date().toISOString().split('T')[0],
+      image: itemData.image || 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+      location: itemData.location || 'SkyGlobal Dubai, UAE',
+      description: itemData.description || '',
+      tags: Array.isArray(itemData.tags)
+        ? itemData.tags
+        : typeof itemData.tags === 'string'
+          ? itemData.tags.split(',').map(s => s.trim()).filter(Boolean)
+          : [itemData.category, itemData.timeframe].filter(Boolean)
+    };
+    setGallery(prev => [newItem, ...prev]);
+    return newItem;
+  };
+
+  const updateGalleryItem = (itemId, updatedFields) => {
+    setGallery(prev => prev.map(item => {
+      if (item.id === itemId || String(item.id) === String(itemId)) {
+        return {
+          ...item,
+          ...updatedFields,
+          tags: updatedFields.tags !== undefined
+            ? Array.isArray(updatedFields.tags)
+              ? updatedFields.tags
+              : typeof updatedFields.tags === 'string'
+                ? updatedFields.tags.split(',').map(s => s.trim()).filter(Boolean)
+                : item.tags
+            : item.tags
+        };
+      }
+      return item;
+    }));
+  };
+
+  const deleteGalleryItem = (itemId) => {
+    setGallery(prev => prev.filter(item => item.id !== itemId && String(item.id) !== String(itemId)));
+  };
+
   // Reset to default data
   const resetAllToDefaults = () => {
     setJobs(JOBS_LIST);
@@ -409,6 +462,7 @@ export function CMSProvider({ children }) {
     setBlogs(BLOGS);
     setTestimonials(TESTIMONIALS);
     setCompanyInfo(COMPANY_INFO);
+    setGallery(INITIAL_GALLERY);
     localStorage.removeItem('skyglobal_cms_jobs');
     localStorage.removeItem('skyglobal_cms_applications');
     localStorage.removeItem('skyglobal_cms_employer_requests');
@@ -416,6 +470,7 @@ export function CMSProvider({ children }) {
     localStorage.removeItem('skyglobal_cms_blogs');
     localStorage.removeItem('skyglobal_cms_testimonials');
     localStorage.removeItem('skyglobal_cms_company_info');
+    localStorage.removeItem('skyglobal_cms_gallery');
   };
 
   return (
@@ -447,6 +502,11 @@ export function CMSProvider({ children }) {
       deleteTestimonial,
       companyInfo,
       updateCompanyInfo,
+      gallery,
+      galleryCategories: GALLERY_CATEGORIES,
+      addGalleryItem,
+      updateGalleryItem,
+      deleteGalleryItem,
       resetAllToDefaults
     }}>
       {children}
