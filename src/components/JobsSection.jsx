@@ -9,7 +9,8 @@ import {
   ArrowRight, 
   RotateCcw,
   Sparkles,
-  FileText
+  FileText,
+  Users
 } from 'lucide-react';
 
 export default function JobsSection({ 
@@ -145,6 +146,26 @@ export default function JobsSection({
                     <span className="text-xs font-bold text-[#101a6d] bg-[#e5f2f9] px-2.5 py-1 rounded-md border border-[#25c0f3]/30">
                       {job.sector}
                     </span>
+                    <span className="text-xs font-bold text-[#020024] bg-[#faf8ee] border border-[#a99410]/50 px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-xs">
+                      <Users className="w-3.5 h-3.5 text-[#a99410]" />
+                      <span>{job.vacancies || 1} {Number(job.vacancies) === 1 ? 'Vacancy' : 'Vacancies'}</span>
+                    </span>
+                    {job.status === 'Awaiting Confirmation' ? (
+                      <span className="text-xs font-semibold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200 flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Awaiting Confirmation</span>
+                      </span>
+                    ) : job.status === 'Inactive' ? (
+                      <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+                        <span>Closed / Inactive</span>
+                      </span>
+                    ) : (
+                      <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Active Hiring</span>
+                      </span>
+                    )}
                     <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100 flex items-center gap-1">
                       <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
                       Visa Sponsored
@@ -200,17 +221,34 @@ export default function JobsSection({
                   <div className="flex items-center gap-2 w-full sm:w-auto">
                     <button
                       onClick={() => onSelectJob(job)}
-                      className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors flex-1 sm:flex-none text-center"
+                      className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors flex-1 sm:flex-none text-center cursor-pointer"
                     >
                       Job Details
                     </button>
-                    <button
-                      onClick={() => onApplyJob(job)}
-                      className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/20 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
-                    >
-                      <span>Apply Now</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                    {job.status === 'Inactive' ? (
+                      <button
+                        disabled
+                        className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 bg-slate-100 border border-slate-200 cursor-not-allowed flex items-center justify-center gap-1.5 flex-1 sm:flex-none"
+                      >
+                        <span>Closed</span>
+                      </button>
+                    ) : job.status === 'Awaiting Confirmation' ? (
+                      <button
+                        onClick={() => onApplyJob(job)}
+                        className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-amber-400 to-[#a99410] hover:from-amber-300 hover:to-[#bfa715] shadow-md shadow-amber-500/20 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none cursor-pointer"
+                      >
+                        <span>Pre-Register</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => onApplyJob(job)}
+                        className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/20 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none cursor-pointer"
+                      >
+                        <span>Apply Now</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

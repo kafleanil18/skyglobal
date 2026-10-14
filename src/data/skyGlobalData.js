@@ -182,6 +182,8 @@ export const SECTORS = [
 export const JOBS_LIST = [
   {
     id: 'job-mep-1',
+    vacancies: 6,
+    status: 'Active',
     title: 'Electrician (Technical Trade Sector)',
     company: 'Established Technical Trade Client',
     location: 'Malta',
@@ -208,6 +210,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-2',
+    vacancies: 4,
+    status: 'Active',
     title: 'Maintenance Technician',
     company: 'Commercial Facility Client',
     location: 'Malta',
@@ -234,6 +238,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-3',
+    vacancies: 5,
+    status: 'Active',
     title: 'Plumber',
     company: 'Building Services Client',
     location: 'Malta',
@@ -260,6 +266,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-4',
+    vacancies: 2,
+    status: 'Awaiting Confirmation',
     title: 'MEP Company Procurement Officer',
     company: 'Leading MEP Contracting Firm',
     location: 'Malta',
@@ -286,6 +294,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-5',
+    vacancies: 1,
+    status: 'Active',
     title: 'MEP Project Manager',
     company: 'Construction & Building Services Group',
     location: 'Malta',
@@ -312,6 +322,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-6',
+    vacancies: 3,
+    status: 'Active',
     title: 'Plumbing Supervisor',
     company: 'Major MEP Infrastructure Group',
     location: 'Malta',
@@ -338,6 +350,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-7',
+    vacancies: 8,
+    status: 'Active',
     title: 'Assistant Electrician',
     company: 'Electrical Contracting Client',
     location: 'Malta',
@@ -364,6 +378,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-hosp-1',
+    vacancies: 4,
+    status: 'Active',
     title: 'Housekeeping Supervisor',
     company: 'Ramla Bay Resort & Hospitality Partners',
     location: 'Malta',
@@ -390,6 +406,8 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-hosp-2',
+    vacancies: 6,
+    status: 'Active',
     title: 'Food & Beverage Server / Bartender',
     company: 'Luxury Hospitality Group',
     location: 'Dubai & Malta',

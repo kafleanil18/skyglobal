@@ -110,7 +110,14 @@ function safeStorageSet(key, value) {
 
 export function CMSProvider({ children }) {
   // Jobs
-  const [jobs, setJobs] = useState(() => safeStorageGet('skyglobal_cms_jobs', JOBS_LIST));
+  const [jobs, setJobs] = useState(() => {
+    const loaded = safeStorageGet('skyglobal_cms_jobs', JOBS_LIST);
+    return loaded.map(j => ({
+      ...j,
+      vacancies: j.vacancies !== undefined ? Number(j.vacancies) : 4,
+      status: j.status || 'Active'
+    }));
+  });
 
   // Applications
   const [applications, setApplications] = useState(() => safeStorageGet('skyglobal_cms_applications', INITIAL_APPLICATIONS));
@@ -171,6 +178,8 @@ export function CMSProvider({ children }) {
       type: newJobData.type || 'Full-time',
       contract: newJobData.contract || '1 Year Renewable',
       salary: newJobData.salary,
+      vacancies: Number(newJobData.vacancies) > 0 ? Number(newJobData.vacancies) : 1,
+      status: newJobData.status || 'Active',
       visaSponsorship: newJobData.visaSponsorship !== false,
       tags: Array.isArray(newJobData.tags) ? newJobData.tags : (newJobData.tags || '').split(',').map(s => s.trim()).filter(Boolean),
       description: newJobData.description,
@@ -187,6 +196,8 @@ export function CMSProvider({ children }) {
         return {
           ...job,
           ...updatedFields,
+          vacancies: updatedFields.vacancies !== undefined ? Number(updatedFields.vacancies) : (job.vacancies || 1),
+          status: updatedFields.status !== undefined ? updatedFields.status : (job.status || 'Active'),
           tags: Array.isArray(updatedFields.tags) 
             ? updatedFields.tags 
             : typeof updatedFields.tags === 'string'
@@ -206,6 +217,10 @@ export function CMSProvider({ children }) {
       }
       return job;
     }));
+  };
+
+  const updateJobStatus = (jobId, status) => {
+    updateJob(jobId, { status });
   };
 
   const deleteJob = (jobId) => {
@@ -408,6 +423,7 @@ export function CMSProvider({ children }) {
       jobs,
       addJob,
       updateJob,
+      updateJobStatus,
       deleteJob,
       applications,
       addApplication,
