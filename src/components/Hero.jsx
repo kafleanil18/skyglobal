@@ -49,17 +49,23 @@ export default function Hero({
           </div>
 
           {/* Main Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-display leading-[1.15] mb-6">
-            Connecting World Talent with{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a99410] via-[#bfa715] to-[#b6eafb]">
-              International Careers
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight font-display leading-[1.2] mb-3">
+            <span className="text-[#a99410]">Your Talent.</span>{' '}
+            <span className="text-[#0ca7da]">Our Platform.</span>{' '}
+            <span className="text-[#111e6c] bg-[#e5f2f9] px-3.5 py-0.5 rounded-2xl border border-[#25c0f3]/40 shadow-md inline-block">
+              Boundless Possibilities.
             </span>
           </h1>
 
+          {/* Tagline from skyglobalhr.com */}
+          <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0ca7da] tracking-tight mb-4 drop-shadow-sm">
+            Your journey starts here.
+          </p>
+
           {/* Subtitle from skyglobalhr.com */}
-          <p className="text-base sm:text-lg md:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed mb-10">
-            {COMPANY_INFO.description} Specializing in verified overseas placements across 
-            <span className="text-[#a99410] font-semibold"> Malta, Australia, UAE, Bulgaria, Romania, and Greece</span>.
+          <p className="text-base sm:text-lg text-slate-200 max-w-3xl mx-auto leading-relaxed mb-10">
+            {COMPANY_INFO.description} Specializing in verified overseas placements across{' '}
+            <span className="text-[#a99410] font-semibold">Malta, Australia, UAE, Bulgaria, Romania, and Greece</span>.
           </p>
 
           {/* Integrated Search Engine */}
