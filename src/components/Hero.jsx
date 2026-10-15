@@ -96,9 +96,9 @@ export default function Hero({
   const currentSlide = DYNAMIC_RECRUITMENT_SLIDES[activeSlide];
 
   return (
-    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-gradient-to-b from-[#101a6d] via-[#09113d] to-[#020024] text-white">
-      {/* Background gradients matching SkyGlobal logo */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_85%_at_50%_-15%,rgba(37,192,243,0.22),rgba(16,26,109,0.7),transparent)] pointer-events-none" />
+    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-skyglobal-hero text-white">
+      {/* Subtle ambient lighting accent */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_75%_25%,rgba(20,178,227,0.15),transparent_60%)] pointer-events-none" />
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{

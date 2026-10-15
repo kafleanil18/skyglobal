@@ -43,7 +43,7 @@
 }
 
 .bg-skyglobal-hero {
-  background: radial-gradient(ellipse 85% 85% at 50% -10%, #182a98 0%, #101a6d 40%, #020024 95%);
+  background: linear-gradient(135deg, #151C60 0%, #14B2E3 100%);
 }
 
 .text-skyglobal-gold {
