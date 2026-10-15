@@ -164,14 +164,11 @@ export default function Footer({ onNavigate, onOpenHireModal, onOpenResumeModal,
               <button onClick={(e) => handleFooterNav('gallery', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Photo Gallery</button>
               <button onClick={(e) => handleFooterNav('blogs', e)} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">Visa Updates</button>
               <a href="#how-we-are-different" onClick={(e) => handleFooterNav('home', e)} className="hover:text-[#a99410] transition-colors cursor-pointer">Why Choose Us</a>
-              <button 
-                onClick={onOpenLoginModal} 
-                className="text-left text-[#a99410] hover:text-[#bfa715] font-bold transition-colors"
-              >
-                Log In
-              </button>
-              <button onClick={onOpenResumeModal} className="text-left hover:text-[#a99410] transition-colors">
+              <button onClick={onOpenResumeModal} className="text-left hover:text-[#a99410] transition-colors cursor-pointer">
                 Submit CV
+              </button>
+              <button onClick={onOpenHireModal} className="text-left text-[#a99410] hover:text-[#bfa715] font-semibold transition-colors cursor-pointer">
+                Hire Talent
               </button>
             </div>
           </div>

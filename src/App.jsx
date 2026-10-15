@@ -19,7 +19,7 @@ import Footer from './components/Footer';
 import JobModal from './components/JobModal';
 import HireTalentModal from './components/HireTalentModal';
 import SubmitResumeModal from './components/SubmitResumeModal';
-import LoginModal from './components/admin/LoginModal';
+import LoginPage from './components/LoginPage';
 
 // CMS Dashboard
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -35,16 +35,22 @@ import {
   Camera
 } from 'lucide-react';
 
+// Helper to determine the current active route from path or hash
+const resolveCurrentPage = () => {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+  if (path === 'login') return 'login';
+  const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+  const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'gallery', 'blogs', 'login'];
+  if (valid.includes(hash)) return hash;
+  return 'home';
+};
+
 function MainWebsite() {
   const { currentUser, isSuperAdmin, isAuthenticated } = useAuth();
   const { jobs, countries, companyInfo } = useCMS();
 
-  // Page Routing State ('home' | 'about' | 'countries' | 'sectors' | 'jobs' | 'gallery' | 'blogs')
-  const [currentPage, setCurrentPage] = useState(() => {
-    const hash = window.location.hash.replace('#', '').toLowerCase();
-    const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'gallery', 'blogs'];
-    return valid.includes(hash) ? hash : 'home';
-  });
+  // Page Routing State ('home' | 'about' | 'countries' | 'sectors' | 'jobs' | 'gallery' | 'blogs' | 'login')
+  const [currentPage, setCurrentPage] = useState(resolveCurrentPage);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('All Countries');
@@ -54,28 +60,39 @@ function MainWebsite() {
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const [isHireModalOpen, setIsHireModalOpen] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   // CMS Dashboard view mode
   const [isViewingAdminDashboard, setIsViewingAdminDashboard] = useState(false);
 
-  // Synchronize hash with browser navigation (back/forward)
+  // Synchronize URL changes (path or hash) with browser back/forward buttons
   useEffect(() => {
-    const onHashChange = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      const valid = ['home', 'about', 'countries', 'sectors', 'jobs', 'gallery', 'blogs'];
-      if (valid.includes(hash)) {
-        setCurrentPage(hash);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+    const handleLocationChange = () => {
+      const page = resolveCurrentPage();
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   const navigateTo = (pageId) => {
     setCurrentPage(pageId);
-    window.location.hash = pageId;
+    if (pageId === 'login') {
+      window.history.pushState(null, '', '/login');
+    } else {
+      const currentPath = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+      if (currentPath === 'login') {
+        const targetUrl = pageId === 'home' ? '/' : `/#${pageId}`;
+        window.history.pushState(null, '', targetUrl);
+      } else {
+        window.location.hash = pageId === 'home' ? '' : pageId;
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -114,7 +131,24 @@ function MainWebsite() {
   // If in CMS Dashboard mode
   if (isViewingAdminDashboard) {
     return (
-      <AdminDashboard onExitDashboard={() => setIsViewingAdminDashboard(false)} />
+      <AdminDashboard 
+        onExitDashboard={() => {
+          setIsViewingAdminDashboard(false);
+          navigateTo('home');
+        }} 
+      />
+    );
+  }
+
+  // If dedicated /login page is requested
+  if (currentPage === 'login') {
+    return (
+      <LoginPage 
+        onNavigate={navigateTo}
+        onLoginSuccess={() => {
+          setIsViewingAdminDashboard(true);
+        }}
+      />
     );
   }
 
@@ -151,7 +185,6 @@ function MainWebsite() {
         onNavigate={navigateTo}
         onOpenHireModal={() => setIsHireModalOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
-        onOpenLoginModal={() => setIsLoginModalOpen(true)}
         onOpenDashboard={() => setIsViewingAdminDashboard(true)}
       />
 
@@ -300,13 +333,6 @@ function MainWebsite() {
         onNavigate={navigateTo}
         onOpenHireModal={() => setIsHireModalOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
-        onOpenLoginModal={() => {
-          if (isAuthenticated) {
-            setIsViewingAdminDashboard(true);
-          } else {
-            setIsLoginModalOpen(true);
-          }
-        }}
       />
 
       {/* Interactive Modals */}
@@ -327,12 +353,6 @@ function MainWebsite() {
       <SubmitResumeModal 
         isOpen={isResumeModalOpen}
         onClose={() => setIsResumeModalOpen(false)}
-      />
-
-      <LoginModal 
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-        onLoginSuccess={() => setIsViewingAdminDashboard(true)}
       />
     </div>
   );

@@ -125,7 +125,8 @@ export default function Navbar({
 
             {/* Action Buttons & Log In */}
             <div className="hidden sm:flex items-center gap-2.5">
-              {isAuthenticated ? (
+              {/* Staff CMS Dashboard button - Only shown when authenticated */}
+              {isAuthenticated && (
                 <button
                   onClick={onOpenDashboard}
                   className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#cbb218] hover:to-[#a99410] shadow-md shadow-[#a99410]/20 transition-all flex items-center gap-1.5 cursor-pointer"
@@ -136,15 +137,6 @@ export default function Navbar({
                     <ShieldCheck className="w-3.5 h-3.5 text-[#020024]" />
                   )}
                   <span>CMS Dashboard</span>
-                </button>
-              ) : (
-                <button
-                  onClick={onOpenLoginModal}
-                  className="px-3.5 py-2 text-xs font-semibold rounded-xl text-[#a99410] hover:text-white bg-[#101a6d]/90 hover:bg-[#182a98] border border-[#a99410]/40 hover:border-[#a99410] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
-                  title="Log In to Portal"
-                >
-                  <Lock className="w-3.5 h-3.5 text-[#a99410]" />
-                  <span>Log In</span>
                 </button>
               )}
 
@@ -167,20 +159,13 @@ export default function Navbar({
 
             {/* Mobile Menu Toggle */}
             <div className="xl:hidden flex items-center gap-2">
-              {isAuthenticated ? (
+              {isAuthenticated && (
                 <button
                   onClick={onOpenDashboard}
                   className="px-3 py-1.5 text-xs font-bold rounded-lg text-slate-900 bg-amber-400 flex items-center gap-1"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5" />
                   <span>CMS</span>
-                </button>
-              ) : (
-                <button
-                  onClick={onOpenLoginModal}
-                  className="px-2.5 py-1.5 text-xs font-semibold rounded-lg text-amber-300 bg-slate-800 border border-slate-700"
-                >
-                  Log In
                 </button>
               )}
 
@@ -221,7 +206,7 @@ export default function Navbar({
           </div>
 
           <div className="pt-4 border-t border-slate-800 flex flex-col gap-2.5">
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -231,17 +216,6 @@ export default function Navbar({
               >
                 <LayoutDashboard className="w-4 h-4" />
                 Open Staff CMS Dashboard
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenLoginModal();
-                }}
-                className="w-full py-2.5 px-4 text-xs font-bold uppercase tracking-wider rounded-xl text-center text-amber-300 bg-slate-800 border border-slate-700 flex items-center justify-center gap-2"
-              >
-                <Lock className="w-4 h-4 text-amber-400" />
-                Log In (Admin / Super Admin)
               </button>
             )}
 
