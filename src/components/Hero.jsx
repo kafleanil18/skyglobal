@@ -110,11 +110,11 @@ export default function Hero({
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Split Grid: Content on Left, Dynamic Image Showcase on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+        {/* Split Grid: Content on Left, Dynamic Image Showcase on Right (Balanced 6 / 6) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
           
-          {/* Left Column: Headlines & Search (7 Cols) */}
-          <div className="lg:col-span-7 text-center lg:text-left">
+          {/* Left Column: Headlines & Search (6 Cols) */}
+          <div className="lg:col-span-6 text-center lg:text-left flex flex-col justify-center">
             
             {/* Eyebrow Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 text-[#101a6d] text-xs font-bold uppercase tracking-wider mb-5 shadow-xs">
@@ -206,20 +206,20 @@ export default function Hero({
 
           </div>
 
-          {/* Right Column: Dynamic Recruitment & Talent Acquisition Visual Showcase (5 Cols) */}
-          <div className="lg:col-span-5 relative">
+          {/* Right Column: Dynamic Recruitment & Talent Acquisition Visual Showcase (Expanded 6 Cols) */}
+          <div className="lg:col-span-6 relative">
             
             {/* Ambient Backlight Glow */}
-            <div className="absolute -inset-2 bg-gradient-to-tr from-[#14B2E3]/20 via-[#a99410]/20 to-[#101a6d]/20 rounded-3xl blur-2xl opacity-60 pointer-events-none" />
+            <div className="absolute -inset-3 bg-gradient-to-tr from-[#14B2E3]/25 via-[#a99410]/20 to-[#101a6d]/25 rounded-[36px] blur-3xl opacity-75 pointer-events-none" />
 
             {/* Main Interactive Showcase Container */}
             <div 
-              className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl shadow-slate-300/70 bg-slate-950 group"
+              className="relative rounded-3xl sm:rounded-[32px] overflow-hidden border border-slate-200/90 shadow-2xl shadow-slate-300/80 bg-slate-950 group"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              {/* Dynamic Image with Crossfade Transition */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] overflow-hidden bg-slate-950">
+              {/* Dynamic Image with Crossfade Transition - Enlarged Height & Proportions */}
+              <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[16/12] xl:aspect-[5/4] min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] overflow-hidden bg-slate-950">
                 {DYNAMIC_RECRUITMENT_SLIDES.map((slide, idx) => (
                   <img 
                     key={slide.id}
@@ -236,16 +236,16 @@ export default function Hero({
                 ))}
 
                 {/* Subtle Cinematic Vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020024] via-black/25 to-black/35 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020024] via-black/20 to-black/30 pointer-events-none" />
 
                 {/* Top Badges */}
-                <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 pointer-events-none z-10">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#020024] bg-[#faf8ee] px-3 py-1 rounded-full border border-[#a99410]/60 shadow-lg backdrop-blur-md">
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none z-10">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#020024] bg-white/95 px-3.5 py-1.5 rounded-full border border-[#a99410]/50 shadow-lg backdrop-blur-md">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span>{currentSlide.badge}</span>
                   </span>
 
-                  <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">
+                  <span className="text-xs font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
                     {activeSlide + 1} / {DYNAMIC_RECRUITMENT_SLIDES.length}
                   </span>
                 </div>
@@ -254,52 +254,53 @@ export default function Hero({
                 <button
                   type="button"
                   onClick={prevSlide}
-                  className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-[#a99410] hover:text-[#020024] text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-xs shadow-md"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-[#101a6d] hover:text-white text-slate-900 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-sm shadow-xl"
                   title="Previous recruitment photo"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   type="button"
                   onClick={nextSlide}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-[#a99410] hover:text-[#020024] text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-xs shadow-md"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-[#101a6d] hover:text-white text-slate-900 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-sm shadow-xl"
                   title="Next recruitment photo"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-5 h-5" />
                 </button>
 
                 {/* Bottom Overlay Info Card */}
-                <div className="absolute bottom-3 left-3 right-3 p-3.5 rounded-2xl bg-[#09113d]/90 backdrop-blur-md border border-[#25c0f3]/40 shadow-xl space-y-1 z-10 text-left">
+                <div className="absolute bottom-4 left-4 right-4 p-4 sm:p-5 rounded-2xl bg-[#09113d]/90 backdrop-blur-xl border border-white/15 shadow-2xl space-y-1.5 z-10 text-left">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight line-clamp-1">
+                    <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight line-clamp-1">
                       {currentSlide.title}
                     </h3>
-                    <span className="text-[10px] text-[#a99410] font-extrabold shrink-0 flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3 text-[#a99410]" />
+                    <span className="text-xs text-[#a99410] font-black shrink-0 flex items-center gap-1.5 bg-[#a99410]/15 px-2.5 py-1 rounded-full border border-[#a99410]/30">
+                      <CheckCircle className="w-3.5 h-3.5 text-[#a99410]" />
                       {currentSlide.stat}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#b6eafb]/80 line-clamp-1">
+                  <p className="text-xs sm:text-sm text-[#b6eafb]/90 line-clamp-1">
                     {currentSlide.subtitle}
                   </p>
 
                   {/* Interactive Slide Dots & Location */}
-                  <div className="pt-2 flex items-center justify-between border-t border-white/10">
-                    <div className="flex items-center gap-1.5">
+                  <div className="pt-2.5 flex items-center justify-between border-t border-white/10">
+                    <div className="flex items-center gap-2">
                       {DYNAMIC_RECRUITMENT_SLIDES.map((_, i) => (
                         <button
                           key={i}
                           type="button"
                           onClick={() => setActiveSlide(i)}
-                          className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                            i === activeSlide ? 'w-6 bg-[#a99410]' : 'w-2 bg-white/30 hover:bg-white/60'
+                          className={`h-2 rounded-full transition-all cursor-pointer ${
+                            i === activeSlide ? 'w-7 bg-[#a99410]' : 'w-2 bg-white/30 hover:bg-white/60'
                           }`}
                           title={`Slide ${i + 1}`}
                         />
                       ))}
                     </div>
-                    <span className="text-[10px] text-slate-300 font-medium">
-                      {currentSlide.location}
+                    <span className="text-xs text-slate-300 font-medium flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-[#a99410]" />
+                      <span>{currentSlide.location}</span>
                     </span>
                   </div>
                 </div>
@@ -308,15 +309,15 @@ export default function Hero({
             </div>
 
             {/* Floating Trust Pill */}
-            <div className="hidden sm:flex items-center gap-2.5 absolute -bottom-5 -right-2 bg-white text-[#020024] px-3.5 py-2 rounded-2xl shadow-2xl border border-slate-200 z-20">
-              <div className="w-7 h-7 rounded-xl bg-[#faf8ee] border border-[#a99410]/50 flex items-center justify-center shrink-0">
-                <Sparkles className="w-3.5 h-3.5 text-[#a99410]" />
+            <div className="hidden sm:flex items-center gap-3 absolute -bottom-6 -right-2 bg-white text-[#020024] px-4 py-3 rounded-2xl shadow-2xl border border-slate-200/90 z-20 hover:-translate-y-0.5 transition-transform">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#faf8ee] to-[#fff3cd] border border-[#a99410]/50 flex items-center justify-center shrink-0 shadow-xs">
+                <Sparkles className="w-4 h-4 text-[#a99410]" />
               </div>
               <div className="text-left">
-                <span className="text-[11px] font-black text-slate-900 block leading-tight">
+                <span className="text-xs font-black text-slate-900 block leading-tight">
                   100% Ethical Recruitment
                 </span>
-                <span className="text-[10px] text-slate-500 block leading-tight">
+                <span className="text-[11px] text-slate-500 block leading-tight mt-0.5">
                   Licensed Overseas Placement Agency
                 </span>
               </div>
