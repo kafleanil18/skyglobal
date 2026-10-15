@@ -98,7 +98,7 @@ export default function Hero({
   const currentSlide = DYNAMIC_RECRUITMENT_SLIDES[activeSlide];
 
   return (
-    <section id="home" className="relative pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-36 md:pb-24 overflow-hidden bg-white text-slate-900 border-b border-slate-200/60">
+    <section id="home" className="relative pt-36 pb-12 sm:pt-40 sm:pb-16 md:pt-40 md:pb-24 overflow-hidden bg-white text-slate-900 border-b border-slate-200/60">
       {/* Subtle modern geometric background texture */}
       <div 
         className="absolute inset-0 opacity-[0.35] pointer-events-none"
@@ -123,19 +123,19 @@ export default function Hero({
               <span className="text-[#a99410]">Your Talent.</span>{' '}
               <span className="text-[#101a6d]">Our Platform.</span>
               <span className="block mt-1.5 sm:mt-2">
-                <span className="text-[#0ca7da] bg-sky-50 px-3.5 py-1 rounded-2xl border border-sky-200 shadow-xs inline-block text-2xl sm:text-3xl md:text-4xl lg:text-[34px] xl:text-[38px] font-extrabold tracking-tight">
+                <span className="text-[#0ca7da] bg-sky-50 px-3 sm:px-3.5 py-1 rounded-2xl border border-sky-200 shadow-xs inline-block text-xl sm:text-3xl md:text-4xl lg:text-[34px] xl:text-[38px] font-extrabold tracking-tight max-w-full">
                   Boundless Possibilities.
                 </span>
               </span>
             </h1>
 
             {/* Tagline from skyglobalhr.com */}
-            <p className="text-xl sm:text-2xl font-bold text-slate-600 tracking-tight mb-6">
+            <p className="text-lg sm:text-xl md:text-2xl font-bold text-slate-600 tracking-tight mb-5 sm:mb-6">
               Your journey starts here.
             </p>
 
             {/* Integrated Search Engine - Enlarged to balance image showcase on the right */}
-            <div className="bg-white p-3.5 sm:p-4.5 lg:p-5 rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/70 mb-5">
+            <div className="bg-white p-3.5 sm:p-4.5 lg:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/70 mb-5">
               <form 
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -145,23 +145,23 @@ export default function Hero({
               >
                 {/* Job Title / Role */}
                 <div className="relative flex-1 flex items-center">
-                  <Search className="w-5 h-5 text-slate-400 ml-4 absolute pointer-events-none" />
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 ml-3.5 sm:ml-4 absolute pointer-events-none" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search job position (e.g. Electrician, MEP, Plumber, Server)..."
-                    className="w-full pl-11 pr-4 py-3.5 sm:py-4 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 transition-all font-medium"
+                    placeholder="Search job position (e.g. Electrician, MEP, Plumber)..."
+                    className="w-full pl-10 sm:pl-11 pr-4 py-3 sm:py-3.5 lg:py-4 rounded-xl sm:rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-400 text-xs sm:text-base focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 transition-all font-medium"
                   />
                 </div>
 
                 {/* Destination Country */}
                 <div className="relative sm:w-56 flex items-center">
-                  <MapPin className="w-5 h-5 text-[#a99410] ml-3.5 absolute pointer-events-none" />
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#a99410] ml-3 sm:ml-3.5 absolute pointer-events-none" />
                   <select
                     value={selectedCountry}
                     onChange={(e) => setSelectedCountry(e.target.value)}
-                    className="w-full pl-10 pr-8 py-3.5 sm:py-4 rounded-2xl bg-slate-50 text-slate-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 appearance-none cursor-pointer transition-all font-medium"
+                    className="w-full pl-9 sm:pl-10 pr-8 py-3 sm:py-3.5 lg:py-4 rounded-xl sm:rounded-2xl bg-slate-50 text-slate-800 text-xs sm:text-base focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 appearance-none cursor-pointer transition-all font-medium"
                   >
                     <option value="All Countries">All Destinations</option>
                     {countries.map((c) => (
@@ -176,7 +176,7 @@ export default function Hero({
                 {/* Find Button */}
                 <button
                   type="submit"
-                  className="px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#101a6d] via-[#14227e] to-[#182a98] hover:from-[#182a98] hover:to-[#101a6d] text-white font-extrabold text-sm sm:text-base shadow-lg shadow-[#101a6d]/25 flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 group"
+                  className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 lg:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#101a6d] via-[#14227e] to-[#182a98] hover:from-[#182a98] hover:to-[#101a6d] text-white font-extrabold text-xs sm:text-base shadow-lg shadow-[#101a6d]/25 flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 group"
                 >
                   <span>Find Jobs</span>
                   <ArrowRight className="w-4 h-4 text-[#a99410] group-hover:translate-x-0.5 transition-transform" />
@@ -202,11 +202,11 @@ export default function Hero({
             </div>
 
             {/* Quick Action Buttons to complete visual height balance */}
-            <div className="pt-2 flex flex-wrap items-center gap-3">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
               <button
                 type="button"
                 onClick={onOpenResumeModal}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#101a6d] hover:bg-[#101a6d] hover:text-white border border-slate-200 hover:border-[#101a6d] text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer"
+                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#101a6d] hover:bg-[#101a6d] hover:text-white border border-slate-200 hover:border-[#101a6d] text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer"
               >
                 <FileText className="w-4 h-4 text-[#0ca7da]" />
                 <span>Submit CV for Assessment</span>
@@ -215,7 +215,7 @@ export default function Hero({
               <button
                 type="button"
                 onClick={onOpenHireModal}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#faf8ee] text-[#020024] hover:bg-[#a99410] border border-[#a99410]/50 text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer"
+                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#faf8ee] text-[#020024] hover:bg-[#a99410] border border-[#a99410]/50 text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer"
               >
                 <UserCheck className="w-4 h-4 text-[#020024]" />
                 <span>Hire Verified Talent</span>
@@ -237,7 +237,7 @@ export default function Hero({
               onMouseLeave={() => setIsPaused(false)}
             >
               {/* Dynamic Image with Crossfade Transition - Enlarged Height & Proportions */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[16/12] xl:aspect-[5/4] min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] overflow-hidden bg-slate-950">
+              <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[16/12] xl:aspect-[5/4] min-h-[340px] sm:min-h-[460px] lg:min-h-[520px] overflow-hidden bg-slate-950">
                 {DYNAMIC_RECRUITMENT_SLIDES.map((slide, idx) => (
                   <img 
                     key={slide.id}
@@ -257,13 +257,13 @@ export default function Hero({
                 <div className="absolute inset-0 bg-gradient-to-t from-[#020024] via-black/20 to-black/30 pointer-events-none" />
 
                 {/* Top Badges */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none z-10">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#020024] bg-white/95 px-3.5 py-1.5 rounded-full border border-[#a99410]/50 shadow-lg backdrop-blur-md">
+                <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-2 pointer-events-none z-10">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#020024] bg-white/95 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border border-[#a99410]/50 shadow-lg backdrop-blur-md">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span>{currentSlide.badge}</span>
                   </span>
 
-                  <span className="text-xs font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                  <span className="text-xs font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/20">
                     {activeSlide + 1} / {DYNAMIC_RECRUITMENT_SLIDES.length}
                   </span>
                 </div>
@@ -272,52 +272,52 @@ export default function Hero({
                 <button
                   type="button"
                   onClick={prevSlide}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-[#101a6d] hover:text-white text-slate-900 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-sm shadow-xl"
+                  className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#101a6d] hover:text-white text-slate-900 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-sm shadow-xl"
                   title="Previous recruitment photo"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <button
                   type="button"
                   onClick={nextSlide}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-[#101a6d] hover:text-white text-slate-900 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-sm shadow-xl"
+                  className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#101a6d] hover:text-white text-slate-900 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer z-20 backdrop-blur-sm shadow-xl"
                   title="Next recruitment photo"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
 
                 {/* Bottom Overlay Info Card */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 sm:p-5 rounded-2xl bg-[#09113d]/90 backdrop-blur-xl border border-white/15 shadow-2xl space-y-1.5 z-10 text-left">
+                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-3.5 sm:p-5 rounded-2xl bg-[#09113d]/90 backdrop-blur-xl border border-white/15 shadow-2xl space-y-1 sm:space-y-1.5 z-10 text-left">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight line-clamp-1">
+                    <h3 className="text-xs sm:text-base font-extrabold text-white tracking-tight line-clamp-1">
                       {currentSlide.title}
                     </h3>
-                    <span className="text-xs text-[#a99410] font-black shrink-0 flex items-center gap-1.5 bg-[#a99410]/15 px-2.5 py-1 rounded-full border border-[#a99410]/30">
-                      <CheckCircle className="w-3.5 h-3.5 text-[#a99410]" />
+                    <span className="text-[10px] sm:text-xs text-[#a99410] font-black shrink-0 flex items-center gap-1 sm:gap-1.5 bg-[#a99410]/15 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-[#a99410]/30">
+                      <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#a99410]" />
                       {currentSlide.stat}
                     </span>
                   </div>
-                  <p className="text-xs sm:text-sm text-[#b6eafb]/90 line-clamp-1">
+                  <p className="text-[11px] sm:text-sm text-[#b6eafb]/90 line-clamp-1">
                     {currentSlide.subtitle}
                   </p>
 
                   {/* Interactive Slide Dots & Location */}
-                  <div className="pt-2.5 flex items-center justify-between border-t border-white/10">
-                    <div className="flex items-center gap-2">
+                  <div className="pt-2 sm:pt-2.5 flex items-center justify-between border-t border-white/10">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       {DYNAMIC_RECRUITMENT_SLIDES.map((_, i) => (
                         <button
                           key={i}
                           type="button"
                           onClick={() => setActiveSlide(i)}
-                          className={`h-2 rounded-full transition-all cursor-pointer ${
-                            i === activeSlide ? 'w-7 bg-[#a99410]' : 'w-2 bg-white/30 hover:bg-white/60'
+                          className={`h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${
+                            i === activeSlide ? 'w-5 sm:w-7 bg-[#a99410]' : 'w-2 bg-white/30 hover:bg-white/60'
                           }`}
                           title={`Slide ${i + 1}`}
                         />
                       ))}
                     </div>
-                    <span className="text-xs text-slate-300 font-medium flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#a99410]" />
+                    <span className="text-[10px] sm:text-xs text-slate-300 font-medium flex items-center gap-1">
+                      <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#a99410]" />
                       <span>{currentSlide.location}</span>
                     </span>
                   </div>
@@ -346,16 +346,16 @@ export default function Hero({
         </div>
 
         {/* Quick Metrics Bar across full width */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-200">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-7xl mx-auto pt-8 sm:pt-10 mt-8 sm:mt-10 border-t border-slate-200">
           {COMPANY_INFO.stats.map((st) => (
-            <div key={st.label} className="bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-[#14B2E3] transition-all rounded-2xl p-4 text-left shadow-xs hover:shadow-md hover:-translate-y-0.5 group">
-              <span className="text-2xl sm:text-3xl font-extrabold text-[#101a6d] group-hover:text-[#0ca7da] font-display block transition-colors">
+            <div key={st.label} className="bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-[#14B2E3] transition-all rounded-xl sm:rounded-2xl p-3 sm:p-4 text-left shadow-xs hover:shadow-md hover:-translate-y-0.5 group">
+              <span className="text-xl sm:text-3xl font-extrabold text-[#101a6d] group-hover:text-[#0ca7da] font-display block transition-colors">
                 {st.value}
               </span>
-              <span className="text-xs font-bold text-slate-800 block mt-0.5">
+              <span className="text-[11px] sm:text-xs font-bold text-slate-800 block mt-0.5 leading-snug">
                 {st.label}
               </span>
-              <span className="text-[11px] text-slate-500 block mt-0.5">
+              <span className="text-[10px] sm:text-[11px] text-slate-500 block mt-0.5 leading-snug">
                 {st.sub}
               </span>
             </div>
