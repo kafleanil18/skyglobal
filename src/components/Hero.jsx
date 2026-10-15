@@ -111,24 +111,26 @@ export default function Hero({
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Split Grid: Content on Left, Dynamic Image Showcase on Right (Balanced 6 / 6) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-16 items-center">
           
-          {/* Left Column: Headlines & Search (6 Cols) */}
-          <div className="lg:col-span-6 text-center lg:text-left flex flex-col justify-center">
+          {/* Left Column: Headlines & Search (6 Cols with min-w-0) */}
+          <div className="lg:col-span-6 min-w-0 text-center lg:text-left flex flex-col justify-center">
             
             {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 text-[#101a6d] text-xs font-bold uppercase tracking-wider mb-5 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 text-[#101a6d] text-xs font-bold uppercase tracking-wider mb-5 shadow-xs w-fit mx-auto lg:mx-0">
               <span className="flex h-2 w-2 rounded-full bg-[#a99410] animate-ping" />
               <Globe className="w-3.5 h-3.5 text-[#a99410]" />
               <span>Licensed Overseas Recruitment • Bur Dubai, UAE</span>
             </div>
 
-            {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-display leading-[1.18] mb-3 text-slate-900">
+            {/* Main Title - Proportional spacing preventing any picture overlap */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-5xl font-extrabold tracking-tight font-display leading-[1.16] mb-3 text-slate-900">
               <span className="text-[#a99410]">Your Talent.</span>{' '}
-              <span className="text-[#101a6d]">Our Platform.</span>{' '}
-              <span className="text-[#0ca7da] bg-sky-50 px-3.5 py-0.5 rounded-2xl border border-sky-200 shadow-xs inline-block whitespace-nowrap">
-                Boundless Possibilities.
+              <span className="text-[#101a6d]">Our Platform.</span>
+              <span className="block mt-1.5 sm:mt-2">
+                <span className="text-[#0ca7da] bg-sky-50 px-3.5 py-1 rounded-2xl border border-sky-200 shadow-xs inline-block text-2xl sm:text-3xl md:text-4xl lg:text-[34px] xl:text-[38px] font-extrabold tracking-tight">
+                  Boundless Possibilities.
+                </span>
               </span>
             </h1>
 
@@ -207,7 +209,7 @@ export default function Hero({
           </div>
 
           {/* Right Column: Dynamic Recruitment & Talent Acquisition Visual Showcase (Expanded 6 Cols) */}
-          <div className="lg:col-span-6 relative">
+          <div className="lg:col-span-6 min-w-0 relative">
             
             {/* Ambient Backlight Glow */}
             <div className="absolute -inset-3 bg-gradient-to-tr from-[#14B2E3]/25 via-[#a99410]/20 to-[#101a6d]/25 rounded-[36px] blur-3xl opacity-75 pointer-events-none" />
