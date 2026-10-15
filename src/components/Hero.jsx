@@ -96,7 +96,7 @@ export default function Hero({
   const currentSlide = DYNAMIC_RECRUITMENT_SLIDES[activeSlide];
 
   return (
-    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-white text-slate-900 border-b border-slate-200/60">
+    <section id="home" className="relative pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-36 md:pb-24 overflow-hidden bg-white text-slate-900 border-b border-slate-200/60">
       {/* Subtle modern geometric background texture */}
       <div 
         className="absolute inset-0 opacity-[0.35] pointer-events-none"
@@ -111,18 +111,11 @@ export default function Hero({
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Split Grid: Content on Left, Dynamic Image Showcase on Right (Balanced 6 / 6) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-16 items-start">
           
-          {/* Left Column: Headlines & Search (6 Cols with min-w-0) */}
-          <div className="lg:col-span-6 min-w-0 text-center lg:text-left flex flex-col justify-center">
+          {/* Left Column: Headlines & Search (6 Cols with min-w-0, top-aligned with showcase) */}
+          <div className="lg:col-span-6 min-w-0 text-left flex flex-col justify-start pt-1 sm:pt-2">
             
-            {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 text-[#101a6d] text-xs font-bold uppercase tracking-wider mb-5 shadow-xs w-fit mx-auto lg:mx-0">
-              <span className="flex h-2 w-2 rounded-full bg-[#a99410] animate-ping" />
-              <Globe className="w-3.5 h-3.5 text-[#a99410]" />
-              <span>Licensed Overseas Recruitment • Bur Dubai, UAE</span>
-            </div>
-
             {/* Main Title - Proportional spacing preventing any picture overlap */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-5xl font-extrabold tracking-tight font-display leading-[1.16] mb-3 text-slate-900">
               <span className="text-[#a99410]">Your Talent.</span>{' '}
