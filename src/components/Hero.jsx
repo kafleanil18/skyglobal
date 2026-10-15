@@ -96,13 +96,13 @@ export default function Hero({
   const currentSlide = DYNAMIC_RECRUITMENT_SLIDES[activeSlide];
 
   return (
-    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-skyglobal-hero text-white">
+    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-skyglobal-hero text-slate-900">
       {/* Subtle ambient lighting accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_75%_25%,rgba(20,178,227,0.15),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_75%_25%,rgba(20,178,227,0.12),transparent_60%)] pointer-events-none" />
       <div 
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 opacity-15 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(rgba(255, 211, 0, 0.45) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(rgba(20, 178, 227, 0.3) 1px, transparent 1px)`,
           backgroundSize: '28px 28px'
         }}
       />
@@ -116,7 +116,7 @@ export default function Hero({
           <div className="lg:col-span-7 text-center lg:text-left">
             
             {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101a6d]/90 border border-[#a99410]/50 text-[#a99410] text-xs font-bold uppercase tracking-wider mb-5 shadow-lg shadow-[#101a6d]/50">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101a6d] border border-[#a99410]/50 text-[#a99410] text-xs font-bold uppercase tracking-wider mb-5 shadow-lg shadow-[#101a6d]/30">
               <span className="flex h-2 w-2 rounded-full bg-[#a99410] animate-ping" />
               <Globe className="w-3.5 h-3.5 text-[#a99410]" />
               <span>Licensed Overseas Recruitment • Bur Dubai, UAE</span>
@@ -132,7 +132,7 @@ export default function Hero({
             </h1>
 
             {/* Tagline from skyglobalhr.com */}
-            <p className="text-xl sm:text-2xl font-extrabold text-[#0ca7da] tracking-tight mb-6 drop-shadow-sm">
+            <p className="text-xl sm:text-2xl font-extrabold text-[#101a6d] tracking-tight mb-6 drop-shadow-sm">
               Your journey starts here.
             </p>
 
@@ -187,8 +187,8 @@ export default function Hero({
             </div>
 
             {/* Trending Searches */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-slate-300">
-              <span className="font-semibold text-[#a99410]">Popular Opportunities:</span>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs">
+              <span className="font-bold text-[#101a6d]">Popular Opportunities:</span>
               {trendingSearches.map((tag) => (
                 <button
                   key={tag}
@@ -196,7 +196,7 @@ export default function Hero({
                     setSearchQuery(tag.split(' ')[0]);
                     onSearchSubmit();
                   }}
-                  className="px-2.5 py-1 rounded-md bg-[#101a6d]/80 hover:bg-[#182a98] text-[#b6eafb] hover:text-[#a99410] border border-[#25c0f3]/30 hover:border-[#a99410] transition-colors cursor-pointer text-[11px]"
+                  className="px-2.5 py-1 rounded-md bg-[#101a6d] hover:bg-[#182a98] text-[#b6eafb] hover:text-[#a99410] border border-[#25c0f3]/40 hover:border-[#a99410] transition-colors cursor-pointer text-[11px] shadow-xs"
                 >
                   {tag}
                 </button>
@@ -326,16 +326,16 @@ export default function Hero({
         </div>
 
         {/* Quick Metrics Bar across full width */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pt-10 mt-10 border-t border-[#182a98]/60">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pt-10 mt-10 border-t border-[#101a6d]/20">
           {COMPANY_INFO.stats.map((st) => (
-            <div key={st.label} className="bg-[#101a6d]/60 border border-[#25c0f3]/30 hover:border-[#a99410] transition-colors rounded-2xl p-4 text-left">
+            <div key={st.label} className="bg-[#0b1448]/95 border border-[#25c0f3]/40 hover:border-[#a99410] transition-colors rounded-2xl p-4 text-left shadow-xl shadow-[#101a6d]/15 backdrop-blur-md">
               <span className="text-2xl sm:text-3xl font-extrabold text-[#a99410] font-display block">
                 {st.value}
               </span>
               <span className="text-xs font-bold text-white block mt-0.5">
                 {st.label}
               </span>
-              <span className="text-[11px] text-[#b6eafb]/80 block mt-0.5">
+              <span className="text-[11px] text-[#b6eafb]/90 block mt-0.5">
                 {st.sub}
               </span>
             </div>
