@@ -96,16 +96,17 @@ export default function Hero({
   const currentSlide = DYNAMIC_RECRUITMENT_SLIDES[activeSlide];
 
   return (
-    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-skyglobal-hero text-slate-900">
-      {/* Subtle ambient lighting accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_75%_25%,rgba(20,178,227,0.12),transparent_60%)] pointer-events-none" />
+    <section id="home" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-white text-slate-900 border-b border-slate-200/60">
+      {/* Subtle modern geometric background texture */}
       <div 
-        className="absolute inset-0 opacity-15 pointer-events-none"
+        className="absolute inset-0 opacity-[0.35] pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(rgba(20, 178, 227, 0.3) 1px, transparent 1px)`,
-          backgroundSize: '28px 28px'
+          backgroundImage: `radial-gradient(#94a3b8 1px, transparent 1px)`,
+          backgroundSize: '24px 24px'
         }}
       />
+      {/* Soft ambient lighting gradient behind right showcase */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#14B2E3]/10 via-[#a99410]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -116,28 +117,28 @@ export default function Hero({
           <div className="lg:col-span-7 text-center lg:text-left">
             
             {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101a6d] border border-[#a99410]/50 text-[#a99410] text-xs font-bold uppercase tracking-wider mb-5 shadow-lg shadow-[#101a6d]/30">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 text-[#101a6d] text-xs font-bold uppercase tracking-wider mb-5 shadow-xs">
               <span className="flex h-2 w-2 rounded-full bg-[#a99410] animate-ping" />
               <Globe className="w-3.5 h-3.5 text-[#a99410]" />
               <span>Licensed Overseas Recruitment • Bur Dubai, UAE</span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-display leading-[1.18] mb-3">
+            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-display leading-[1.18] mb-3 text-slate-900">
               <span className="text-[#a99410]">Your Talent.</span>{' '}
-              <span className="text-[#0ca7da]">Our Platform.</span>{' '}
-              <span className="text-[#111e6c] bg-[#e5f2f9] px-3.5 py-0.5 rounded-2xl border border-[#25c0f3]/40 shadow-md inline-block whitespace-nowrap">
+              <span className="text-[#101a6d]">Our Platform.</span>{' '}
+              <span className="text-[#0ca7da] bg-sky-50 px-3.5 py-0.5 rounded-2xl border border-sky-200 shadow-xs inline-block whitespace-nowrap">
                 Boundless Possibilities.
               </span>
             </h1>
 
             {/* Tagline from skyglobalhr.com */}
-            <p className="text-xl sm:text-2xl font-extrabold text-[#101a6d] tracking-tight mb-6 drop-shadow-sm">
+            <p className="text-xl sm:text-2xl font-bold text-slate-600 tracking-tight mb-6">
               Your journey starts here.
             </p>
 
             {/* Integrated Search Engine */}
-            <div className="bg-[#0b1448]/90 backdrop-blur-xl p-3 sm:p-3.5 rounded-2xl border border-[#25c0f3]/40 shadow-2xl mb-4">
+            <div className="bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60 mb-4">
               <form 
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -147,13 +148,13 @@ export default function Hero({
               >
                 {/* Job Title / Role */}
                 <div className="relative flex-1 flex items-center">
-                  <Search className="w-4 h-4 text-[#b6eafb]/70 ml-3.5 absolute pointer-events-none" />
+                  <Search className="w-4 h-4 text-slate-400 ml-3.5 absolute pointer-events-none" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Job position (e.g. Electrician, MEP, Plumber, Server)..."
-                    className="w-full pl-10 pr-3 py-3 rounded-xl bg-[#101a6d]/90 text-white placeholder-[#b6eafb]/50 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#a99410] border border-[#25c0f3]/30"
+                    className="w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 text-slate-800 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 transition-all"
                   />
                 </div>
 
@@ -163,14 +164,14 @@ export default function Hero({
                   <select
                     value={selectedCountry}
                     onChange={(e) => setSelectedCountry(e.target.value)}
-                    className="w-full pl-9 pr-7 py-3 rounded-xl bg-[#101a6d]/90 text-slate-100 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#a99410] border border-[#25c0f3]/30 appearance-none cursor-pointer"
+                    className="w-full pl-9 pr-7 py-3 rounded-xl bg-slate-50 text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 appearance-none cursor-pointer transition-all"
                   >
                     <option value="All Countries">All Destination Countries</option>
                     {countries.map((c) => (
                       <option key={c.name} value={c.name}>{c.name}</option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#b6eafb]/70">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
                     <svg className="fill-current h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                   </div>
                 </div>
@@ -178,17 +179,17 @@ export default function Hero({
                 {/* Find Button */}
                 <button
                   type="submit"
-                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#a99410] via-[#bfa715] to-[#8e7c0c] hover:from-[#cbb218] hover:to-[#a99410] text-[#020024] font-extrabold text-xs sm:text-sm shadow-lg shadow-[#a99410]/25 flex items-center justify-center gap-1.5 transition-all cursor-pointer shrink-0"
+                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#101a6d] via-[#14227e] to-[#182a98] hover:from-[#182a98] hover:to-[#101a6d] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-[#101a6d]/20 flex items-center justify-center gap-1.5 transition-all cursor-pointer shrink-0"
                 >
                   <span>Find Jobs</span>
-                  <ArrowRight className="w-4 h-4 text-[#020024]" />
+                  <ArrowRight className="w-4 h-4 text-[#a99410]" />
                 </button>
               </form>
             </div>
 
             {/* Trending Searches */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs">
-              <span className="font-bold text-[#101a6d]">Popular Opportunities:</span>
+              <span className="font-bold text-slate-700">Popular Opportunities:</span>
               {trendingSearches.map((tag) => (
                 <button
                   key={tag}
@@ -196,7 +197,7 @@ export default function Hero({
                     setSearchQuery(tag.split(' ')[0]);
                     onSearchSubmit();
                   }}
-                  className="px-2.5 py-1 rounded-md bg-[#101a6d] hover:bg-[#182a98] text-[#b6eafb] hover:text-[#a99410] border border-[#25c0f3]/40 hover:border-[#a99410] transition-colors cursor-pointer text-[11px] shadow-xs"
+                  className="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-[#101a6d] text-slate-700 hover:text-white border border-slate-200 hover:border-[#101a6d] transition-all cursor-pointer text-[11px] shadow-2xs"
                 >
                   {tag}
                 </button>
@@ -209,11 +210,11 @@ export default function Hero({
           <div className="lg:col-span-5 relative">
             
             {/* Ambient Backlight Glow */}
-            <div className="absolute -inset-2 bg-gradient-to-tr from-[#0ca7da]/25 via-[#a99410]/30 to-[#101a6d]/40 rounded-3xl blur-2xl opacity-75 pointer-events-none" />
+            <div className="absolute -inset-2 bg-gradient-to-tr from-[#14B2E3]/20 via-[#a99410]/20 to-[#101a6d]/20 rounded-3xl blur-2xl opacity-60 pointer-events-none" />
 
             {/* Main Interactive Showcase Container */}
             <div 
-              className="relative rounded-3xl overflow-hidden border border-[#25c0f3]/40 shadow-2xl bg-[#09113d] group"
+              className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl shadow-slate-300/70 bg-slate-950 group"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
@@ -326,16 +327,16 @@ export default function Hero({
         </div>
 
         {/* Quick Metrics Bar across full width */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pt-10 mt-10 border-t border-[#101a6d]/20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-200">
           {COMPANY_INFO.stats.map((st) => (
-            <div key={st.label} className="bg-[#0b1448]/95 border border-[#25c0f3]/40 hover:border-[#a99410] transition-colors rounded-2xl p-4 text-left shadow-xl shadow-[#101a6d]/15 backdrop-blur-md">
-              <span className="text-2xl sm:text-3xl font-extrabold text-[#a99410] font-display block">
+            <div key={st.label} className="bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-[#14B2E3] transition-all rounded-2xl p-4 text-left shadow-xs hover:shadow-md hover:-translate-y-0.5 group">
+              <span className="text-2xl sm:text-3xl font-extrabold text-[#101a6d] group-hover:text-[#0ca7da] font-display block transition-colors">
                 {st.value}
               </span>
-              <span className="text-xs font-bold text-white block mt-0.5">
+              <span className="text-xs font-bold text-slate-800 block mt-0.5">
                 {st.label}
               </span>
-              <span className="text-[11px] text-[#b6eafb]/90 block mt-0.5">
+              <span className="text-[11px] text-slate-500 block mt-0.5">
                 {st.sub}
               </span>
             </div>
