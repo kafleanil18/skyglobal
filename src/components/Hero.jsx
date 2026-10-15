@@ -14,7 +14,9 @@ import {
   ChevronRight,
   Users,
   Award,
-  Check
+  Check,
+  FileText,
+  UserCheck
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/skyGlobalData';
 import { useCMS } from '../context/CMSContext';
@@ -132,58 +134,58 @@ export default function Hero({
               Your journey starts here.
             </p>
 
-            {/* Integrated Search Engine */}
-            <div className="bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60 mb-4">
+            {/* Integrated Search Engine - Enlarged to balance image showcase on the right */}
+            <div className="bg-white p-3.5 sm:p-4.5 lg:p-5 rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/70 mb-5">
               <form 
                 onSubmit={(e) => {
                   e.preventDefault();
                   onSearchSubmit();
                 }}
-                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
               >
                 {/* Job Title / Role */}
                 <div className="relative flex-1 flex items-center">
-                  <Search className="w-4 h-4 text-slate-400 ml-3.5 absolute pointer-events-none" />
+                  <Search className="w-5 h-5 text-slate-400 ml-4 absolute pointer-events-none" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Job position (e.g. Electrician, MEP, Plumber, Server)..."
-                    className="w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 text-slate-800 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 transition-all"
+                    placeholder="Search job position (e.g. Electrician, MEP, Plumber, Server)..."
+                    className="w-full pl-11 pr-4 py-3.5 sm:py-4 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 transition-all font-medium"
                   />
                 </div>
 
                 {/* Destination Country */}
-                <div className="relative sm:w-48 flex items-center">
-                  <MapPin className="w-4 h-4 text-[#a99410] ml-3.5 absolute pointer-events-none" />
+                <div className="relative sm:w-56 flex items-center">
+                  <MapPin className="w-5 h-5 text-[#a99410] ml-3.5 absolute pointer-events-none" />
                   <select
                     value={selectedCountry}
                     onChange={(e) => setSelectedCountry(e.target.value)}
-                    className="w-full pl-9 pr-7 py-3 rounded-xl bg-slate-50 text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 appearance-none cursor-pointer transition-all"
+                    className="w-full pl-10 pr-8 py-3.5 sm:py-4 rounded-2xl bg-slate-50 text-slate-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#101a6d] focus:bg-white border border-slate-200 appearance-none cursor-pointer transition-all font-medium"
                   >
-                    <option value="All Countries">All Destination Countries</option>
+                    <option value="All Countries">All Destinations</option>
                     {countries.map((c) => (
                       <option key={c.name} value={c.name}>{c.name}</option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
-                    <svg className="fill-current h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                   </div>
                 </div>
 
                 {/* Find Button */}
                 <button
                   type="submit"
-                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#101a6d] via-[#14227e] to-[#182a98] hover:from-[#182a98] hover:to-[#101a6d] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-[#101a6d]/20 flex items-center justify-center gap-1.5 transition-all cursor-pointer shrink-0"
+                  className="px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#101a6d] via-[#14227e] to-[#182a98] hover:from-[#182a98] hover:to-[#101a6d] text-white font-extrabold text-sm sm:text-base shadow-lg shadow-[#101a6d]/25 flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 group"
                 >
                   <span>Find Jobs</span>
-                  <ArrowRight className="w-4 h-4 text-[#a99410]" />
+                  <ArrowRight className="w-4 h-4 text-[#a99410] group-hover:translate-x-0.5 transition-transform" />
                 </button>
               </form>
             </div>
 
-            {/* Trending Searches */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs">
+            {/* Trending Searches - Enlarged tags */}
+            <div className="flex flex-wrap items-center justify-start gap-2.5 text-xs sm:text-sm mb-5">
               <span className="font-bold text-slate-700">Popular Opportunities:</span>
               {trendingSearches.map((tag) => (
                 <button
@@ -192,11 +194,32 @@ export default function Hero({
                     setSearchQuery(tag.split(' ')[0]);
                     onSearchSubmit();
                   }}
-                  className="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-[#101a6d] text-slate-700 hover:text-white border border-slate-200 hover:border-[#101a6d] transition-all cursor-pointer text-[11px] shadow-2xs"
+                  className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#101a6d] text-slate-700 hover:text-white border border-slate-200/80 hover:border-[#101a6d] transition-all cursor-pointer text-xs sm:text-sm font-medium shadow-2xs"
                 >
                   {tag}
                 </button>
               ))}
+            </div>
+
+            {/* Quick Action Buttons to complete visual height balance */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={onOpenResumeModal}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#101a6d] hover:bg-[#101a6d] hover:text-white border border-slate-200 hover:border-[#101a6d] text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer"
+              >
+                <FileText className="w-4 h-4 text-[#0ca7da]" />
+                <span>Submit CV for Assessment</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onOpenHireModal}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#faf8ee] text-[#020024] hover:bg-[#a99410] border border-[#a99410]/50 text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer"
+              >
+                <UserCheck className="w-4 h-4 text-[#020024]" />
+                <span>Hire Verified Talent</span>
+              </button>
             </div>
 
           </div>
