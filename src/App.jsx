@@ -20,6 +20,7 @@ import JobModal from './components/JobModal';
 import HireTalentModal from './components/HireTalentModal';
 import SubmitResumeModal from './components/SubmitResumeModal';
 import LoginPage from './components/LoginPage';
+import WhatsAppWidget from './components/WhatsAppWidget';
 
 // CMS Dashboard
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -354,6 +355,9 @@ function MainWebsite() {
         isOpen={isResumeModalOpen}
         onClose={() => setIsResumeModalOpen(false)}
       />
+
+      {/* Floating WhatsApp Quick-Chat Widget */}
+      <WhatsAppWidget isModalOpen={isJobModalOpen || isHireModalOpen || isResumeModalOpen} />
     </div>
   );
 }

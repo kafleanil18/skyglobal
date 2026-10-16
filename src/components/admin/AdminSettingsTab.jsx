@@ -23,6 +23,7 @@ export default function AdminSettingsTab() {
     description: companyInfo.description,
     address: companyInfo.address,
     phone: companyInfo.phone,
+    whatsapp: companyInfo.whatsapp || companyInfo.phone || '+971 04 5570778',
     email: companyInfo.email,
     weekdays: companyInfo.officeHours.weekdays,
     sunday: companyInfo.officeHours.sunday
@@ -38,6 +39,7 @@ export default function AdminSettingsTab() {
       description: formData.description,
       address: formData.address,
       phone: formData.phone,
+      whatsapp: formData.whatsapp,
       email: formData.email,
       officeHours: {
         weekdays: formData.weekdays,
@@ -119,7 +121,7 @@ export default function AdminSettingsTab() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="sm:col-span-2">
             <label className="block font-bold text-slate-700 mb-1">Dubai Headquarters Address</label>
             <input
@@ -140,6 +142,18 @@ export default function AdminSettingsTab() {
               disabled={!isSuperAdmin}
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-800 focus:ring-2 focus:ring-amber-400 disabled:bg-slate-100"
+            />
+          </div>
+
+          <div>
+            <label className="block font-bold text-slate-700 mb-1">WhatsApp Number</label>
+            <input
+              type="text"
+              disabled={!isSuperAdmin}
+              value={formData.whatsapp}
+              onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+              placeholder="+971 4 557 0778"
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-800 focus:ring-2 focus:ring-amber-400 disabled:bg-slate-100"
             />
           </div>

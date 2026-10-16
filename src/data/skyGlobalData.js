@@ -6,6 +6,8 @@ export const COMPANY_INFO = {
   address: "Toronto Building, 202 2nd floor Bur Dubai, Dubai, United Arab Emirates",
   phone: "+971 04 5570778",
   phoneRaw: "+971045570778",
+  whatsapp: "+971 4 557 0778",
+  whatsappRaw: "97145570778",
   email: "info@skyglobalhr.com",
   officeHours: {
     weekdays: "Mon - Sat: 9:00 AM – 7:00 PM",
