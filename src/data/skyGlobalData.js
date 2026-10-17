@@ -184,6 +184,7 @@ export const SECTORS = [
 export const JOBS_LIST = [
   {
     id: 'job-mep-1',
+    rffNumber: 'RFF-MLT-101',
     vacancies: 6,
     status: 'Active',
     title: 'Electrician (Technical Trade Sector)',
@@ -193,7 +194,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: '1 Year, Renewable',
-    salary: 'Attractive European Salary Package',
+    salary: '€1,400 – €1,750 / month',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: ['🏠 Free Accommodation', '✈️ Return Ticket', '🏥 Medical Insurance', '⚡ Overtime Pay'],
     visaSponsorship: true,
     tags: ['Wiring & Installation', 'Fault Finding', 'Single & 3-Phase', 'Blueprint Reading', 'Schengen Visa'],
     description: 'Sky Global HR Consultancy is recruiting skilled and experienced Electricians for an established technical trade sector client in Malta. Responsible for wiring, installation, testing, and maintenance of electrical systems in residential and commercial facilities.',
@@ -212,6 +215,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-2',
+    rffNumber: 'RFF-MLT-102',
     vacancies: 4,
     status: 'Active',
     title: 'Maintenance Technician',
@@ -221,7 +225,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: '1 Year, Renewable',
-    salary: 'Attractive Salary Package',
+    salary: '€1,300 – €1,600 / month',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: ['🏠 Shared Accommodation', '✈️ Flight Ticket', '🏥 Health Insurance', '⚡ Overtime Available'],
     visaSponsorship: true,
     tags: ['Preventative Maintenance', 'HVAC & Plumbing', 'Troubleshooting', 'Hotel/Commercial'],
     description: 'Sky Global HR Consultancy is recruiting skilled and experienced Maintenance Technicians for our client in Malta to ensure smooth day-to-day operation of building mechanical, electrical, and plumbing fixtures.',
@@ -240,6 +246,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-3',
+    rffNumber: 'RFF-MLT-103',
     vacancies: 5,
     status: 'Active',
     title: 'Plumber',
@@ -249,7 +256,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: '1 Year, Renewable',
-    salary: 'Attractive Salary Package',
+    salary: '€1,400 – €1,700 / month',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: ['🏠 Free Housing Provided', '✈️ Annual Flight', '🏥 Health Cover', '⚡ Overtime Eligible'],
     visaSponsorship: true,
     tags: ['Pipe Fitting', 'Sanitary Installations', 'Pressure Testing', 'Water Systems'],
     description: 'Sky Global HR Consultancy is recruiting skilled and experienced Plumbers for our client in Malta for installation, repair, and maintenance of water supply, drainage, and piping networks.',
@@ -268,6 +277,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-4',
+    rffNumber: 'RFF-MLT-104',
     vacancies: 2,
     status: 'Awaiting Confirmation',
     title: 'MEP Company Procurement Officer',
@@ -277,7 +287,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: 'Long-term / Renewable',
-    salary: 'Attractive Salary Package',
+    salary: '€1,800 – €2,400 / month',
+    visaProcessing: '⚡ 4–6 Weeks Processing',
+    perks: ['🏠 Housing Allowance', '✈️ Annual Return Ticket', '🏥 Comprehensive Medical', '📈 Performance Bonus'],
     visaSponsorship: true,
     tags: ['BOQ Analysis', 'Vendor Management', 'HVAC & Electrical Products', 'Procurement'],
     description: 'Sky Global HR Consultancy is recruiting a skilled and experienced MEP Company Procurement Officer for our client in Malta to oversee material sourcing, supplier negotiations, and logistics for major construction projects.',
@@ -296,6 +308,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-5',
+    rffNumber: 'RFF-MLT-105',
     vacancies: 1,
     status: 'Active',
     title: 'MEP Project Manager',
@@ -305,7 +318,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: 'Multi-year Contract',
-    salary: 'Attractive Executive Package',
+    salary: '€3,200 – €4,000 / month',
+    visaProcessing: '⚡ 4–6 Weeks Processing',
+    perks: ['🏠 Executive Housing Allowance', '🚗 Transport Provided', '✈️ Family Relocation Flights', '🏥 Full Family Medical'],
     visaSponsorship: true,
     tags: ['Project Management', 'MEP & HVAC', 'Site Leadership', 'Commercial & Hospitality'],
     description: 'Sky Global HR Consultancy is recruiting a skilled and experienced MEP Project Manager for our client in Malta. Responsible for full project lifecycle management from mobilisation through testing, commissioning, and handover.',
@@ -324,6 +339,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-6',
+    rffNumber: 'RFF-MLT-106',
     vacancies: 3,
     status: 'Active',
     title: 'Plumbing Supervisor',
@@ -333,7 +349,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: '1 Year, Renewable',
-    salary: 'Attractive Salary Package',
+    salary: '€1,700 – €2,100 / month',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: ['🏠 Accommodation Support', '✈️ Annual Flight Ticket', '🏥 Medical Coverage', '⚡ Overtime Supervised'],
     visaSponsorship: true,
     tags: ['Site Supervision', 'Plumbing Teams', 'Quality Control', 'Safety Compliance'],
     description: 'Sky Global HR Consultancy is recruiting a skilled and experienced Plumbing Supervisor for our client in Malta to lead onsite installation squads and coordinate with MEP project directors.',
@@ -352,6 +370,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-mep-7',
+    rffNumber: 'RFF-MLT-107',
     vacancies: 8,
     status: 'Active',
     title: 'Assistant Electrician',
@@ -361,7 +380,9 @@ export const JOBS_LIST = [
     sector: 'MEP & Technical Trades',
     type: 'Full-time',
     contract: '1 Year, Renewable',
-    salary: 'Competitive Salary Package',
+    salary: '€1,100 – €1,350 / month',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: ['🏠 Free Accommodation', '✈️ Visa & Ticket Included', '🏥 Health Insurance', '⚡ Paid Overtime'],
     visaSponsorship: true,
     tags: ['Cable Pulling', 'Tray Installation', 'Apprenticeship/Assistant', 'Electrical Trade'],
     description: 'Sky Global HR Consultancy is recruiting skilled and experienced Assistant Electricians for our client in Malta to support senior electricians on commercial installations, wiring trunking, and fixture mounting.',
@@ -380,6 +401,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-hosp-1',
+    rffNumber: 'RFF-MLT-201',
     vacancies: 4,
     status: 'Active',
     title: 'Housekeeping Supervisor',
@@ -389,7 +411,9 @@ export const JOBS_LIST = [
     sector: 'Hospitality & Tourism',
     type: 'Full-time',
     contract: '1 Year, Renewable',
-    salary: 'Attractive Resort Package',
+    salary: '€1,200 – €1,500 / month',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: ['🏠 Free Resort Staff Housing', '🍽️ Duty Meals Provided', '✈️ Annual Flight Ticket', '🏥 Health Insurance'],
     visaSponsorship: true,
     tags: ['Resort Operations', 'Room Inspection', 'Team Training', 'Hospitality'],
     description: 'Join premier Mediterranean resorts as a Housekeeping Supervisor overseeing guest room cleanliness, inventory controls, and housekeeping crew shifts.',
@@ -408,6 +432,7 @@ export const JOBS_LIST = [
   },
   {
     id: 'job-hosp-2',
+    rffNumber: 'RFF-UAE-202',
     vacancies: 6,
     status: 'Active',
     title: 'Food & Beverage Server / Bartender',
@@ -417,7 +442,9 @@ export const JOBS_LIST = [
     sector: 'Hospitality & Tourism',
     type: 'Full-time',
     contract: '2 Years Renewable',
-    salary: 'Tax-Free Salary + Service Charge & Tips',
+    salary: 'AED 3,500 – 4,800 / month + Tips',
+    visaProcessing: '⚡ Fast-track 2–3 Weeks',
+    perks: ['🏠 Free Company Accommodation', '🍽️ Duty Meals Included', '✈️ Annual Flight Ticket', '🏥 Medical Insurance', '💰 Tax-Free + Tips'],
     visaSponsorship: true,
     tags: ['Fine Dining', 'Customer Care', 'Cocktail Mixing', 'Tax-Free UAE'],
     description: 'Deliver exceptional dining experiences for international clientele at renowned hotels and waterfront restaurants in Dubai and Malta.',
@@ -664,3 +691,47 @@ export const INITIAL_GALLERY = [
     tags: ['Conference', 'Ethical Recruitment', 'Dubai Forum', 'November 2025']
   }
 ];
+
+export const INITIAL_HERO_SLIDES = [
+  {
+    id: 'slide-1',
+    url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80',
+    title: 'Global Talent Acquisition & Screening',
+    subtitle: 'Direct employer interviews & skill vetting in Dubai HQ',
+    badge: 'Talent Acquisition',
+    location: 'Bur Dubai HQ',
+    stat: '100% Vetted Candidates',
+    order: 1
+  },
+  {
+    id: 'slide-2',
+    url: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80',
+    title: 'Executive Matching & Direct Hiring',
+    subtitle: 'Connecting employers in Europe & UAE with top professionals',
+    badge: 'Employer Partnership',
+    location: 'Malta & UAE Placements',
+    stat: '500+ Hired Monthly',
+    order: 2
+  },
+  {
+    id: 'slide-3',
+    url: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80',
+    title: 'Placement Agreements & Offer Letters',
+    subtitle: 'Verified bilateral employment contracts & Schengen work permits',
+    badge: 'Offer & Visa Stamping',
+    location: 'Schengen & Australia',
+    stat: '98.4% Visa Success',
+    order: 3
+  },
+  {
+    id: 'slide-4',
+    url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
+    title: 'Overseas Workforce Mobilization',
+    subtitle: 'Pre-departure orientation, ticketing & smooth airport deployment',
+    badge: 'Deployment Ready',
+    location: 'International Flights',
+    stat: '24/7 Travel Assistance',
+    order: 4
+  }
+];
+

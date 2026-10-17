@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiLogin, apiFetchUsers, apiAddUser, apiDeleteUser } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -54,6 +55,26 @@ export function AuthProvider({ children }) {
   const [users, setUsers] = useState(() => safeStorageGet('skyglobal_cms_users', INITIAL_USERS));
   const [currentUser, setCurrentUser] = useState(() => safeStorageGet('skyglobal_cms_auth_user', null));
 
+  // Sync users from MongoDB when online
+  useEffect(() => {
+    let isMounted = true;
+    async function loadRemoteUsers() {
+      const remoteUsers = await apiFetchUsers();
+      if (isMounted && Array.isArray(remoteUsers) && remoteUsers.length > 0) {
+        setUsers(prev => {
+          const map = new Map(prev.map(u => [u.id, u]));
+          remoteUsers.forEach(ru => {
+            const existing = map.get(ru.id) || {};
+            map.set(ru.id, { ...existing, ...ru });
+          });
+          return Array.from(map.values());
+        });
+      }
+    }
+    loadRemoteUsers();
+    return () => { isMounted = false; };
+  }, []);
+
   useEffect(() => {
     safeStorageSet('skyglobal_cms_users', users);
   }, [users]);
@@ -66,8 +87,21 @@ export function AuthProvider({ children }) {
     }
   }, [currentUser]);
 
-  const login = (email, password) => {
+  const login = async (email, password) => {
     const trimmedEmail = email.trim().toLowerCase();
+
+    // 1. Try remote MongoDB authentication
+    try {
+      const apiRes = await apiLogin(trimmedEmail, password);
+      if (apiRes && apiRes.success && apiRes.user) {
+        setCurrentUser(apiRes.user);
+        return { success: true, user: apiRes.user, source: 'mongodb' };
+      }
+    } catch (e) {
+      // Fall through to local fallback
+    }
+
+    // 2. Hybrid fallback: check local storage users
     const found = users.find(
       u => u.email.toLowerCase() === trimmedEmail && u.password === password
     );
@@ -81,7 +115,7 @@ export function AuthProvider({ children }) {
         department: found.department
       };
       setCurrentUser(sessionUser);
-      return { success: true, user: sessionUser };
+      return { success: true, user: sessionUser, source: 'local' };
     }
 
     return { 
@@ -94,7 +128,7 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
   };
 
-  const addAdminUser = (newUserData) => {
+  const addAdminUser = async (newUserData) => {
     if (currentUser?.role !== 'super_admin') {
       return { success: false, message: 'Only Super Admins can create administrative accounts.' };
     }
@@ -115,10 +149,14 @@ export function AuthProvider({ children }) {
     };
 
     setUsers(prev => [...prev, newUser]);
+
+    // Persist to MongoDB
+    apiAddUser(newUser).catch(err => console.warn('[Auth] Remote user persist error:', err));
+
     return { success: true, user: newUser };
   };
 
-  const deleteAdminUser = (userId) => {
+  const deleteAdminUser = async (userId) => {
     if (currentUser?.role !== 'super_admin') {
       return { success: false, message: 'Only Super Admins can remove accounts.' };
     }
@@ -126,6 +164,10 @@ export function AuthProvider({ children }) {
       return { success: false, message: 'You cannot delete your own active account.' };
     }
     setUsers(prev => prev.filter(u => u.id !== userId));
+
+    // Delete from MongoDB
+    apiDeleteUser(userId).catch(err => console.warn('[Auth] Remote user delete error:', err));
+
     return { success: true };
   };
 

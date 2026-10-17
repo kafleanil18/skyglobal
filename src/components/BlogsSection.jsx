@@ -12,7 +12,7 @@ import {
 
 export default function BlogsSection() {
   const cms = useCMS();
-  const blogList = cms?.blogs || DEFAULT_BLOGS;
+  const blogList = Array.isArray(cms?.blogs) ? cms.blogs : [];
   const [activeBlog, setActiveBlog] = useState(null);
 
   return (
@@ -33,60 +33,70 @@ export default function BlogsSection() {
           </p>
         </div>
 
-        {/* 3 Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {blogList.map((blog) => (
-            <article 
-              key={blog.id}
-              className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410]/80 transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={blog.image}
-                    alt={blog.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-950/80 text-[#a99410] backdrop-blur-md">
-                      {blog.category}
-                    </span>
+        {/* Articles Grid or Clean Empty State */}
+        {blogList.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {blogList.map((blog) => (
+              <article 
+                key={blog.id}
+                className="bg-slate-50/70 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-[#a99410]/80 transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-950/80 text-[#a99410] backdrop-blur-md">
+                        {blog.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-2">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{blog.date}</span>
+                      <span>•</span>
+                      <span className="text-[#101a6d] font-bold">{blog.source}</span>
+                    </div>
+
+                    <h3 
+                      onClick={() => setActiveBlog(blog)}
+                      className="text-lg font-bold font-display text-slate-900 group-hover:text-[#101a6d] transition-colors cursor-pointer line-clamp-2 mb-3"
+                    >
+                      {blog.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                      {blog.summary}
+                    </p>
                   </div>
                 </div>
 
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-2">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{blog.date}</span>
-                    <span>•</span>
-                    <span className="text-[#101a6d] font-bold">{blog.source}</span>
-                  </div>
-
-                  <h3 
+                <div className="p-6 pt-0">
+                  <button
                     onClick={() => setActiveBlog(blog)}
-                    className="text-lg font-bold font-display text-slate-900 group-hover:text-[#101a6d] transition-colors cursor-pointer line-clamp-2 mb-3"
+                    className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#a99410] hover:to-[#8e7c0c] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
                   >
-                    {blog.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
-                    {blog.summary}
-                  </p>
+                    <span>Read Full Update</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
                 </div>
-              </div>
-
-              <div className="p-6 pt-0">
-                <button
-                  onClick={() => setActiveBlog(blog)}
-                  className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-gradient-to-r hover:from-[#a99410] hover:to-[#8e7c0c] hover:text-[#020024] border border-slate-200 transition-all flex items-center justify-center gap-1.5 shadow-sm"
-                >
-                  <span>Read Full Update</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-slate-50/70 rounded-3xl p-12 text-center border border-slate-200 max-w-md mx-auto shadow-sm">
+            <FileText className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+            <h4 className="text-base font-bold text-slate-800">No immigration updates published yet</h4>
+            <p className="text-xs text-slate-500 mt-1">
+              New legal visa and international recruitment articles will appear here once published by the SkyGlobal team.
+            </p>
+          </div>
+        )}
 
         {/* Modal for Full Article View */}
         {activeBlog && (

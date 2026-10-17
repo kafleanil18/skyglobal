@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Plus, 
   Search, 
@@ -16,7 +16,11 @@ import {
   AlertCircle,
   Filter,
   CheckCircle2,
-  Crown
+  Crown,
+  Hash,
+  Sparkles,
+  XCircle,
+  AlertTriangle
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { useAuth } from '../../context/AuthContext';
@@ -36,6 +40,7 @@ export default function AdminJobsTab() {
   const [editingJobId, setEditingJobId] = useState(null);
   
   const initialFormState = {
+    rffNumber: '',
     title: '',
     company: 'Sky Global Partner Client',
     location: 'Malta',
@@ -43,6 +48,8 @@ export default function AdminJobsTab() {
     sector: 'MEP & Technical Trades',
     contract: '1 Year Renewable',
     salary: 'Attractive Salary Package',
+    visaProcessing: '⚡ Fast-track 3–4 Weeks',
+    perks: '',
     vacancies: 4,
     status: 'Active',
     visaSponsorship: true,
@@ -54,15 +61,78 @@ export default function AdminJobsTab() {
 
   const [formData, setFormData] = useState(initialFormState);
 
+  // Helper: Auto-generate an available, guaranteed-unique RFF code
+  const generateUniqueRFF = (countryName) => {
+    const prefix = (countryName || formData.country || 'MLT').slice(0, 3).toUpperCase();
+    let num = 101;
+    let candidate = `RFF-${prefix}-${num}`;
+    while (jobs.some(j => 
+      ((j.rffNumber || '').trim().toUpperCase() === candidate || 
+       (j.id || '').trim().toUpperCase() === candidate) &&
+      (!editingJobId || j.id !== editingJobId)
+    )) {
+      num++;
+      candidate = `RFF-${prefix}-${num}`;
+    }
+    return candidate;
+  };
+
+  // Instant Keystroke Validation: Checks RFF uniqueness on every typed character
+  const rffValidation = useMemo(() => {
+    const raw = (formData.rffNumber || '').trim();
+    if (!raw) {
+      return {
+        status: 'empty',
+        message: 'Unique RFF reference number is required.',
+        isDuplicate: false,
+        conflictingJob: null
+      };
+    }
+
+    const normalized = raw.toUpperCase();
+
+    // Check if any other job in the system already uses this RFF number or ID
+    const conflictingJob = jobs.find(j => {
+      // Exclude current job being edited
+      if (editingJobId && j.id === editingJobId) return false;
+
+      const otherRff = (j.rffNumber || '').trim().toUpperCase();
+      const otherId = (j.id || '').trim().toUpperCase();
+
+      return otherRff === normalized || otherId === normalized;
+    });
+
+    if (conflictingJob) {
+      return {
+        status: 'duplicate',
+        message: `RFF "${raw}" is already assigned to "${conflictingJob.title}" (${conflictingJob.country || conflictingJob.location}).`,
+        isDuplicate: true,
+        conflictingJob
+      };
+    }
+
+    return {
+      status: 'valid',
+      message: `RFF "${raw}" is unique and available.`,
+      isDuplicate: false,
+      conflictingJob: null
+    };
+  }, [formData.rffNumber, jobs, editingJobId]);
+
   const handleOpenAdd = () => {
     setEditingJobId(null);
-    setFormData(initialFormState);
+    setFormData({
+      ...initialFormState,
+      rffNumber: generateUniqueRFF('Malta'),
+      perks: ''
+    });
     setIsModalOpen(true);
   };
 
   const handleOpenEdit = (job) => {
     setEditingJobId(job.id);
     setFormData({
+      rffNumber: job.rffNumber || job.id || '',
       title: job.title || '',
       company: job.company || 'Sky Global Partner Client',
       location: job.location || '',
@@ -70,6 +140,8 @@ export default function AdminJobsTab() {
       sector: job.sector || 'MEP & Technical Trades',
       contract: job.contract || '1 Year Renewable',
       salary: job.salary || 'Attractive Salary Package',
+      visaProcessing: job.visaProcessing || '⚡ Fast-track 3–4 Weeks',
+      perks: Array.isArray(job.perks) ? job.perks.join('\n') : (job.perks || ''),
       vacancies: job.vacancies !== undefined ? Number(job.vacancies) : 1,
       status: job.status || 'Active',
       visaSponsorship: job.visaSponsorship !== false,
@@ -83,17 +155,25 @@ export default function AdminJobsTab() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (rffValidation.isDuplicate || !formData.rffNumber.trim()) {
+      setToastMsg('Cannot publish vacancy: Please resolve the duplicate RFF reference number.');
+      return;
+    }
+
     const payload = {
       ...formData,
-      vacancies: Math.max(1, parseInt(formData.vacancies, 10) || 1)
+      rffNumber: formData.rffNumber.trim().toUpperCase(),
+      vacancies: Math.max(1, parseInt(formData.vacancies, 10) || 1),
+      perks: formData.perks ? formData.perks.split('\n').map(s => s.trim()).filter(Boolean) : [],
+      visaProcessing: formData.visaProcessing || '⚡ Fast-track 3–4 Weeks'
     };
 
     if (editingJobId) {
       updateJob(editingJobId, payload);
-      setToastMsg(`Updated vacancy "${formData.title}" (${payload.vacancies} openings, status: ${payload.status}).`);
+      setToastMsg(`Updated vacancy "${formData.title}" (${payload.rffNumber}).`);
     } else {
       addJob(payload);
-      setToastMsg(`Created new vacancy "${formData.title}" with ${payload.vacancies} openings.`);
+      setToastMsg(`Published new vacancy "${formData.title}" (${payload.rffNumber}) with ${payload.vacancies} openings.`);
     }
     setIsModalOpen(false);
     setTimeout(() => setToastMsg(''), 4000);
@@ -128,7 +208,9 @@ export default function AdminJobsTab() {
     const matchesSearch = 
       (job.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (job.location || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (job.company || '').toLowerCase().includes(searchTerm.toLowerCase());
+      (job.company || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (job.rffNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (job.id || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCountry = selectedCountryFilter === 'All' || job.country === selectedCountryFilter;
     const matchesStatus = selectedStatusFilter === 'All' || (job.status || 'Active') === selectedStatusFilter;
     return matchesSearch && matchesCountry && matchesStatus;
@@ -285,8 +367,14 @@ export default function AdminJobsTab() {
                   
                   {/* Position & Role */}
                   <td className="py-3.5 px-4">
-                    <div className="font-bold text-slate-900 text-[13px]">{job.title}</div>
-                    <div className="text-[11px] text-slate-500">{job.company}</div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-bold text-slate-900 text-[13px]">{job.title}</span>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-black bg-[#101a6d] text-white tracking-wider font-mono shadow-2xs">
+                        <Hash className="w-2.5 h-2.5 text-[#25c0f3]" />
+                        <span>{job.rffNumber || job.id}</span>
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">{job.company}</div>
                   </td>
 
                   {/* Destination */}
@@ -391,6 +479,83 @@ export default function AdminJobsTab() {
 
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               
+              {/* RFF Reference Number (Real-Time Keystroke Uniqueness Detection) */}
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold text-slate-800 text-xs flex items-center gap-1.5">
+                    <Hash className="w-3.5 h-3.5 text-[#101a6d]" />
+                    <span>RFF Reference Number *</span>
+                    <span className="text-[10px] font-normal text-slate-400">(Must be globally unique)</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const generated = generateUniqueRFF(formData.country);
+                      setFormData(prev => ({ ...prev, rffNumber: generated }));
+                    }}
+                    className="text-[11px] font-bold text-[#101a6d] hover:text-[#a99410] flex items-center gap-1 cursor-pointer transition-colors"
+                    title="Generate an available unique RFF number"
+                  >
+                    <Sparkles className="w-3 h-3 text-[#a99410]" />
+                    <span>Auto-Generate Available RFF</span>
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. RFF-MLT-101 or RFF-2026-904"
+                    value={formData.rffNumber}
+                    onChange={(e) => setFormData({ ...formData, rffNumber: e.target.value.toUpperCase() })}
+                    className={`w-full pl-3.5 pr-10 py-2.5 rounded-xl border text-xs font-mono font-bold tracking-wider uppercase transition-all outline-none ${
+                      rffValidation.status === 'duplicate'
+                        ? 'border-rose-500 bg-rose-50/60 text-rose-950 focus:ring-2 focus:ring-rose-500'
+                        : rffValidation.status === 'valid'
+                        ? 'border-emerald-500 bg-emerald-50/40 text-emerald-950 focus:ring-2 focus:ring-emerald-500'
+                        : 'border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#a99410]'
+                    }`}
+                  />
+
+                  {/* Live Status Icon */}
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    {rffValidation.status === 'duplicate' && (
+                      <XCircle className="w-4 h-4 text-rose-600 animate-pulse" />
+                    )}
+                    {rffValidation.status === 'valid' && (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    )}
+                    {rffValidation.status === 'empty' && (
+                      <span className="text-[10px] text-slate-400 font-bold">REQ</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Real-time Inline Detection Message */}
+                {rffValidation.status === 'duplicate' && (
+                  <div className="p-2.5 rounded-xl bg-rose-100 border border-rose-300 text-rose-900 flex items-start gap-2 text-[11px] animate-fadeIn">
+                    <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block font-black">Duplicate RFF Detected!</strong>
+                      <span>{rffValidation.message}</span>
+                    </div>
+                  </div>
+                )}
+
+                {rffValidation.status === 'valid' && (
+                  <div className="p-2 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 flex items-center gap-2 text-[11px]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span className="font-semibold">{rffValidation.message}</span>
+                  </div>
+                )}
+
+                {rffValidation.status === 'empty' && (
+                  <span className="text-[10px] text-slate-400 block">
+                    Type any RFF number — the system instantly detects uniqueness across all vacancies as you type.
+                  </span>
+                )}
+              </div>
+
               {/* Position Title */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1">Position Title *</label>
@@ -534,6 +699,83 @@ export default function AdminJobsTab() {
                 />
               </div>
 
+              {/* Key Inclusions & Candidate Perks (Manual Admin Entry) */}
+              <div className="bg-[#faf8ee] p-4 rounded-2xl border border-[#a99410]/40 space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <label className="block font-bold text-[#020024] text-xs flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#a99410]" />
+                    <span>Key Inclusions & Candidate Perks (Manual Entry)</span>
+                  </label>
+                  <span className="text-[10px] text-slate-500 font-medium">
+                    (1 perk per line • Leave empty if no specific inclusions)
+                  </span>
+                </div>
+
+                <p className="text-[11px] text-slate-600">
+                  Enter the exact contract inclusions for this position. Only inclusions entered here will be displayed to candidates on the website.
+                </p>
+
+                {/* Quick Add Helper Pills */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-[10px] font-bold text-slate-400 mr-1 uppercase tracking-wider">
+                    Quick Add:
+                  </span>
+                  {[
+                    '🏠 Free Accommodation',
+                    '✈️ Return Air Ticket',
+                    '🏥 Medical Insurance',
+                    '⚡ Overtime Pay',
+                    '🍽️ Duty Meals Provided',
+                    '🚗 Transport Included',
+                    '💰 Tax-Free Tips'
+                  ].map(perk => (
+                    <button
+                      key={perk}
+                      type="button"
+                      onClick={() => {
+                        const current = formData.perks ? formData.perks.trim().split('\n') : [];
+                        if (!current.includes(perk)) {
+                          const updated = [...current, perk].join('\n');
+                          setFormData({ ...formData, perks: updated });
+                        }
+                      }}
+                      className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white text-slate-700 border border-slate-200 hover:border-[#a99410] hover:text-[#020024] transition-colors cursor-pointer shadow-2xs"
+                    >
+                      + {perk}
+                    </button>
+                  ))}
+                  {formData.perks && (
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, perks: '' })}
+                      className="px-2 py-0.5 rounded-lg text-[10px] font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 transition-colors cursor-pointer ml-auto"
+                    >
+                      Clear All
+                    </button>
+                  )}
+                </div>
+
+                <textarea
+                  rows={3}
+                  placeholder="🏠 Free Accommodation&#10;✈️ Return Air Ticket&#10;🏥 Medical Insurance&#10;⚡ Overtime Pay"
+                  value={formData.perks}
+                  onChange={(e) => setFormData({ ...formData, perks: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs font-semibold focus:ring-2 focus:ring-[#a99410]"
+                />
+              </div>
+
+              {/* Visa Processing Speed Tag */}
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Visa Processing Speed Tag</label>
+                <input
+                  type="text"
+                  placeholder="e.g. ⚡ Fast-track 3–4 Weeks"
+                  value={formData.visaProcessing}
+                  onChange={(e) => setFormData({ ...formData, visaProcessing: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-800 text-xs focus:ring-2 focus:ring-[#a99410]"
+                />
+              </div>
+
               {/* Requirements & Benefits */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -570,9 +812,21 @@ export default function AdminJobsTab() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] font-extrabold shadow-md shadow-[#a99410]/25 transition-all cursor-pointer flex items-center gap-1.5"
+                  disabled={rffValidation.isDuplicate || !formData.rffNumber.trim()}
+                  className={`px-6 py-2.5 rounded-xl font-extrabold shadow-md transition-all flex items-center gap-1.5 ${
+                    rffValidation.isDuplicate || !formData.rffNumber.trim()
+                      ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                      : 'bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] text-[#020024] shadow-[#a99410]/25 cursor-pointer'
+                  }`}
+                  title={
+                    rffValidation.isDuplicate
+                      ? 'Cannot save: RFF number is already assigned to another vacancy'
+                      : !formData.rffNumber.trim()
+                      ? 'Cannot save: Unique RFF number is required'
+                      : editingJobId ? 'Save Vacancy Changes' : 'Publish Job Vacancy'
+                  }
                 >
-                  <CheckCircle className="w-4 h-4 text-[#020024]" />
+                  <CheckCircle className={`w-4 h-4 ${rffValidation.isDuplicate || !formData.rffNumber.trim() ? 'text-slate-400' : 'text-[#020024]'}`} />
                   <span>{editingJobId ? 'Save Vacancy Changes' : 'Publish Job Vacancy'}</span>
                 </button>
               </div>

@@ -12,7 +12,10 @@ import {
   Send,
   Building,
   Users,
-  Clock
+  Clock,
+  Zap,
+  Coins,
+  MessageCircle
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/skyGlobalData';
 import { useCMS } from '../context/CMSContext';
@@ -167,15 +170,26 @@ export default function JobModal({ job, isOpen, onClose }) {
           {activeTab === 'details' ? (
             <>
               {/* Highlight Box */}
-              <div className="bg-[#e5f2f9] rounded-2xl p-4 sm:p-5 border border-[#25c0f3]/30 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-[#e5f2f9] rounded-2xl p-4 sm:p-5 border border-[#25c0f3]/30 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                   <span className="text-xs uppercase font-bold tracking-wider text-[#101a6d] block mb-0.5">
                     Package / Remuneration
                   </span>
-                  <span className="text-xl font-black text-slate-900 font-display">
+                  <span className="text-lg sm:text-xl font-black text-slate-900 font-display flex items-center gap-1">
+                    <Coins className="w-4 h-4 text-emerald-600 shrink-0" />
                     {job.salary}
                   </span>
                   <p className="text-xs text-slate-500 mt-1">Contract: {job.contract || '1 Year Renewable'}</p>
+                </div>
+                <div>
+                  <span className="text-xs uppercase font-bold tracking-wider text-[#101a6d] block mb-0.5">
+                    Visa & Processing
+                  </span>
+                  <span className="text-sm font-bold text-sky-950 flex items-center gap-1.5">
+                    <Zap className="w-4 h-4 text-sky-600 fill-sky-500 shrink-0" />
+                    {job.visaProcessing || '⚡ Fast-track 3–4 Weeks'}
+                  </span>
+                  <p className="text-xs text-slate-500 mt-1">Schengen / UAE Work Permit</p>
                 </div>
                 <div>
                   <span className="text-xs uppercase font-bold tracking-wider text-[#101a6d] block mb-0.5">
@@ -200,6 +214,23 @@ export default function JobModal({ job, isOpen, onClose }) {
                   </p>
                 </div>
               </div>
+
+              {/* Guaranteed Inclusions & Candidate Perks Banner */}
+              {job.perks && job.perks.length > 0 && (
+                <div className="bg-[#faf8ee] rounded-2xl p-4 sm:p-5 border border-[#a99410]/40 shadow-xs">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#020024] uppercase tracking-wider mb-2.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#a99410]" />
+                    <span>Guaranteed Contract Inclusions & Overseas Benefits</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {job.perks.map((p, i) => (
+                      <span key={i} className="px-3 py-1.5 rounded-xl bg-white border border-[#a99410]/30 text-xs font-bold text-slate-800 shadow-2xs flex items-center gap-1.5">
+                        {p}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Description */}
               <div>
@@ -436,13 +467,29 @@ export default function JobModal({ job, isOpen, onClose }) {
             <span className="text-xs text-slate-500 hidden sm:inline">
               Ref: {job.id}
             </span>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <button
+                type="button"
                 onClick={onClose}
                 className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-100 flex-1 sm:flex-none text-center cursor-pointer"
               >
                 Close
               </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const msg = `Hello SkyGlobal team, I am interested in applying for the ${job.title} vacancy in ${job.location} (${job.salary}). Could you provide more details about this position?`;
+                  window.open(`https://wa.me/97145570778?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+                }}
+                className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#075E54] bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer flex-1 sm:flex-none"
+                title="Ask about this vacancy on WhatsApp"
+                aria-label="Ask about this vacancy on WhatsApp"
+              >
+                <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                <span>Ask on WhatsApp</span>
+              </button>
+
               {job.status === 'Inactive' ? (
                 <button
                   disabled
@@ -452,6 +499,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                 </button>
               ) : job.status === 'Awaiting Confirmation' ? (
                 <button
+                  type="button"
                   onClick={() => setActiveTab('apply')}
                   className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-amber-400 to-[#a99410] hover:from-amber-300 hover:to-[#bfa715] shadow-md shadow-amber-500/20 flex-1 sm:flex-none text-center flex items-center justify-center gap-1.5 cursor-pointer"
                 >
@@ -460,6 +508,7 @@ export default function JobModal({ job, isOpen, onClose }) {
                 </button>
               ) : (
                 <button
+                  type="button"
                   onClick={() => setActiveTab('apply')}
                   className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-md shadow-[#a99410]/25 flex-1 sm:flex-none text-center flex items-center justify-center gap-1.5 cursor-pointer"
                 >

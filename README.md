@@ -37,10 +37,11 @@ A modern, responsive web application for **SkyGlobal**, an international recruit
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [React 19](https://react.dev)
-- **Build Tool**: [Vite 6](https://vite.dev)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
-- **Icons**: [Lucide React](https://lucide.dev)
+- **Frontend**: [React 19](https://react.dev) + [Vite 6](https://vite.dev)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) + [Lucide React](https://lucide.dev)
+- **Backend API**: [Express.js](https://expressjs.com) (Port 5001)
+- **Local Database**: [MongoDB](https://www.mongodb.com) (`mongodb://127.0.0.1:27017/skyglobal`) via [Mongoose](https://mongoosejs.com)
+- **Data Architecture**: Hybrid sync (connects to local MongoDB when backend is running; seamlessly falls back to localStorage cache if offline)
 
 ---
 
@@ -50,15 +51,28 @@ A modern, responsive web application for **SkyGlobal**, an international recruit
 
 - Node.js (v18+ recommended)
 - npm (v9+ recommended)
+- MongoDB running locally (`brew services start mongodb-community`)
 
-### Development
+### Starting Database & Application
+
+To run both the **backend database API** (port 5001) and the **Vite frontend** (port 5173) together:
 
 ```bash
-npm install
+# Run both backend server & frontend concurrently
+npm run dev:all
+```
+
+Or run them individually:
+
+```bash
+# Terminal 1: Backend MongoDB API Server (Port 5001)
+npm run server:dev
+
+# Terminal 2: Vite React Frontend (Port 5173)
 npm run dev
 ```
 
-The application will be live at `http://127.0.0.1:5173/`.
+Alternatively on macOS, double-click **`Launch-SkyGlobal.command`** in the project folder to start both services and open your browser automatically.
 
 ### Production Build
 

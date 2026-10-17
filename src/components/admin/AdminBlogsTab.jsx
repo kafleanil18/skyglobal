@@ -69,62 +69,79 @@ export default function AdminBlogsTab() {
         </button>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {blogs.map(blog => (
-          <div 
-            key={blog.id}
-            className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between"
+      {/* Grid or Empty State */}
+      {blogs.length === 0 ? (
+        <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-sm max-w-md mx-auto">
+          <FileText className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+          <h4 className="text-base font-bold text-slate-800">No immigration articles published</h4>
+          <p className="text-xs text-slate-500 mt-1 mb-4">
+            Click "New Article" to create and publish your first visa intelligence update.
+          </p>
+          <button
+            onClick={handleOpenAdd}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#020024] bg-gradient-to-r from-[#a99410] to-[#8e7c0c] hover:from-[#bfa715] hover:to-[#a99410] shadow-sm cursor-pointer"
           >
-            <div>
-              <div className="h-40 overflow-hidden relative">
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  className="w-full h-full object-cover"
-                />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-950/80 text-[#a99410] text-[10px] font-bold">
-                  {blog.category}
-                </span>
+            <Plus className="w-4 h-4" />
+            <span>Create Article</span>
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogs.map(blog => (
+            <div 
+              key={blog.id}
+              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <div className="h-40 overflow-hidden relative">
+                  <img
+                    src={blog.image}
+                    alt={blog.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-950/80 text-[#a99410] text-[10px] font-bold">
+                    {blog.category}
+                  </span>
+                </div>
+
+                <div className="p-4 space-y-2">
+                  <span className="text-[10px] text-slate-400 block">{blog.date} • {blog.source}</span>
+                  <h4 className="text-sm font-bold text-slate-900 line-clamp-2">
+                    {blog.title}
+                  </h4>
+                  <p className="text-xs text-slate-600 line-clamp-3">
+                    {blog.summary}
+                  </p>
+                </div>
               </div>
 
-              <div className="p-4 space-y-2">
-                <span className="text-[10px] text-slate-400 block">{blog.date} • {blog.source}</span>
-                <h4 className="text-sm font-bold text-slate-900 line-clamp-2">
-                  {blog.title}
-                </h4>
-                <p className="text-xs text-slate-600 line-clamp-3">
-                  {blog.summary}
-                </p>
+              <div className="p-4 pt-0 border-t border-slate-100 flex items-center justify-between text-xs mt-3">
+                <span className="text-slate-400 text-[11px]">ID: {blog.id}</span>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => handleOpenEdit(blog)}
+                    className="p-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:bg-blue-50"
+                    title="Edit"
+                  >
+                    <Edit3 className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (confirm(`Delete article "${blog.title}"?`)) {
+                        deleteBlog(blog.id);
+                      }
+                    }}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="p-4 pt-0 border-t border-slate-100 flex items-center justify-between text-xs mt-3">
-              <span className="text-slate-400 text-[11px]">ID: {blog.id}</span>
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => handleOpenEdit(blog)}
-                  className="p-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:bg-blue-50"
-                  title="Edit"
-                >
-                  <Edit3 className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => {
-                    if (confirm(`Delete article "${blog.title}"?`)) {
-                      deleteBlog(blog.id);
-                    }
-                  }}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50"
-                  title="Delete"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Modal */}
       {isModalOpen && (

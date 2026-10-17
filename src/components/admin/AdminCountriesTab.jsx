@@ -198,9 +198,11 @@ Renewable 1-year contract with competitive salary and accommodation benefits.`
 
   // Calculate jobs matching each country
   const getJobsCount = (countryName) => {
+    if (!countryName) return 0;
+    const lower = countryName.toLowerCase();
     return jobs.filter(j => 
-      (j.country && j.country.toLowerCase() === countryName.toLowerCase()) ||
-      (j.location && j.location.toLowerCase().includes(countryName.toLowerCase()))
+      (j.country && j.country.toLowerCase() === lower) ||
+      (j.location && j.location.toLowerCase().includes(lower))
     ).length;
   };
 

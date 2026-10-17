@@ -25,8 +25,8 @@ export default function AdminSettingsTab() {
     phone: companyInfo.phone,
     whatsapp: companyInfo.whatsapp || companyInfo.phone || '+971 04 5570778',
     email: companyInfo.email,
-    weekdays: companyInfo.officeHours.weekdays,
-    sunday: companyInfo.officeHours.sunday
+    weekdays: companyInfo.officeHours?.weekdays || 'Mon - Sat: 9:00 AM – 7:00 PM',
+    sunday: companyInfo.officeHours?.sunday || 'Sun: Closed'
   });
 
   const [saved, setSaved] = useState(false);
@@ -50,10 +50,10 @@ export default function AdminSettingsTab() {
     setTimeout(() => setSaved(false), 3000);
   };
 
-  const handleReset = () => {
-    if (confirm('Are you sure you want to reset all CMS jobs, applications, and blogs back to original demo values? This will wipe recent mock submissions.')) {
-      resetAllToDefaults();
-      alert('All CMS records have been reset to original values.');
+  const handleReset = async () => {
+    if (confirm('Are you sure you want to clean wipe all jobs, gallery photos, and blogs? This will wipe the local MongoDB collections to clean empty arrays so you can add your own data from scratch.')) {
+      await resetAllToDefaults();
+      alert('CMS records and MongoDB collections have been wiped clean.');
       window.location.reload();
     }
   };
@@ -219,20 +219,20 @@ export default function AdminSettingsTab() {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-rose-800 font-bold text-sm">
               <AlertTriangle className="w-4 h-4 text-rose-600" />
-              <span>System Reset & Storage Flush</span>
+              <span>System Reset & Clean Slate</span>
             </div>
             <p className="text-xs text-rose-700">
-              Restore all jobs, sample applications, blogs, and settings to original state.
+              Permanently wipe demo jobs, blogs, and gallery albums to empty arrays so you can add your own data.
             </p>
           </div>
 
           <button
             type="button"
             onClick={handleReset}
-            className="px-4 py-2 rounded-xl bg-white border border-rose-300 text-rose-700 hover:bg-rose-100 font-bold text-xs flex items-center gap-1.5 shrink-0"
+            className="px-4 py-2 rounded-xl bg-white border border-rose-300 text-rose-700 hover:bg-rose-100 font-bold text-xs flex items-center gap-1.5 shrink-0 cursor-pointer"
           >
             <RotateCcw className="w-4 h-4 text-rose-600" />
-            <span>Reset Demo Data</span>
+            <span>Wipe Data Clean</span>
           </button>
         </div>
       )}

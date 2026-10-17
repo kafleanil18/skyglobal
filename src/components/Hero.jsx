@@ -71,31 +71,38 @@ export default function Hero({
   onOpenHireModal,
   onOpenResumeModal
 }) {
-  const { countries } = useCMS();
+  const { countries, heroSlides } = useCMS();
+  const slides = (Array.isArray(heroSlides) && heroSlides.length > 0)
+    ? heroSlides
+    : DYNAMIC_RECRUITMENT_SLIDES;
+
   const trendingSearches = ['Electrician (Malta)', 'Maintenance Tech', 'Plumber', 'MEP Project Manager', 'Housekeeping', 'Australia Subclass 407'];
 
   // Dynamic image carousel state
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Ensure activeSlide is within bounds if slides length changes
+  const safeActiveIndex = slides.length > 0 ? (activeSlide % slides.length) : 0;
+
   // Auto-rotate every 5 seconds (pauses on hover)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length <= 1) return;
     const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % DYNAMIC_RECRUITMENT_SLIDES.length);
+      setActiveSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, slides.length]);
 
   const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + DYNAMIC_RECRUITMENT_SLIDES.length) % DYNAMIC_RECRUITMENT_SLIDES.length);
+    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % DYNAMIC_RECRUITMENT_SLIDES.length);
+    setActiveSlide((prev) => (prev + 1) % slides.length);
   };
 
-  const currentSlide = DYNAMIC_RECRUITMENT_SLIDES[activeSlide];
+  const currentSlide = slides[safeActiveIndex] || slides[0] || {};
 
   return (
     <section id="home" className="relative pt-36 pb-12 sm:pt-40 sm:pb-16 md:pt-40 md:pb-24 overflow-hidden bg-white text-slate-900 border-b border-slate-200/60">
@@ -236,19 +243,19 @@ export default function Hero({
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              {/* Dynamic Image with Crossfade Transition - Enlarged Height & Proportions */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[16/12] xl:aspect-[5/4] min-h-[340px] sm:min-h-[460px] lg:min-h-[520px] overflow-hidden bg-slate-950">
-                {DYNAMIC_RECRUITMENT_SLIDES.map((slide, idx) => (
+              {/* Dynamic Image with Crossfade Transition - Stable, Consistent Dimensions */}
+              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-[480px] xl:h-[500px] overflow-hidden bg-slate-950">
+                {slides.map((slide, idx) => (
                   <img 
-                    key={slide.id}
+                    key={slide.id || idx}
                     src={slide.url} 
                     alt={slide.title} 
                     onError={(e) => {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = FALLBACK_GALLERY_IMAGE;
                     }}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-                      idx === activeSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out ${
+                      idx === safeActiveIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
                     }`}
                   />
                 ))}
@@ -260,11 +267,11 @@ export default function Hero({
                 <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-2 pointer-events-none z-10">
                   <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#020024] bg-white/95 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border border-[#a99410]/50 shadow-lg backdrop-blur-md">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>{currentSlide.badge}</span>
+                    <span>{currentSlide.badge || 'Talent Acquisition'}</span>
                   </span>
 
                   <span className="text-xs font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/20">
-                    {activeSlide + 1} / {DYNAMIC_RECRUITMENT_SLIDES.length}
+                    {safeActiveIndex + 1} / {slides.length}
                   </span>
                 </div>
 
@@ -290,27 +297,27 @@ export default function Hero({
                 <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-3.5 sm:p-5 rounded-2xl bg-[#09113d]/90 backdrop-blur-xl border border-white/15 shadow-2xl space-y-1 sm:space-y-1.5 z-10 text-left">
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="text-xs sm:text-base font-extrabold text-white tracking-tight line-clamp-1">
-                      {currentSlide.title}
+                      {currentSlide.title || 'SkyGlobal Global Placement'}
                     </h3>
                     <span className="text-[10px] sm:text-xs text-[#a99410] font-black shrink-0 flex items-center gap-1 sm:gap-1.5 bg-[#a99410]/15 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-[#a99410]/30">
                       <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#a99410]" />
-                      {currentSlide.stat}
+                      {currentSlide.stat || 'Verified Candidates'}
                     </span>
                   </div>
                   <p className="text-[11px] sm:text-sm text-[#b6eafb]/90 line-clamp-1">
-                    {currentSlide.subtitle}
+                    {currentSlide.subtitle || 'End-to-end recruitment & visa processing'}
                   </p>
 
                   {/* Interactive Slide Dots & Location */}
                   <div className="pt-2 sm:pt-2.5 flex items-center justify-between border-t border-white/10">
                     <div className="flex items-center gap-1.5 sm:gap-2">
-                      {DYNAMIC_RECRUITMENT_SLIDES.map((_, i) => (
+                      {slides.map((_, i) => (
                         <button
                           key={i}
                           type="button"
                           onClick={() => setActiveSlide(i)}
                           className={`h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${
-                            i === activeSlide ? 'w-5 sm:w-7 bg-[#a99410]' : 'w-2 bg-white/30 hover:bg-white/60'
+                            i === safeActiveIndex ? 'w-5 sm:w-7 bg-[#a99410]' : 'w-2 bg-white/30 hover:bg-white/60'
                           }`}
                           title={`Slide ${i + 1}`}
                         />
@@ -318,7 +325,7 @@ export default function Hero({
                     </div>
                     <span className="text-[10px] sm:text-xs text-slate-300 font-medium flex items-center gap-1">
                       <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#a99410]" />
-                      <span>{currentSlide.location}</span>
+                      <span>{currentSlide.location || 'Dubai HQ'}</span>
                     </span>
                   </div>
                 </div>

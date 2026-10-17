@@ -25,20 +25,23 @@ export default function LoginPage({ onNavigate, onLoginSuccess }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    setTimeout(() => {
-      const res = login(email, password);
+    try {
+      const res = await login(email, password);
       setLoading(false);
       if (res.success) {
         if (onLoginSuccess) onLoginSuccess();
       } else {
         setError(res.message);
       }
-    }, 300);
+    } catch (err) {
+      setLoading(false);
+      setError('An error occurred during authentication.');
+    }
   };
 
   const handleQuickFill = (fillEmail, fillPass) => {

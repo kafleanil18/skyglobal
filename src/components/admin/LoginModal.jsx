@@ -21,13 +21,13 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    setTimeout(() => {
-      const res = login(email, password);
+    try {
+      const res = await login(email, password);
       setLoading(false);
       if (res.success) {
         onClose();
@@ -35,7 +35,10 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
       } else {
         setError(res.message);
       }
-    }, 300);
+    } catch (err) {
+      setLoading(false);
+      setError('An error occurred during authentication.');
+    }
   };
 
   const handleQuickFill = (fillEmail, fillPass) => {

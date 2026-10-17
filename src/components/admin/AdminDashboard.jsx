@@ -18,13 +18,16 @@ import {
   Clock,
   ArrowRight,
   Download,
-  Camera
+  Camera,
+  Database,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCMS } from '../../context/CMSContext';
 import { downloadApplicantCV } from '../../utils/cvDownloader';
 import skyGlobalLogo from '../../assets/SkyGlobalLogo.png';
 
+import AdminAnalyticsTab from './AdminAnalyticsTab';
 import AdminJobsTab from './AdminJobsTab';
 import AdminApplicationsTab from './AdminApplicationsTab';
 import AdminEmployersTab from './AdminEmployersTab';
@@ -33,14 +36,16 @@ import AdminBlogsTab from './AdminBlogsTab';
 import AdminGalleryTab from './AdminGalleryTab';
 import AdminUsersTab from './AdminUsersTab';
 import AdminSettingsTab from './AdminSettingsTab';
+import AdminHeroTab from './AdminHeroTab';
 
 export default function AdminDashboard({ onExitDashboard }) {
   const { currentUser, logout, isSuperAdmin } = useAuth();
-  const { jobs, applications, employerRequests, blogs, countries, gallery } = useCMS();
+  const { jobs, applications, employerRequests, blogs, countries, gallery, heroSlides, dbStatus, refreshFromDatabase } = useCMS();
   const [activeTab, setActiveTab] = useState('overview');
 
   const navItems = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'analytics', label: 'Executive Analytics', icon: TrendingUp },
     { id: 'jobs', label: 'Job Vacancies', icon: Briefcase, count: jobs.length },
     { id: 'applications', label: 'Candidate CVs', icon: FileText, count: applications.length },
     { id: 'gallery', label: 'Photo Gallery', icon: Camera, count: gallery.length },
@@ -48,6 +53,7 @@ export default function AdminDashboard({ onExitDashboard }) {
     { id: 'countries', label: 'Destinations', icon: Globe2, count: countries.length },
     { id: 'blogs', label: 'Visa News', icon: Newspaper, count: blogs.length },
     ...(isSuperAdmin ? [
+      { id: 'hero', label: 'Hero Slides', icon: Sparkles, count: heroSlides?.length || 0 },
       { id: 'users', label: 'Staff Management', icon: Users },
       { id: 'settings', label: 'Portal Settings', icon: Settings }
     ] : [])
@@ -91,6 +97,30 @@ export default function AdminDashboard({ onExitDashboard }) {
 
         {/* Header Right Actions */}
         <div className="flex items-center gap-3">
+          {dbStatus?.isOnline ? (
+            <button 
+              type="button"
+              onClick={refreshFromDatabase}
+              title="Connected to local MongoDB (database: skyglobal). Click to re-sync."
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 hover:bg-emerald-500/30 transition-all cursor-pointer"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <Database className="w-3.5 h-3.5 text-emerald-300" />
+              <span className="hidden sm:inline">MongoDB Connected</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={refreshFromDatabase}
+              title="Backend server offline. Using local browser cache. Click to retry connection."
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30 transition-all cursor-pointer"
+            >
+              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <Database className="w-3.5 h-3.5 text-amber-300" />
+              <span className="hidden sm:inline">Offline Cache</span>
+            </button>
+          )}
+
           <button
             onClick={onExitDashboard}
             className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center gap-1.5"
@@ -265,6 +295,39 @@ export default function AdminDashboard({ onExitDashboard }) {
                 </div>
               </div>
 
+              {/* Executive Analytics Snapshot Banner */}
+              <div 
+                onClick={() => setActiveTab('analytics')}
+                className="bg-gradient-to-r from-[#101a6d] via-[#0b144d] to-[#020024] rounded-3xl p-6 text-white border border-[#25c0f3]/30 shadow-md cursor-pointer group hover:border-[#a99410]/60 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3.5 rounded-2xl bg-white/10 text-[#a99410] border border-white/15 group-hover:scale-105 transition-transform">
+                    <TrendingUp className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs uppercase font-extrabold tracking-wider text-[#a99410]">
+                        Executive Intelligence
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                        Live Metrics
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-black font-display text-white mt-0.5">
+                      Recruitment Pipeline & Overseas Conversion Funnel
+                    </h3>
+                    <p className="text-xs text-[#b6eafb]/80 mt-0.5">
+                      Analyze candidate retention across screening, interviews, work permit processing, and mobilization.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs font-bold text-white bg-white/10 group-hover:bg-[#a99410] group-hover:text-[#020024] px-4 py-2.5 rounded-xl border border-white/20 transition-all shrink-0">
+                  <span>View Full Analytics</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+
               {/* Quick Actions Bar */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <button
@@ -296,22 +359,38 @@ export default function AdminDashboard({ onExitDashboard }) {
 
                 <button
                   onClick={() => setActiveTab('gallery')}
-                  className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm text-left transition-all group sm:col-span-3 lg:col-span-1"
+                  className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm text-left transition-all group"
                 >
                   <Camera className="w-5 h-5 text-[#a99410] mb-2 group-hover:scale-110 transition-transform" />
                   <h4 className="text-sm font-bold text-slate-900">Upload to Gallery</h4>
                   <p className="text-xs text-slate-500 mt-0.5">Add candidate deployment milestones by time frame.</p>
                 </button>
+
+                {isSuperAdmin && (
+                  <button
+                    onClick={() => setActiveTab('hero')}
+                    className="p-5 rounded-2xl bg-gradient-to-br from-[#101a6d] via-[#0b1456] to-[#020024] text-white border border-[#25c0f3]/30 hover:border-[#a99410] shadow-sm text-left transition-all group sm:col-span-2 lg:col-span-1 cursor-pointer"
+                  >
+                    <Sparkles className="w-5 h-5 text-[#a99410] mb-2 group-hover:scale-110 transition-transform" />
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-bold text-white">Hero Photoslides</h4>
+                      <span className="text-[10px] bg-[#a99410] text-[#020024] font-black px-2 py-0.5 rounded-full">Super Admin</span>
+                    </div>
+                    <p className="text-xs text-[#b6eafb]/80 mt-0.5">Change, edit, or delete homepage hero slider photos.</p>
+                  </button>
+                )}
               </div>
             </div>
           )}
 
+          {activeTab === 'analytics' && <AdminAnalyticsTab />}
           {activeTab === 'jobs' && <AdminJobsTab />}
           {activeTab === 'applications' && <AdminApplicationsTab />}
           {activeTab === 'gallery' && <AdminGalleryTab />}
           {activeTab === 'employers' && <AdminEmployersTab />}
           {activeTab === 'countries' && <AdminCountriesTab />}
           {activeTab === 'blogs' && <AdminBlogsTab />}
+          {activeTab === 'hero' && isSuperAdmin && <AdminHeroTab />}
           {activeTab === 'users' && isSuperAdmin && <AdminUsersTab />}
           {activeTab === 'settings' && isSuperAdmin && <AdminSettingsTab />}
         </main>

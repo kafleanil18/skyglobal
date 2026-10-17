@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { 
   COMPANY_INFO, 
   JOBS_LIST, 
@@ -7,90 +7,46 @@ import {
   TESTIMONIALS, 
   BLOGS,
   INITIAL_GALLERY,
-  GALLERY_CATEGORIES
+  GALLERY_CATEGORIES,
+  INITIAL_HERO_SLIDES
 } from '../data/skyGlobalData';
 import { FALLBACK_GALLERY_IMAGE } from '../utils/imageOptimizer';
+import {
+  checkBackendHealth,
+  fetchSyncAll,
+  apiResetDatabase,
+  apiAddJob,
+  apiUpdateJob,
+  apiDeleteJob,
+  apiAddApplication,
+  apiUpdateApplication,
+  apiDeleteApplication,
+  apiAddEmployerRequest,
+  apiUpdateEmployerRequest,
+  apiDeleteEmployerRequest,
+  apiAddCountry,
+  apiUpdateCountry,
+  apiDeleteCountry,
+  apiAddBlog,
+  apiUpdateBlog,
+  apiDeleteBlog,
+  apiAddTestimonial,
+  apiUpdateTestimonial,
+  apiDeleteTestimonial,
+  apiUpdateCompanyInfo,
+  apiAddGalleryItem,
+  apiUpdateGalleryItem,
+  apiDeleteGalleryItem,
+  apiAddHeroSlide,
+  apiUpdateHeroSlide,
+  apiDeleteHeroSlide
+} from '../services/api';
 
 const CMSContext = createContext();
 
-const INITIAL_APPLICATIONS = [
-  {
-    id: 'app-101',
-    jobId: 'job-mep-1',
-    jobTitle: 'Electrician (Technical Trade Sector)',
-    applicantName: 'Ramesh Adhikari',
-    email: 'ramesh.adhikari@email.com',
-    phone: '+971 52 345 6789',
-    currentCountry: 'Nepal',
-    experienceYears: '5 years',
-    preferredDestination: 'Malta',
-    appliedDate: '2026-04-10',
-    status: 'Visa Processing', // Pending, Under Review, Interview Scheduled, Visa Processing, Approved, Rejected
-    resumeName: 'Ramesh_Adhikari_Electrician_CV.pdf',
-    notes: '5 years certified electrical wiring experience in Gulf & Nepal. Documents submitted for single work permit.'
-  },
-  {
-    id: 'app-102',
-    jobId: 'job-mep-2',
-    jobTitle: 'Maintenance Technician',
-    applicantName: 'Sunil Thapa',
-    email: 'sunil.t@email.com',
-    phone: '+971 50 882 1123',
-    currentCountry: 'UAE',
-    experienceYears: '4 years',
-    preferredDestination: 'Malta',
-    appliedDate: '2026-04-12',
-    status: 'Under Review',
-    resumeName: 'Sunil_Maintenance_Technician_2026.pdf',
-    notes: 'Worked 3 years at hotel chain in Dubai. Hands-on HVAC and basic electrical.'
-  },
-  {
-    id: 'app-103',
-    jobId: 'job-hosp-1',
-    jobTitle: 'Housekeeping Supervisor',
-    applicantName: 'Maria Santos',
-    email: 'maria.santos@email.com',
-    phone: '+971 56 771 9021',
-    currentCountry: 'Philippines',
-    experienceYears: '6 years',
-    preferredDestination: 'Malta (Ramla Bay Resort)',
-    appliedDate: '2026-04-13',
-    status: 'Interview Scheduled',
-    resumeName: 'Maria_Santos_Housekeeping_Sup.docx',
-    notes: 'Supervisor background at 5-star resort. Excellent English.'
-  }
-];
+const INITIAL_APPLICATIONS = [];
 
-const INITIAL_EMPLOYER_REQUESTS = [
-  {
-    id: 'req-201',
-    companyName: 'Ramla Bay Resort & Hospitality',
-    contactName: 'Jean M. (General Manager)',
-    email: 'hr@ramlabayresort.com.mt',
-    phone: '+356 2281 2281',
-    industrySector: 'Hospitality & Tourism',
-    headcount: '6 Candidates (Housekeeping & F&B)',
-    destinationCountry: 'Malta',
-    timeline: 'Immediate (Within 30 Days)',
-    requestDate: '2026-04-08',
-    status: 'Sourced & Screening', // New, Contacted, Sourced & Screening, Completed
-    notes: 'Require 2 Housekeeping Supervisors and 4 Bartenders for summer season peak.'
-  },
-  {
-    id: 'req-202',
-    companyName: 'Apex MEP Contracting Ltd.',
-    contactName: 'David Miller (Operations Dir)',
-    email: 'd.miller@apex-mep.com',
-    phone: '+356 2144 5590',
-    industrySector: 'MEP, Electrical & Technical Trades',
-    headcount: '8 Electricians & Plumbers',
-    destinationCountry: 'Malta',
-    timeline: 'Upcoming Quarter (1-3 Months)',
-    requestDate: '2026-04-11',
-    status: 'New',
-    notes: 'Commercial infrastructure renovation. Sourcing certified single and 3-phase electricians.'
-  }
-];
+const INITIAL_EMPLOYER_REQUESTS = [];
 
 function safeStorageGet(key, fallback) {
   try {
@@ -112,14 +68,31 @@ function safeStorageSet(key, value) {
 }
 
 export function CMSProvider({ children }) {
-  // Jobs
+  // DB Connection Status
+  const [dbStatus, setDbStatus] = useState({
+    isOnline: false,
+    status: 'checking', // checking, connected, offline
+    dbName: 'skyglobal'
+  });
+
+  // Jobs (starts empty by default so user can add custom vacancies)
   const [jobs, setJobs] = useState(() => {
-    const loaded = safeStorageGet('skyglobal_cms_jobs', JOBS_LIST);
-    return loaded.map(j => ({
-      ...j,
-      vacancies: j.vacancies !== undefined ? Number(j.vacancies) : 4,
-      status: j.status || 'Active'
-    }));
+    const loaded = safeStorageGet('skyglobal_cms_jobs', []);
+    if (!Array.isArray(loaded)) return [];
+    // Filter out legacy hardcoded demo jobs (IDs 1-8) if cached in localStorage
+    const cleanList = loaded.filter(j => typeof j.id !== 'number' && !String(j.id).match(/^[1-8]$/));
+    return cleanList.map((j, index) => {
+      const defaultRff = j.rffNumber || `RFF-${(j.country || 'MLT').slice(0, 3).toUpperCase()}-${101 + index}`;
+      return {
+        ...j,
+        rffNumber: j.rffNumber || defaultRff,
+        vacancies: j.vacancies !== undefined ? Number(j.vacancies) : 1,
+        status: j.status || 'Active',
+        salary: j.salary || 'Attractive Salary Package',
+        visaProcessing: j.visaProcessing || '⚡ Fast-track 3–4 Weeks',
+        perks: Array.isArray(j.perks) ? j.perks : []
+      };
+    });
   });
 
   // Applications
@@ -131,8 +104,13 @@ export function CMSProvider({ children }) {
   // Countries
   const [countries, setCountries] = useState(() => safeStorageGet('skyglobal_cms_countries', COUNTRIES));
 
-  // Blogs / News
-  const [blogs, setBlogs] = useState(() => safeStorageGet('skyglobal_cms_blogs', BLOGS));
+  // Blogs / News (starts empty by default so user can publish custom articles)
+  const [blogs, setBlogs] = useState(() => {
+    const loaded = safeStorageGet('skyglobal_cms_blogs', []);
+    if (!Array.isArray(loaded)) return [];
+    // Filter out legacy hardcoded demo blogs (IDs 1-3) if cached in localStorage
+    return loaded.filter(b => typeof b.id !== 'number' && !String(b.id).match(/^[1-3]$/));
+  });
 
   // Testimonials
   const [testimonials, setTestimonials] = useState(() => safeStorageGet('skyglobal_cms_testimonials', TESTIMONIALS));
@@ -140,15 +118,17 @@ export function CMSProvider({ children }) {
   // Company Information
   const [companyInfo, setCompanyInfo] = useState(() => safeStorageGet('skyglobal_cms_company_info', COMPANY_INFO));
 
-  // Gallery (supports multiple photos per event album)
+  // Gallery (starts empty by default so user can upload custom event albums)
   const [gallery, setGallery] = useState(() => {
-    const loaded = safeStorageGet('skyglobal_cms_gallery', INITIAL_GALLERY);
-    return loaded.map(item => {
+    const loaded = safeStorageGet('skyglobal_cms_gallery', []);
+    if (!Array.isArray(loaded)) return [];
+    // Filter out legacy hardcoded demo gallery items (IDs 1-8) if cached in localStorage
+    const cleanList = loaded.filter(item => typeof item.id !== 'number' && !String(item.id).match(/^[1-8]$/));
+    return cleanList.map(item => {
       let images = Array.isArray(item.images) && item.images.length > 0
         ? item.images
         : item.image ? [item.image] : [];
 
-      // Sanitize: filter out local file paths (e.g. /Users/..., file://, C:\) or empty values
       images = images.map(img => {
         if (!img || typeof img !== 'string') return FALLBACK_GALLERY_IMAGE;
         const trimmed = img.trim();
@@ -175,43 +155,56 @@ export function CMSProvider({ children }) {
     });
   });
 
-  // Persistence side-effects
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_jobs', jobs);
-  }, [jobs]);
+  // Hero Slides (Super Admin configurable photoslide)
+  const [heroSlides, setHeroSlides] = useState(() => safeStorageGet('skyglobal_cms_hero_slides', INITIAL_HERO_SLIDES));
 
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_applications', applications);
-  }, [applications]);
+  // Hybrid Sync Function: pulls fresh state from MongoDB
+  const refreshFromDatabase = useCallback(async () => {
+    const health = await checkBackendHealth();
+    if (health.isOnline && health.dbStatus === 'connected') {
+      setDbStatus({ isOnline: true, status: 'connected', dbName: health.dbName || 'skyglobal' });
+      const remoteData = await fetchSyncAll();
+      if (remoteData) {
+        if (Array.isArray(remoteData.jobs)) setJobs(remoteData.jobs);
+        if (Array.isArray(remoteData.applications)) setApplications(remoteData.applications);
+        if (Array.isArray(remoteData.employerRequests)) setEmployerRequests(remoteData.employerRequests);
+        if (Array.isArray(remoteData.countries)) setCountries(remoteData.countries);
+        if (Array.isArray(remoteData.blogs)) setBlogs(remoteData.blogs);
+        if (Array.isArray(remoteData.testimonials)) setTestimonials(remoteData.testimonials);
+        if (remoteData.companyInfo && typeof remoteData.companyInfo === 'object') setCompanyInfo(remoteData.companyInfo);
+        if (Array.isArray(remoteData.gallery)) setGallery(remoteData.gallery);
+        if (Array.isArray(remoteData.heroSlides)) {
+          setHeroSlides(remoteData.heroSlides.sort((a, b) => (a.order || 0) - (b.order || 0)));
+        }
+      }
+      return true;
+    } else {
+      setDbStatus({ isOnline: false, status: 'offline', dbName: null });
+      return false;
+    }
+  }, []);
 
+  // Sync on initial mount
   useEffect(() => {
-    safeStorageSet('skyglobal_cms_employer_requests', employerRequests);
-  }, [employerRequests]);
+    refreshFromDatabase();
+  }, [refreshFromDatabase]);
 
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_countries', countries);
-  }, [countries]);
-
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_blogs', blogs);
-  }, [blogs]);
-
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_testimonials', testimonials);
-  }, [testimonials]);
-
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_company_info', companyInfo);
-  }, [companyInfo]);
-
-  useEffect(() => {
-    safeStorageSet('skyglobal_cms_gallery', gallery);
-  }, [gallery]);
+  // Local storage persistence backups
+  useEffect(() => { safeStorageSet('skyglobal_cms_jobs', jobs); }, [jobs]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_applications', applications); }, [applications]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_employer_requests', employerRequests); }, [employerRequests]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_countries', countries); }, [countries]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_blogs', blogs); }, [blogs]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_testimonials', testimonials); }, [testimonials]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_company_info', companyInfo); }, [companyInfo]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_gallery', gallery); }, [gallery]);
+  useEffect(() => { safeStorageSet('skyglobal_cms_hero_slides', heroSlides); }, [heroSlides]);
 
   // --- Job Operations ---
   const addJob = (newJobData) => {
     const newJob = {
       id: `job-custom-${Date.now()}`,
+      rffNumber: (newJobData.rffNumber || '').trim().toUpperCase() || `RFF-${(newJobData.country || 'GLB').slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`,
       title: newJobData.title,
       company: newJobData.company || 'Sky Global Partner Client',
       location: newJobData.location,
@@ -226,9 +219,15 @@ export function CMSProvider({ children }) {
       tags: Array.isArray(newJobData.tags) ? newJobData.tags : (newJobData.tags || '').split(',').map(s => s.trim()).filter(Boolean),
       description: newJobData.description,
       requirements: Array.isArray(newJobData.requirements) ? newJobData.requirements : (newJobData.requirements || '').split('\n').map(s => s.trim()).filter(Boolean),
-      benefits: Array.isArray(newJobData.benefits) ? newJobData.benefits : (newJobData.benefits || '').split('\n').map(s => s.trim()).filter(Boolean)
+      benefits: Array.isArray(newJobData.benefits) ? newJobData.benefits : (newJobData.benefits || '').split('\n').map(s => s.trim()).filter(Boolean),
+      visaProcessing: newJobData.visaProcessing || '⚡ Fast-track 3–4 Weeks',
+      perks: Array.isArray(newJobData.perks) 
+        ? newJobData.perks 
+        : (typeof newJobData.perks === 'string' ? newJobData.perks.split('\n').map(s => s.trim()).filter(Boolean) : [])
     };
     setJobs(prev => [newJob, ...prev]);
+    // Persist to MongoDB
+    apiAddJob(newJob).catch(err => console.warn('[CMS] Remote addJob error:', err));
     return newJob;
   };
 
@@ -238,6 +237,7 @@ export function CMSProvider({ children }) {
         return {
           ...job,
           ...updatedFields,
+          rffNumber: updatedFields.rffNumber !== undefined ? (updatedFields.rffNumber || '').trim().toUpperCase() : (job.rffNumber || ''),
           vacancies: updatedFields.vacancies !== undefined ? Number(updatedFields.vacancies) : (job.vacancies || 1),
           status: updatedFields.status !== undefined ? updatedFields.status : (job.status || 'Active'),
           tags: Array.isArray(updatedFields.tags) 
@@ -254,11 +254,20 @@ export function CMSProvider({ children }) {
             ? updatedFields.benefits
             : typeof updatedFields.benefits === 'string'
               ? updatedFields.benefits.split('\n').map(s => s.trim()).filter(Boolean)
-              : job.benefits
+              : job.benefits,
+          perks: updatedFields.perks !== undefined
+            ? (Array.isArray(updatedFields.perks)
+                ? updatedFields.perks
+                : typeof updatedFields.perks === 'string'
+                  ? updatedFields.perks.split('\n').map(s => s.trim()).filter(Boolean)
+                  : [])
+            : (job.perks || [])
         };
       }
       return job;
     }));
+    // Persist to MongoDB
+    apiUpdateJob(jobId, updatedFields).catch(err => console.warn('[CMS] Remote updateJob error:', err));
   };
 
   const updateJobStatus = (jobId, status) => {
@@ -267,6 +276,8 @@ export function CMSProvider({ children }) {
 
   const deleteJob = (jobId) => {
     setJobs(prev => prev.filter(job => job.id !== jobId));
+    // Persist to MongoDB
+    apiDeleteJob(jobId).catch(err => console.warn('[CMS] Remote deleteJob error:', err));
   };
 
   // --- Candidate Application Operations ---
@@ -287,9 +298,12 @@ export function CMSProvider({ children }) {
       resumeDataUrl: appData.fileDataUrl || appData.resumeDataUrl || null,
       resumeSize: appData.fileSize || appData.resumeSize || null,
       resumeType: appData.fileType || appData.resumeType || null,
-      notes: appData.note || 'Online portal submission.'
+      notes: appData.note || 'Online portal submission.',
+      adminNotes: ''
     };
     setApplications(prev => [newApp, ...prev]);
+    // Persist to MongoDB
+    apiAddApplication(newApp).catch(err => console.warn('[CMS] Remote addApplication error:', err));
     return newApp;
   };
 
@@ -304,10 +318,14 @@ export function CMSProvider({ children }) {
       }
       return app;
     }));
+    // Persist to MongoDB
+    apiUpdateApplication(appId, { status, adminNotes }).catch(err => console.warn('[CMS] Remote updateApplication error:', err));
   };
 
   const deleteApplication = (appId) => {
     setApplications(prev => prev.filter(app => app.id !== appId));
+    // Persist to MongoDB
+    apiDeleteApplication(appId).catch(err => console.warn('[CMS] Remote deleteApplication error:', err));
   };
 
   // --- Employer Request Operations ---
@@ -327,6 +345,8 @@ export function CMSProvider({ children }) {
       notes: reqData.notes || ''
     };
     setEmployerRequests(prev => [newReq, ...prev]);
+    // Persist to MongoDB
+    apiAddEmployerRequest(newReq).catch(err => console.warn('[CMS] Remote addEmployerRequest error:', err));
     return newReq;
   };
 
@@ -337,10 +357,14 @@ export function CMSProvider({ children }) {
       }
       return req;
     }));
+    // Persist to MongoDB
+    apiUpdateEmployerRequest(reqId, { status }).catch(err => console.warn('[CMS] Remote updateEmployerRequest error:', err));
   };
 
   const deleteEmployerRequest = (reqId) => {
     setEmployerRequests(prev => prev.filter(req => req.id !== reqId));
+    // Persist to MongoDB
+    apiDeleteEmployerRequest(reqId).catch(err => console.warn('[CMS] Remote deleteEmployerRequest error:', err));
   };
 
   // --- Country Operations ---
@@ -364,6 +388,8 @@ export function CMSProvider({ children }) {
             ]
     };
     setCountries(prev => [...prev, newCountry]);
+    // Persist to MongoDB
+    apiAddCountry(newCountry).catch(err => console.warn('[CMS] Remote addCountry error:', err));
     return newCountry;
   };
 
@@ -384,10 +410,14 @@ export function CMSProvider({ children }) {
       }
       return c;
     }));
+    // Persist to MongoDB
+    apiUpdateCountry(countryId, updatedFields).catch(err => console.warn('[CMS] Remote updateCountry error:', err));
   };
 
   const deleteCountry = (countryId) => {
     setCountries(prev => prev.filter(c => c.id !== countryId && String(c.id) !== String(countryId)));
+    // Persist to MongoDB
+    apiDeleteCountry(countryId).catch(err => console.warn('[CMS] Remote deleteCountry error:', err));
   };
 
   // --- Blog Operations ---
@@ -403,15 +433,21 @@ export function CMSProvider({ children }) {
       source: blogData.source || 'SkyGlobal HR Market Intelligence'
     };
     setBlogs(prev => [newBlog, ...prev]);
+    // Persist to MongoDB
+    apiAddBlog(newBlog).catch(err => console.warn('[CMS] Remote addBlog error:', err));
     return newBlog;
   };
 
   const updateBlog = (blogId, updatedFields) => {
     setBlogs(prev => prev.map(b => (b.id === blogId ? { ...b, ...updatedFields } : b)));
+    // Persist to MongoDB
+    apiUpdateBlog(blogId, updatedFields).catch(err => console.warn('[CMS] Remote updateBlog error:', err));
   };
 
   const deleteBlog = (blogId) => {
     setBlogs(prev => prev.filter(b => b.id !== blogId));
+    // Persist to MongoDB
+    apiDeleteBlog(blogId).catch(err => console.warn('[CMS] Remote deleteBlog error:', err));
   };
 
   // --- Testimonial Operations ---
@@ -426,20 +462,28 @@ export function CMSProvider({ children }) {
       category: testData.category || 'Candidate (Visa Approved)'
     };
     setTestimonials(prev => [newTest, ...prev]);
+    // Persist to MongoDB
+    apiAddTestimonial(newTest).catch(err => console.warn('[CMS] Remote addTestimonial error:', err));
     return newTest;
   };
 
   const updateTestimonial = (id, updatedFields) => {
     setTestimonials(prev => prev.map(t => (t.id === id ? { ...t, ...updatedFields } : t)));
+    // Persist to MongoDB
+    apiUpdateTestimonial(id, updatedFields).catch(err => console.warn('[CMS] Remote updateTestimonial error:', err));
   };
 
   const deleteTestimonial = (id) => {
     setTestimonials(prev => prev.filter(t => t.id !== id));
+    // Persist to MongoDB
+    apiDeleteTestimonial(id).catch(err => console.warn('[CMS] Remote deleteTestimonial error:', err));
   };
 
   // --- Settings Operation ---
   const updateCompanyInfo = (newInfo) => {
     setCompanyInfo(prev => ({ ...prev, ...newInfo }));
+    // Persist to MongoDB
+    apiUpdateCompanyInfo(newInfo).catch(err => console.warn('[CMS] Remote updateCompanyInfo error:', err));
   };
 
   // --- Gallery Operations ---
@@ -470,6 +514,8 @@ export function CMSProvider({ children }) {
           : [itemData.category, itemData.timeframe].filter(Boolean)
     };
     setGallery(prev => [newItem, ...prev]);
+    // Persist to MongoDB
+    apiAddGalleryItem(newItem).catch(err => console.warn('[CMS] Remote addGalleryItem error:', err));
     return newItem;
   };
 
@@ -501,34 +547,90 @@ export function CMSProvider({ children }) {
       }
       return item;
     }));
+    // Persist to MongoDB
+    apiUpdateGalleryItem(itemId, updatedFields).catch(err => console.warn('[CMS] Remote updateGalleryItem error:', err));
   };
 
   const deleteGalleryItem = (itemId) => {
     setGallery(prev => prev.filter(item => item.id !== itemId && String(item.id) !== String(itemId)));
+    // Persist to MongoDB
+    apiDeleteGalleryItem(itemId).catch(err => console.warn('[CMS] Remote deleteGalleryItem error:', err));
   };
 
-  // Reset to default data
-  const resetAllToDefaults = () => {
-    setJobs(JOBS_LIST);
+  // --- Hero Slides Operations (Super Admin) ---
+  const addHeroSlide = (slideData) => {
+    const newSlide = {
+      id: `slide-${Date.now()}`,
+      url: (slideData.url || '').trim(),
+      title: (slideData.title || 'Global Recruitment & Overseas Placement').trim(),
+      subtitle: (slideData.subtitle || 'Connecting employers worldwide with vetted talent').trim(),
+      badge: (slideData.badge || 'Talent Acquisition').trim(),
+      location: (slideData.location || 'SkyGlobal Dubai HQ').trim(),
+      stat: (slideData.stat || '100% Vetted Candidates').trim(),
+      order: slideData.order !== undefined ? Number(slideData.order) : heroSlides.length + 1
+    };
+    setHeroSlides(prev => [...prev, newSlide]);
+    apiAddHeroSlide(newSlide).catch(err => console.warn('[CMS] Remote addHeroSlide error:', err));
+    return newSlide;
+  };
+
+  const updateHeroSlide = (slideId, updatedFields) => {
+    setHeroSlides(prev => prev.map(s => {
+      if (s.id === slideId || String(s.id) === String(slideId)) {
+        return {
+          ...s,
+          ...updatedFields,
+          order: updatedFields.order !== undefined ? Number(updatedFields.order) : (s.order || 0)
+        };
+      }
+      return s;
+    }));
+    apiUpdateHeroSlide(slideId, updatedFields).catch(err => console.warn('[CMS] Remote updateHeroSlide error:', err));
+  };
+
+  const deleteHeroSlide = (slideId) => {
+    setHeroSlides(prev => prev.filter(s => s.id !== slideId && String(s.id) !== String(slideId)));
+    apiDeleteHeroSlide(slideId).catch(err => console.warn('[CMS] Remote deleteHeroSlide error:', err));
+  };
+
+  const resetHeroSlides = () => {
+    setHeroSlides(INITIAL_HERO_SLIDES);
+    safeStorageSet('skyglobal_cms_hero_slides', INITIAL_HERO_SLIDES);
+  };
+
+  // Reset to default data (wipes jobs, blogs, and gallery to empty arrays)
+  const resetAllToDefaults = async () => {
+    setJobs([]);
     setApplications(INITIAL_APPLICATIONS);
     setEmployerRequests(INITIAL_EMPLOYER_REQUESTS);
     setCountries(COUNTRIES);
-    setBlogs(BLOGS);
+    setBlogs([]);
     setTestimonials(TESTIMONIALS);
     setCompanyInfo(COMPANY_INFO);
-    setGallery(INITIAL_GALLERY);
-    localStorage.removeItem('skyglobal_cms_jobs');
+    setGallery([]);
+    setHeroSlides(INITIAL_HERO_SLIDES);
+    safeStorageSet('skyglobal_cms_jobs', []);
+    safeStorageSet('skyglobal_cms_blogs', []);
+    safeStorageSet('skyglobal_cms_gallery', []);
     localStorage.removeItem('skyglobal_cms_applications');
     localStorage.removeItem('skyglobal_cms_employer_requests');
     localStorage.removeItem('skyglobal_cms_countries');
-    localStorage.removeItem('skyglobal_cms_blogs');
     localStorage.removeItem('skyglobal_cms_testimonials');
     localStorage.removeItem('skyglobal_cms_company_info');
-    localStorage.removeItem('skyglobal_cms_gallery');
+    localStorage.removeItem('skyglobal_cms_hero_slides');
+
+    // Reset MongoDB
+    try {
+      await apiResetDatabase();
+    } catch (err) {
+      console.warn('[CMS] Remote resetDatabase error:', err);
+    }
   };
 
   return (
     <CMSContext.Provider value={{
+      dbStatus,
+      refreshFromDatabase,
       jobs,
       addJob,
       updateJob,
@@ -561,6 +663,11 @@ export function CMSProvider({ children }) {
       addGalleryItem,
       updateGalleryItem,
       deleteGalleryItem,
+      heroSlides,
+      addHeroSlide,
+      updateHeroSlide,
+      deleteHeroSlide,
+      resetHeroSlides,
       resetAllToDefaults
     }}>
       {children}

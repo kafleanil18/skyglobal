@@ -4,11 +4,13 @@ cd "$DIR"
 
 echo "=========================================================="
 echo "  Starting Sky Global HR Consultancy Local Portal...      "
+echo "  - Local MongoDB API Server (Port 5001)                 "
+echo "  - Vite React Frontend (Port 5173)                      "
 echo "=========================================================="
 echo "Opening in browser..."
 
 # Open browser once server is responsive
-(sleep 1.5 && open "http://localhost:5173") &
+(sleep 2 && open "http://localhost:5173") &
 
-# Start dev server
-npm run dev
+# Start both backend database server & frontend
+npm run dev:all

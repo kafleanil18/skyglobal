@@ -29,9 +29,9 @@ export default function AdminEmployersTab() {
   };
 
   const filtered = employerRequests.filter(req => 
-    req.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    req.contactName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    req.industrySector.toLowerCase().includes(searchTerm.toLowerCase())
+    (req.companyName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (req.contactName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (req.industrySector || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
